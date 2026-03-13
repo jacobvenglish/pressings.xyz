@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kind of Blue — Miles Davis · Pressings.xyz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; scroll-behavior: smooth; }
+
+:root {
+  --paper:  #f4f1eb;
+  --ink:    #0f0f0f;
+  --mid:    #6b6b6b;
+  --light:  #c8c4bb;
+  --rule:   #d4d0c8;
+  --red:    #d42b2b;
+  --white:  #ffffff;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.022;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  background: var(--paper);
+  border-bottom: 1px solid var(--ink);
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  align-items: stretch;
+  height: 48px;
+}
+.nav-logo-cell {
+  border-right: 1px solid var(--ink);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  text-decoration: none;
+}
+.nav-logo-mark {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.nav-logo-mark sup { font-size: 9px; color: var(--red); vertical-align: super; margin-left: 1px; }
+.nav-links-cell { display: flex; align-items: center; padding: 0 24px; }
+.nav-links { display: flex; list-style: none; gap: 32px; }
+.nav-links a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mid);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-actions { display: flex; align-items: stretch; border-left: 1px solid var(--ink); }
+.nav-btn {
+  display: flex; align-items: center;
+  padding: 0 20px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+  text-decoration: none; color: var(--mid);
+  border-right: 1px solid var(--rule);
+  transition: all 0.15s; white-space: nowrap;
+}
+.nav-btn:hover { color: var(--ink); background: var(--rule); }
+.nav-btn-filled { background: var(--ink); color: var(--paper); border-right: none; }
+.nav-btn-filled:hover { background: var(--red); color: var(--white); }
+
+/* ── RECORD HEADER ── */
+.record-header {
+  padding-top: 48px;
+  border-bottom: 1px solid var(--ink);
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+}
+
+.rh-left {
+  border-right: 1px solid var(--rule);
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.rh-id {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--red);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.rh-format-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 24px;
+}
+.rh-format-tag {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border: 1px solid var(--rule);
+  color: var(--mid);
+  width: fit-content;
+}
+.rh-format-tag.active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.rh-mid { padding: 32px 48px; }
+.rh-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.rh-breadcrumb a, .rh-breadcrumb span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--light);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.rh-breadcrumb a:hover { color: var(--mid); }
+.rh-breadcrumb .sep { color: var(--red); }
+.rh-breadcrumb .current { color: var(--ink); }
+
+.record-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: clamp(48px, 6vw, 88px);
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.record-artist {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 400;
+  font-size: clamp(24px, 3vw, 40px);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--mid);
+}
+
+.rh-right {
+  border-left: 1px solid var(--rule);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 200px;
+}
+.meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.meta-row:first-child { padding-top: 0; }
+.meta-row:last-child { border-bottom: none; }
+.meta-key {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--light);
+}
+.meta-val {
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.meta-val a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  transition: border-color 0.15s;
+}
+.meta-val a:hover { border-color: var(--red); color: var(--red); }
+
+/* ── SCAN GRID ── */
+.scan-section {
+  border-bottom: 1px solid var(--ink);
+}
+.scan-section-header {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  border-bottom: 1px solid var(--rule);
+  height: 40px;
+}
+.ssh-label {
+  border-right: 1px solid var(--rule);
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+}
+.ssh-label span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--light);
+}
+.ssh-tabs {
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.scan-tab {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0 16px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--mid);
+  border-right: 1px solid var(--rule);
+  transition: all 0.15s;
+  background: transparent;
+  border-top: none;
+  border-bottom: none;
+  border-left: none;
+}
+.scan-tab:first-child { border-left: none; padding-left: 0; }
+.scan-tab:hover { color: var(--ink); }
+.scan-tab.active { color: var(--ink); border-bottom: 2px solid var(--red); }
+
+/* The scan grid itself */
+.scan-grid-wrap {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+}
+.scan-sidebar {
+  border-right: 1px solid var(--rule);
+  padding: 24px 20px;
+}
+.scan-count {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--light);
+  margin-bottom: 16px;
+  display: block;
+}
+.scan-type-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+.scan-type-list li a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  transition: color 0.12s;
+}
+.scan-type-list li:last-child a { border-bottom: none; }
+.scan-type-list li a:hover { color: var(--ink); }
+.scan-type-list li a.active { color: var(--red); }
+.stl-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--rule);
+  flex-shrink: 0;
+}
+.stl-dot.scanned { background: var(--ink); }
+.stl-dot.active-dot { background: var(--red); }
+
+.scan-main { padding: 24px; }
+
+/* The archive-style flat grid */
+.scan-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+
+.scan-cell {
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+  cursor: zoom-in;
+  aspect-ratio: 1;
+  transition: background 0.15s;
+}
+.scan-cell:hover .scan-cell-overlay { opacity: 1; }
+.scan-cell-inner {
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* CSS placeholder scans */
+.sc-front    { background: #e2dfd6; }
+.sc-back     { background: #dbd8cf; }
+.sc-spine    { background: #e8e5dc; }
+.sc-inner    { background: #e0ddd4; }
+.sc-gatefold { background: #d8d5cc; }
+.sc-label-a  { background: #e5e2d9; }
+.sc-label-b  { background: #e3e0d7; }
+.sc-detail   { background: #dddad1; }
+
+.sc-art {
+  position: absolute;
+  inset: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scan-cell-label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 6px 10px;
+  background: rgba(244,241,235,0.92);
+  border-top: 1px solid var(--rule);
+}
+.scl-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  display: block;
+}
+.scl-dim {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7px;
+  color: var(--light);
+  display: block;
+  margin-top: 1px;
+}
+
+.scan-cell-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15,15,15,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 2;
+}
+.zoom-icon {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--paper);
+  letter-spacing: 0.1em;
+}
+
+/* Locked scan (paid tier) */
+.scan-cell.locked { cursor: default; }
+.scan-cell.locked .scan-cell-inner { opacity: 0.35; filter: blur(6px); }
+.lock-badge {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  text-align: center;
+}
+.lock-badge span {
+  display: block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-top: 6px;
+}
+.lock-icon {
+  width: 28px; height: 28px;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 12px;
+}
+
+/* ── LIGHTBOX ── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,15,15,0.96);
+  z-index: 500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+.lightbox.open { display: flex; }
+.lightbox-inner {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.lightbox-img {
+  max-width: 80vw;
+  max-height: 75vh;
+  object-fit: contain;
+  display: block;
+}
+/* Placeholder for lightbox */
+.lightbox-placeholder {
+  width: 560px;
+  height: 560px;
+  max-width: 80vw;
+  max-height: 75vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox-meta {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.lightbox-meta span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(244,241,235,0.4);
+}
+.lightbox-meta strong { color: rgba(244,241,235,0.9); font-weight: 400; }
+.lightbox-close {
+  position: absolute;
+  top: -40px; right: 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(244,241,235,0.4);
+  cursor: pointer;
+  transition: color 0.15s;
+  background: none;
+  border: none;
+  padding: 8px 0;
+}
+.lightbox-close:hover { color: var(--paper); }
+.lightbox-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.lb-nav-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(244,241,235,0.4);
+  background: none;
+  border: 1px solid rgba(244,241,235,0.15);
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.lb-nav-btn:hover { color: var(--paper); border-color: rgba(244,241,235,0.4); }
+
+/* ── INFO SECTION ── */
+.info-section {
+  border-bottom: 1px solid var(--ink);
+  display: grid;
+  grid-template-columns: 200px 1fr 280px;
+}
+
+.info-left {
+  border-right: 1px solid var(--rule);
+  padding: 40px 20px;
+  display: flex;
+  align-items: flex-end;
+}
+.info-vert {
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--light);
+}
+
+.info-mid { padding: 40px 48px; border-right: 1px solid var(--rule); }
+
+.info-block { margin-bottom: 40px; }
+.info-block:last-child { margin-bottom: 0; }
+
+.info-block-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--light);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.info-block-title span { color: var(--red); }
+
+/* Design credits table */
+.credits-table { width: 100%; border-collapse: collapse; }
+.credits-table tr { border-bottom: 1px solid var(--rule); }
+.credits-table tr:last-child { border-bottom: none; }
+.credits-table td {
+  padding: 10px 0;
+  font-size: 13px;
+  vertical-align: top;
+}
+.credits-table td:first-child {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--light);
+  width: 160px;
+  padding-right: 24px;
+  padding-top: 12px;
+}
+.credits-table td:last-child {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 500;
+  color: var(--ink);
+}
+.credits-table a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  transition: all 0.15s;
+}
+.credits-table a:hover { color: var(--red); border-color: var(--red); }
+.credit-note {
+  font-weight: 300;
+  font-size: 11px;
+  color: var(--mid);
+  display: block;
+  margin-top: 2px;
+}
+
+/* Print production grid */
+.production-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--rule);
+}
+.prod-cell {
+  padding: 14px 16px;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.prod-cell:nth-child(even) { border-right: none; }
+.prod-cell:nth-last-child(-n+2) { border-bottom: none; }
+.prod-key {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--light);
+  display: block;
+  margin-bottom: 4px;
+}
+.prod-val {
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  display: block;
+}
+
+/* Tags */
+.tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border: 1px solid var(--rule);
+  color: var(--mid);
+  transition: all 0.15s;
+  cursor: pointer;
+}
+.tag:hover { border-color: var(--ink); color: var(--ink); }
+
+/* Notes */
+.record-notes {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--mid);
+  font-weight: 300;
+  font-style: italic;
+  padding: 16px;
+  border-left: 2px solid var(--red);
+  background: rgba(212,43,43,0.03);
+}
+
+/* ── LABEL SIDEBAR ── */
+.info-right { padding: 40px 24px; }
+
+.label-card {
+  border: 1px solid var(--rule);
+  margin-bottom: 32px;
+}
+.label-card-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--ink);
+}
+.label-card-header span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+.label-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--paper);
+  margin-top: 4px;
+  display: block;
+}
+.label-card-body { padding: 16px; }
+.label-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.label-stat-row:last-child { border-bottom: none; }
+.label-stat-key {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--light);
+}
+.label-stat-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.sidebar-section-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--light);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.related-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+.related-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.related-item:last-child { border-bottom: none; }
+.related-item:hover .rel-title { color: var(--red); }
+.rel-thumb {
+  width: 36px; height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--rule);
+  overflow: hidden;
+}
+.rel-info { flex: 1; min-width: 0; }
+.rel-title {
+  font-family: 'Barlow', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  transition: color 0.12s;
+}
+.rel-artist {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  color: var(--light);
+  letter-spacing: 0.06em;
+  display: block;
+  margin-top: 1px;
+}
+.rel-year {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  color: var(--light);
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+/* ── PREV / NEXT NAV ── */
+.record-nav {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  border-bottom: 1px solid var(--ink);
+}
+.record-nav-divider { background: var(--rule); }
+.record-nav-cell {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 40px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.record-nav-cell:hover { background: var(--rule); }
+.record-nav-cell.next { justify-content: flex-end; text-align: right; }
+.rnc-dir {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--light);
+  display: block;
+  margin-bottom: 4px;
+}
+.rnc-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  text-transform: uppercase;
+  color: var(--ink);
+  display: block;
+  line-height: 1;
+}
+.rnc-artist {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--mid);
+  display: block;
+  margin-top: 3px;
+  letter-spacing: 0.06em;
+}
+.rnc-arrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 20px;
+  color: var(--rule);
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+.record-nav-cell:hover .rnc-arrow { color: var(--red); }
+
+/* ── FOOTER ── */
+footer {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  align-items: center;
+  height: 48px;
+}
+.footer-logo-cell {
+  border-right: 1px solid var(--rule);
+  padding: 0 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.footer-logo-cell sup { color: var(--red); font-size: 7px; }
+.footer-mid {
+  padding: 0 24px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--light);
+}
+.footer-right {
+  padding: 0 24px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--light);
+  border-left: 1px solid var(--rule);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* ── ANIMATIONS ── */
+.reveal { opacity: 0; transform: translateY(16px); animation: revealUp 0.55s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+@keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
+.d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.12s; } .d3 { animation-delay: 0.2s; }
+
+.scan-cell { opacity: 0; transform: translateY(8px); transition: opacity 0.35s ease, transform 0.35s ease; }
+.scan-cell.visible { opacity: 1; transform: translateY(0); }
+
+/* ── SAVE SYSTEM ── */
+.scan-cell { overflow: visible; }
+.save-btn {
+  position: absolute;
+  top: 7px; right: 7px;
+  width: 28px; height: 28px;
+  background: rgba(244,241,235,0.95);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.15s;
+}
+.save-btn svg { width: 13px; height: 13px; stroke: var(--mid); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.15s; }
+.save-btn:hover { background: var(--white); border-color: var(--ink); }
+.save-btn:hover svg { stroke: var(--ink); }
+.save-btn.saved svg { stroke: var(--red); fill: var(--red); }
+.save-whole-btn {
+  position: absolute;
+  top: 7px; left: 7px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 7px;
+  background: rgba(244,241,235,0.95);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  display: none;
+  cursor: pointer;
+  color: var(--mid);
+  z-index: 10;
+  white-space: nowrap;
+  transition: all 0.15s;
+  line-height: 1;
+}
+.save-whole-btn:hover { background: var(--white); border-color: var(--ink); color: var(--ink); }
+.scan-cell:hover .save-btn,
+.scan-cell:hover .save-whole-btn { display: flex; }
+.save-whole-btn { display: none; }
+.scan-cell:hover .save-whole-btn { display: block; }
+
+/* Folder dropdown */
+.folder-dd {
+  position: absolute;
+  top: 38px; right: 7px;
+  width: 210px;
+  background: var(--white);
+  border: 1px solid var(--ink);
+  z-index: 50;
+  display: none;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(15,15,15,0.12);
+}
+.folder-dd.open { display: block; }
+.whole-dd {
+  top: 38px; right: auto; left: 7px;
+}
+.dd-head {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--ink);
+}
+.dd-head-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(244,241,235,0.5);
+  display: block;
+}
+.dd-head-name {
+  font-family: 'Barlow', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--paper);
+  display: block;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dd-folder-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--rule);
+  transition: background 0.1s;
+}
+.dd-folder-row:last-of-type { border-bottom: none; }
+.dd-folder-row:hover { background: var(--paper); }
+.dd-folder-icon {
+  width: 14px; height: 11px;
+  border-radius: 1px 3px 3px 3px;
+  flex-shrink: 0;
+  position: relative;
+}
+.dd-folder-icon::before {
+  content: '';
+  position: absolute;
+  top: -3px; left: 0;
+  width: 6px; height: 3px;
+  border-radius: 1px 1px 0 0;
+  background: inherit;
+}
+.fi-red { background: var(--red); }
+.fi-blue { background: #185FA5; }
+.fi-green { background: #3B6D11; }
+.fi-amber { background: #BA7517; }
+.dd-folder-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  flex: 1;
+}
+.dd-folder-count {
+  font-family: 'Barlow Condensed', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--light);
+  line-height: 1;
+}
+.dd-check {
+  width: 13px; height: 13px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dd-check.on { background: var(--red); border-color: var(--red); }
+.dd-check.on::after {
+  content: '';
+  width: 7px; height: 4px;
+  border-left: 1.5px solid white;
+  border-bottom: 1.5px solid white;
+  transform: rotate(-45deg) translateY(-1px);
+  display: block;
+}
+.dd-new-section {
+  padding: 9px 12px;
+  border-top: 1px solid var(--rule);
+  background: var(--paper);
+}
+.dd-new-input {
+  width: 100%;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  padding: 6px 9px;
+  border: 1px solid var(--rule);
+  background: var(--white);
+  color: var(--ink);
+  outline: none;
+  border-radius: 2px;
+  transition: border-color 0.15s;
+}
+.dd-new-input:focus { border-color: var(--ink); }
+.dd-new-input::placeholder { color: var(--light); }
+.dd-new-row { display: flex; gap: 6px; margin-top: 7px; }
+.dd-create-btn {
+  flex: 1;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.15s;
+}
+.dd-create-btn:hover { background: var(--red); }
+.dd-cancel-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  background: transparent;
+  color: var(--mid);
+  border: 1px solid var(--rule);
+  cursor: pointer;
+  border-radius: 2px;
+}
+.dd-cancel-btn:hover { color: var(--ink); border-color: var(--ink); }
+
+/* Toast */
+.save-toast {
+  position: fixed;
+  bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 18px;
+  border-radius: 3px;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+  z-index: 600;
+  white-space: nowrap;
+}
+.save-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-inner" onclick="event.stopPropagation()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+    <div class="lightbox-placeholder" id="lightboxContent">
+      <!-- scan image goes here -->
+    </div>
+    <div class="lightbox-meta">
+      <span id="lightboxLabel"><strong>Front Cover</strong></span>
+      <span>Kind of Blue · Miles Davis · 1959</span>
+    </div>
+    <div class="lightbox-nav">
+      <button class="lb-nav-btn" onclick="lbNav(-1)">← Prev</button>
+      <button class="lb-nav-btn" onclick="lbNav(1)">Next →</button>
+    </div>
+  </div>
+</div>
+
+<div class="save-toast" id="saveToast"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo-cell">
+    <span class="nav-logo-mark">Pressings<sup>.xyz</sup></span>
+  </a>
+  <div class="nav-links-cell">
+    <ul class="nav-links">
+      <li><a href="index.html">Archive</a></li>
+      <li><a href="#">Formats</a></li>
+      <li><a href="#">Designers</a></li>
+      <li><a href="#">Labels</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </div>
+  <div class="nav-actions">
+    <a href="#" class="nav-btn">Log in</a>
+    <a href="#" class="nav-btn nav-btn-filled">Get Access</a>
+  </div>
+</nav>
+
+<!-- RECORD HEADER -->
+<header class="record-header">
+  <div class="rh-left">
+    <span class="rh-id">Pressing #001</span>
+    <div class="rh-format-block">
+      <span class="rh-format-tag active">Vinyl 12"</span>
+      <span class="rh-format-tag">Original Pressing</span>
+      <span class="rh-format-tag">Mono / Stereo</span>
+    </div>
+  </div>
+
+  <div class="rh-mid reveal d1">
+    <div class="rh-breadcrumb">
+      <a href="index.html">Archive</a>
+      <span class="sep">/</span>
+      <a href="#">Jazz</a>
+      <span class="sep">/</span>
+      <a href="#">Miles Davis</a>
+      <span class="sep">/</span>
+      <span class="current">Kind of Blue</span>
+    </div>
+    <h1 class="record-title">Kind of Blue</h1>
+    <p class="record-artist">Miles Davis</p>
+  </div>
+
+  <div class="rh-right reveal d2">
+    <div class="meta-row">
+      <span class="meta-key">Label</span>
+      <span class="meta-val"><a href="#">Columbia Records</a></span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-key">Cat. No.</span>
+      <span class="meta-val">CL 1355</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-key">Year</span>
+      <span class="meta-val">1959</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-key">Country</span>
+      <span class="meta-val">USA</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-key">Edition</span>
+      <span class="meta-val">Original Pressing</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-key">Condition</span>
+      <span class="meta-val">Near Mint</span>
+    </div>
+    <div class="meta-row" style="border-bottom:none; padding-bottom:0;">
+      <span class="meta-key">Discogs</span>
+      <span class="meta-val"><a href="#">View Entry ↗</a></span>
+    </div>
+  </div>
+</header>
+
+<!-- SCAN SECTION -->
+<section class="scan-section">
+  <div class="scan-section-header">
+    <div class="ssh-label"><span>Scans</span></div>
+    <div class="ssh-tabs">
+      <button class="scan-tab active" onclick="setTab(this)">All</button>
+      <button class="scan-tab" onclick="setTab(this)">Exterior</button>
+      <button class="scan-tab" onclick="setTab(this)">Interior</button>
+      <button class="scan-tab" onclick="setTab(this)">Object</button>
+    </div>
+  </div>
+
+  <div class="scan-grid-wrap">
+    <div class="scan-sidebar">
+      <span class="scan-count">10 scans · 2 locked</span>
+      <ul class="scan-type-list">
+        <li><a href="#" class="active">Front Cover <span class="stl-dot active-dot"></span></a></li>
+        <li><a href="#">Back Cover <span class="stl-dot scanned"></span></a></li>
+        <li><a href="#">Spine <span class="stl-dot scanned"></span></a></li>
+        <li><a href="#">Inner Sleeve <span class="stl-dot scanned"></span></a></li>
+        <li><a href="#">Label — Side A <span class="stl-dot scanned"></span></a></li>
+        <li><a href="#">Label — Side B <span class="stl-dot scanned"></span></a></li>
+        <li><a href="#">Record — Full <span class="stl-dot scanned"></span></a></li>
+        <li><a href="#">Detail — Spine Type <span class="stl-dot scanned"></span></a></li>
+        <li><a href="#">Detail — Print Finish <span class="stl-dot"></span></a></li>
+        <li><a href="#">Hype Sticker <span class="stl-dot"></span></a></li>
+      </ul>
+    </div>
+
+    <div class="scan-main">
+      <div class="scan-grid" id="scanGrid">
+
+        <!-- Front Cover -->
+        <div class="scan-cell" onclick="openLightbox('Front Cover', 0)" data-scan="Front Cover" data-idx="0">
+          <div class="scan-cell-inner sc-front">
+            <div class="sc-art">
+              <svg width="70%" viewBox="0 0 200 200">
+                <rect width="200" height="200" fill="none"/>
+                <circle cx="100" cy="100" r="85" stroke="rgba(15,15,15,0.12)" stroke-width="1" fill="none"/>
+                <circle cx="100" cy="100" r="55" stroke="rgba(15,15,15,0.08)" stroke-width="1" fill="rgba(15,15,15,0.04)"/>
+                <circle cx="100" cy="100" r="12" fill="rgba(15,15,15,0.1)"/>
+                <text x="100" y="168" text-anchor="middle" font-family="serif" font-size="10" fill="rgba(15,15,15,0.3)" letter-spacing="3">KIND OF BLUE</text>
+              </svg>
+            </div>
+          </div>
+          <div class="scan-cell-label"><span class="scl-name">Front Cover</span><span class="scl-dim">600 dpi · TIFF</span></div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-0')">+ Save pressing</button>
+          <button class="save-btn" id="sb-0" onclick="openScanDD(event,'scan-0')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+          <div class="folder-dd" id="scan-0"></div>
+          <div class="folder-dd whole-dd" id="whole-0"></div>
+        </div>
+
+        <!-- Back Cover -->
+        <div class="scan-cell" onclick="openLightbox('Back Cover', 1)" data-idx="1">
+          <div class="scan-cell-inner sc-back"><div class="sc-art"><svg width="70%" viewBox="0 0 200 200"><rect x="20" y="20" width="160" height="8" fill="rgba(15,15,15,0.1)"/><rect x="20" y="40" width="120" height="4" fill="rgba(15,15,15,0.06)"/><rect x="20" y="52" width="140" height="4" fill="rgba(15,15,15,0.06)"/><rect x="20" y="64" width="100" height="4" fill="rgba(15,15,15,0.06)"/><rect x="20" y="90" width="160" height="60" fill="rgba(15,15,15,0.06)"/><rect x="20" y="165" width="80" height="6" fill="rgba(15,15,15,0.08)"/><rect x="140" y="165" width="40" height="6" fill="rgba(15,15,15,0.08)"/></svg></div></div>
+          <div class="scan-cell-label"><span class="scl-name">Back Cover</span><span class="scl-dim">600 dpi · TIFF</span></div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-1')">+ Save pressing</button>
+          <button class="save-btn" id="sb-1" onclick="openScanDD(event,'scan-1')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+          <div class="folder-dd" id="scan-1"></div>
+          <div class="folder-dd whole-dd" id="whole-1"></div>
+        </div>
+
+        <!-- Spine -->
+        <div class="scan-cell" onclick="openLightbox('Spine', 2)" data-idx="2">
+          <div class="scan-cell-inner sc-spine"><div class="sc-art"><svg width="70%" viewBox="0 0 200 200"><rect x="80" y="10" width="40" height="180" fill="rgba(15,15,15,0.06)" stroke="rgba(15,15,15,0.1)" stroke-width="1"/><text x="100" y="140" text-anchor="middle" font-family="serif" font-size="8" fill="rgba(15,15,15,0.3)" transform="rotate(-90,100,100)" letter-spacing="2">KIND OF BLUE · MILES DAVIS</text></svg></div></div>
+          <div class="scan-cell-label"><span class="scl-name">Spine</span><span class="scl-dim">600 dpi · TIFF</span></div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-2')">+ Save pressing</button>
+          <button class="save-btn" id="sb-2" onclick="openScanDD(event,'scan-2')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+          <div class="folder-dd" id="scan-2"></div>
+          <div class="folder-dd whole-dd" id="whole-2"></div>
+        </div>
+
+        <!-- Inner Sleeve -->
+        <div class="scan-cell" onclick="openLightbox('Inner Sleeve', 3)" data-idx="3">
+          <div class="scan-cell-inner sc-inner"><div class="sc-art"><svg width="70%" viewBox="0 0 200 200"><rect x="10" y="10" width="180" height="180" fill="rgba(15,15,15,0.04)" stroke="rgba(15,15,15,0.1)" stroke-width="1"/><rect x="20" y="20" width="160" height="4" fill="rgba(15,15,15,0.08)"/><rect x="20" y="32" width="120" height="3" fill="rgba(15,15,15,0.05)"/><rect x="20" y="42" width="140" height="3" fill="rgba(15,15,15,0.05)"/><rect x="20" y="60" width="160" height="3" fill="rgba(15,15,15,0.05)"/><rect x="20" y="70" width="100" height="3" fill="rgba(15,15,15,0.05)"/><rect x="20" y="90" width="160" height="3" fill="rgba(15,15,15,0.05)"/><rect x="20" y="100" width="130" height="3" fill="rgba(15,15,15,0.05)"/><rect x="20" y="120" width="160" height="3" fill="rgba(15,15,15,0.05)"/></svg></div></div>
+          <div class="scan-cell-label"><span class="scl-name">Inner Sleeve</span><span class="scl-dim">600 dpi · TIFF</span></div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-3')">+ Save pressing</button>
+          <button class="save-btn" id="sb-3" onclick="openScanDD(event,'scan-3')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+          <div class="folder-dd" id="scan-3"></div>
+          <div class="folder-dd whole-dd" id="whole-3"></div>
+        </div>
+
+        <!-- Label A -->
+        <div class="scan-cell" onclick="openLightbox('Label — Side A', 4)" data-idx="4">
+          <div class="scan-cell-inner sc-label-a"><div class="sc-art"><svg width="70%" viewBox="0 0 200 200"><circle cx="100" cy="100" r="90" fill="rgba(180,40,40,0.08)" stroke="rgba(15,15,15,0.1)" stroke-width="1"/><circle cx="100" cy="100" r="60" stroke="rgba(15,15,15,0.06)" stroke-width="1" fill="none"/><circle cx="100" cy="100" r="8" fill="rgba(15,15,15,0.15)"/><text x="100" y="85" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(15,15,15,0.35)" letter-spacing="2">COLUMBIA</text><text x="100" y="118" text-anchor="middle" font-family="serif" font-size="7" fill="rgba(15,15,15,0.25)" letter-spacing="1">SIDE A</text></svg></div></div>
+          <div class="scan-cell-label"><span class="scl-name">Label — Side A</span><span class="scl-dim">600 dpi · TIFF</span></div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-4')">+ Save pressing</button>
+          <button class="save-btn" id="sb-4" onclick="openScanDD(event,'scan-4')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+          <div class="folder-dd" id="scan-4"></div>
+          <div class="folder-dd whole-dd" id="whole-4"></div>
+        </div>
+
+        <!-- Label B -->
+        <div class="scan-cell" onclick="openLightbox('Label — Side B', 5)" data-idx="5">
+          <div class="scan-cell-inner sc-label-b"><div class="sc-art"><svg width="70%" viewBox="0 0 200 200"><circle cx="100" cy="100" r="90" fill="rgba(180,40,40,0.08)" stroke="rgba(15,15,15,0.1)" stroke-width="1"/><circle cx="100" cy="100" r="60" stroke="rgba(15,15,15,0.06)" stroke-width="1" fill="none"/><circle cx="100" cy="100" r="8" fill="rgba(15,15,15,0.15)"/><text x="100" y="85" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(15,15,15,0.35)" letter-spacing="2">COLUMBIA</text><text x="100" y="118" text-anchor="middle" font-family="serif" font-size="7" fill="rgba(15,15,15,0.25)" letter-spacing="1">SIDE B</text></svg></div></div>
+          <div class="scan-cell-label"><span class="scl-name">Label — Side B</span><span class="scl-dim">600 dpi · TIFF</span></div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-5')">+ Save pressing</button>
+          <button class="save-btn" id="sb-5" onclick="openScanDD(event,'scan-5')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+          <div class="folder-dd" id="scan-5"></div>
+          <div class="folder-dd whole-dd" id="whole-5"></div>
+        </div>
+
+        <!-- Record Full -->
+        <div class="scan-cell" onclick="openLightbox('Record — Full', 6)" data-idx="6">
+          <div class="scan-cell-inner" style="background:#2a2a2a;"><div class="sc-art"><svg width="75%" viewBox="0 0 200 200"><circle cx="100" cy="100" r="92" fill="#1a1a1a"/><circle cx="100" cy="100" r="88" stroke="rgba(255,255,255,0.06)" stroke-width="0.5" fill="none"/><circle cx="100" cy="100" r="75" stroke="rgba(255,255,255,0.04)" stroke-width="0.5" fill="none"/><circle cx="100" cy="100" r="60" stroke="rgba(255,255,255,0.04)" stroke-width="0.5" fill="none"/><circle cx="100" cy="100" r="30" fill="rgba(180,40,40,0.15)" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/><circle cx="100" cy="100" r="6" fill="rgba(255,255,255,0.2)"/></svg></div></div>
+          <div class="scan-cell-label"><span class="scl-name">Record — Full</span><span class="scl-dim">600 dpi · TIFF</span></div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-6')">+ Save pressing</button>
+          <button class="save-btn" id="sb-6" onclick="openScanDD(event,'scan-6')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+          <div class="folder-dd" id="scan-6"></div>
+          <div class="folder-dd whole-dd" id="whole-6"></div>
+        </div>
+
+        <!-- Detail -->
+        <div class="scan-cell" onclick="openLightbox('Detail — Spine Type', 7)" data-idx="7">
+          <div class="scan-cell-inner sc-detail"><div class="sc-art"><svg width="70%" viewBox="0 0 200 200"><rect x="60" y="30" width="80" height="140" fill="rgba(15,15,15,0.06)" stroke="rgba(15,15,15,0.12)" stroke-width="1"/><rect x="70" y="50" width="60" height="3" fill="rgba(15,15,15,0.15)"/><rect x="70" y="60" width="40" height="2" fill="rgba(15,15,15,0.08)"/><rect x="70" y="70" width="50" height="2" fill="rgba(15,15,15,0.08)"/></svg></div></div>
+          <div class="scan-cell-label"><span class="scl-name">Detail — Spine</span><span class="scl-dim">600 dpi · TIFF</span></div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-7')">+ Save pressing</button>
+          <button class="save-btn" id="sb-7" onclick="openScanDD(event,'scan-7')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+          <div class="folder-dd" id="scan-7"></div>
+          <div class="folder-dd whole-dd" id="whole-7"></div>
+        </div>
+        <!-- Locked: Detail print finish -->
+        <div class="scan-cell locked">
+          <div class="scan-cell-inner sc-front">
+            <div class="sc-art"><svg width="60%" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="rgba(15,15,15,0.1)" stroke-width="1" fill="none"/></svg></div>
+          </div>
+          <div class="scan-cell-label">
+            <span class="scl-name">Detail — Print Finish</span>
+            <span class="scl-dim">Paid access</span>
+          </div>
+          <div class="lock-badge">
+            <div class="lock-icon">⌒</div>
+            <span>Full Access</span>
+          </div>
+        </div>
+
+        <!-- Locked: Hype sticker -->
+        <div class="scan-cell locked">
+          <div class="scan-cell-inner sc-back">
+            <div class="sc-art"><svg width="60%" viewBox="0 0 100 100"><rect x="15" y="15" width="70" height="70" stroke="rgba(15,15,15,0.1)" stroke-width="1" fill="none"/></svg></div>
+          </div>
+          <div class="scan-cell-label">
+            <span class="scl-name">Hype Sticker</span>
+            <span class="scl-dim">Paid access</span>
+          </div>
+          <div class="lock-badge">
+            <div class="lock-icon">⌒</div>
+            <span>Full Access</span>
+          </div>
+        </div>
+
+      </div><!-- /scan-grid -->
+    </div><!-- /scan-main -->
+  </div>
+</section>
+
+<!-- INFO SECTION -->
+<section class="info-section">
+  <div class="info-left">
+    <span class="info-vert">Pressing Details</span>
+  </div>
+
+  <div class="info-mid">
+
+    <!-- Design Credits -->
+    <div class="info-block">
+      <div class="info-block-title">
+        Design Credits
+        <span>01</span>
+      </div>
+      <table class="credits-table">
+        <tr>
+          <td>Art Direction</td>
+          <td>
+            <a href="#">Neil Fujita</a>
+            <span class="credit-note">Columbia Records in-house art director, 1955–1971</span>
+          </td>
+        </tr>
+        <tr>
+          <td>Photography</td>
+          <td>
+            <a href="#">Don Hunstein</a>
+            <span class="credit-note">Staff photographer, Columbia Records</span>
+          </td>
+        </tr>
+        <tr>
+          <td>Typography</td>
+          <td>
+            Columbia house style — set in a period serif
+            <span class="credit-note">Typeface unconfirmed</span>
+          </td>
+        </tr>
+        <tr>
+          <td>Liner Notes</td>
+          <td>
+            Bill Evans
+            <span class="credit-note">Written by pianist Bill Evans, printed on inner sleeve</span>
+          </td>
+        </tr>
+        <tr>
+          <td>Label Design</td>
+          <td>
+            Columbia Records Art Dept.
+            <span class="credit-note">Six-eye label variant, original pressing only</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Print Production -->
+    <div class="info-block">
+      <div class="info-block-title">
+        Print & Production
+        <span>02</span>
+      </div>
+      <div class="production-grid">
+        <div class="prod-cell">
+          <span class="prod-key">Packaging Type</span>
+          <span class="prod-val">Single Sleeve</span>
+        </div>
+        <div class="prod-cell">
+          <span class="prod-key">Print Finish</span>
+          <span class="prod-val">Matte Uncoated</span>
+        </div>
+        <div class="prod-cell">
+          <span class="prod-key">Spine Type</span>
+          <span class="prod-val">Printed Spine</span>
+        </div>
+        <div class="prod-cell">
+          <span class="prod-key">Special Features</span>
+          <span class="prod-val">None</span>
+        </div>
+        <div class="prod-cell">
+          <span class="prod-key">Insert</span>
+          <span class="prod-val">Lyric / Essay Sheet</span>
+        </div>
+        <div class="prod-cell">
+          <span class="prod-key">Label Variant</span>
+          <span class="prod-val">Six-Eye · Mono</span>
+        </div>
+        <div class="prod-cell">
+          <span class="prod-key">Dead Wax</span>
+          <span class="prod-val">XLP 32849 / XLP 32850</span>
+        </div>
+        <div class="prod-cell">
+          <span class="prod-key">Colour Vinyl</span>
+          <span class="prod-val">Black</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Aesthetic Tags -->
+    <div class="info-block">
+      <div class="info-block-title">
+        Aesthetic Tags
+        <span>03</span>
+      </div>
+      <div class="tag-list">
+        <span class="tag">Minimalist</span>
+        <span class="tag">Photographic</span>
+        <span class="tag">Typographic</span>
+        <span class="tag">Monochrome</span>
+        <span class="tag">Serif Type</span>
+        <span class="tag">Institutional</span>
+        <span class="tag">Period Correct</span>
+        <span class="tag">Studio Era</span>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="info-block">
+      <div class="info-block-title">
+        Curator Notes
+        <span>04</span>
+      </div>
+      <p class="record-notes">
+        The "six-eye" label variant is one of the most recognisable in jazz collecting — the six small "eye" logos arranged around the label edge are a reliable indicator of an early pressing. Neil Fujita's cover for Kind of Blue is a masterclass in restraint: the blue wash, the single portrait photograph, the clean serif type. Nothing competes. The design serves the music without comment.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Label Sidebar -->
+  <div class="info-right">
+    <div class="label-card">
+      <div class="label-card-header">
+        <span>Record Label</span>
+        <span class="label-name">Columbia</span>
+      </div>
+      <div class="label-card-body">
+        <div class="label-stat-row">
+          <span class="label-stat-key">In Archive</span>
+          <span class="label-stat-val">24</span>
+        </div>
+        <div class="label-stat-row">
+          <span class="label-stat-key">Founded</span>
+          <span class="label-stat-val">1888</span>
+        </div>
+        <div class="label-stat-row">
+          <span class="label-stat-key">Country</span>
+          <span class="label-stat-val">USA</span>
+        </div>
+        <div class="label-stat-row" style="border-bottom:none;">
+          <span class="label-stat-key">Parent</span>
+          <span class="label-stat-val" style="font-size:13px;">Sony Music</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="sidebar-section-title">More from Columbia</p>
+      <ul class="related-list">
+        <li class="related-item">
+          <div class="rel-thumb" style="background:#e4dde8;">
+            <svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="rgba(15,15,15,0.15)" stroke-width="1" fill="none"/><circle cx="12" cy="12" r="3" fill="rgba(15,15,15,0.1)"/></svg>
+          </div>
+          <div class="rel-info">
+            <span class="rel-title">Bitches Brew</span>
+            <span class="rel-artist">Miles Davis</span>
+          </div>
+          <span class="rel-year">1970</span>
+        </li>
+        <li class="related-item">
+          <div class="rel-thumb" style="background:#e8e0dc;">
+            <svg width="24" height="24" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" stroke="rgba(15,15,15,0.15)" stroke-width="1" fill="rgba(15,15,15,0.05)"/></svg>
+          </div>
+          <div class="rel-info">
+            <span class="rel-title">In a Silent Way</span>
+            <span class="rel-artist">Miles Davis</span>
+          </div>
+          <span class="rel-year">1969</span>
+        </li>
+        <li class="related-item">
+          <div class="rel-thumb" style="background:#dce8e4;">
+            <svg width="24" height="24" viewBox="0 0 24 24"><polygon points="12,3 21,20 3,20" stroke="rgba(15,15,15,0.15)" stroke-width="1" fill="none"/></svg>
+          </div>
+          <div class="rel-info">
+            <span class="rel-title">Sketches of Spain</span>
+            <span class="rel-artist">Miles Davis</span>
+          </div>
+          <span class="rel-year">1960</span>
+        </li>
+        <li class="related-item">
+          <div class="rel-thumb" style="background:#e8e4dc;">
+            <svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="rgba(15,15,15,0.15)" stroke-width="1" fill="none" stroke-dasharray="2 2"/></svg>
+          </div>
+          <div class="rel-info">
+            <span class="rel-title">Mingus Ah Um</span>
+            <span class="rel-artist">Charles Mingus</span>
+          </div>
+          <span class="rel-year">1959</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PREV / NEXT -->
+<nav class="record-nav">
+  <a href="#" class="record-nav-cell prev">
+    <span class="rnc-arrow">←</span>
+    <div>
+      <span class="rnc-dir">Previous</span>
+      <span class="rnc-title">Mingus Ah Um</span>
+      <span class="rnc-artist">Charles Mingus · 1959</span>
+    </div>
+  </a>
+  <div class="record-nav-divider"></div>
+  <a href="#" class="record-nav-cell next">
+    <div>
+      <span class="rnc-dir">Next</span>
+      <span class="rnc-title">Remain in Light</span>
+      <span class="rnc-artist">Talking Heads · 1980</span>
+    </div>
+    <span class="rnc-arrow">→</span>
+  </a>
+</nav>
+
+<footer>
+  <div class="footer-logo-cell">Pressings<sup>.xyz</sup></div>
+  <div class="footer-mid">© 2025 · Built by a collector, for designers</div>
+  <div class="footer-right">Vol. 01 — Est. 2025</div>
+</footer>
+
+<script>
+  // ── SCAN GRID ENTRANCE ──
+  const cells = document.querySelectorAll('.scan-cell');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 50);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  cells.forEach(c => obs.observe(c));
+
+  // ── TAB SWITCHING ──
+  function setTab(el) {
+    document.querySelectorAll('.scan-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // ── SIDEBAR FILTERS ──
+  document.querySelectorAll('.scan-type-list a').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelectorAll('.scan-type-list a').forEach(x => x.classList.remove('active'));
+      a.classList.add('active');
+    });
+  });
+
+  // ── LIGHTBOX ──
+  let currentScan = 0;
+
+  function openLightbox(label, idx) {
+    currentScan = idx;
+    document.getElementById('lightboxLabel').innerHTML = '<strong>' + label + '</strong>';
+    const content = document.getElementById('lightboxContent');
+    const unlocked = document.querySelectorAll('.scan-cell:not(.locked)');
+    if (unlocked[idx]) {
+      const clone = unlocked[idx].querySelector('.scan-cell-inner').cloneNode(true);
+      clone.style.cssText = 'width:100%;height:100%;display:flex;align-items:center;justify-content:center;';
+      content.innerHTML = '';
+      content.appendChild(clone);
+    }
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function lbNav(dir) {
+    const unlocked = document.querySelectorAll('.scan-cell:not(.locked)');
+    currentScan = (currentScan + dir + unlocked.length) % unlocked.length;
+    const label = unlocked[currentScan].querySelector('.scl-name')?.textContent || '';
+    openLightbox(label, currentScan);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') lbNav(1);
+    if (e.key === 'ArrowLeft') lbNav(-1);
+  });
+
+  // ── FOLDER SAVE SYSTEM ──
+  const PRESSING_NAME = 'Kind of Blue — Miles Davis';
+  const FOLDER_COLORS = ['fi-red','fi-blue','fi-green','fi-amber'];
+
+  let folders = [
+    { id: 1, name: 'Typography Ref',  color: 'fi-red',   items: [] },
+    { id: 2, name: 'Jazz Sleeves',    color: 'fi-blue',  items: [] },
+    { id: 3, name: 'Minimal Covers',  color: 'fi-green', items: [] },
+  ];
+  let nextFolderId = 4;
+  let activeDDId = null;
+
+  function toast(msg) {
+    const t = document.getElementById('saveToast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  function folderRowsHTML(key) {
+    return folders.map(f => {
+      const saved = f.items.includes(key);
+      return `<div class="dd-folder-row" onclick="toggleItem('${f.id}','${key}')">
+        <div class="dd-folder-icon ${f.color}"></div>
+        <span class="dd-folder-name">${f.name}</span>
+        <span class="dd-folder-count">${f.items.length}</span>
+        <div class="dd-check ${saved ? 'on' : ''}"></div>
+      </div>`;
+    }).join('');
+  }
+
+  function buildDDHTML(label, subLabel, key, inputId) {
+    return `<div class="dd-head">
+        <span class="dd-head-label">${label}</span>
+        <span class="dd-head-name">${subLabel}</span>
+      </div>
+      <div id="fl-${inputId}">${folderRowsHTML(key)}</div>
+      <div class="dd-new-section">
+        <input class="dd-new-input" id="ni-${inputId}" placeholder="New folder name…" onkeydown="if(event.key==='Enter')createFolder('${key}','${inputId}')"/>
+        <div class="dd-new-row">
+          <button class="dd-create-btn" onclick="createFolder('${key}','${inputId}')">Create + save</button>
+          <button class="dd-cancel-btn" onclick="closeAllDD()">Cancel</button>
+        </div>
+      </div>`;
+  }
+
+  function openScanDD(e, ddId) {
+    e.stopPropagation();
+    const cell = e.target.closest('.scan-cell');
+    const scanName = cell.querySelector('.scl-name').textContent;
+    const key = 'scan:' + scanName;
+    closeAllDD();
+    const dd = document.getElementById(ddId);
+    dd.innerHTML = buildDDHTML('Save scan', scanName, key, ddId);
+    dd.classList.add('open');
+    activeDDId = ddId;
+  }
+
+  function openWholeDD(e, ddId) {
+    e.stopPropagation();
+    const key = 'pressing:' + PRESSING_NAME;
+    closeAllDD();
+    const dd = document.getElementById(ddId);
+    dd.innerHTML = buildDDHTML('Save pressing', PRESSING_NAME, key, ddId);
+    dd.classList.add('open');
+    activeDDId = ddId;
+  }
+
+  function closeAllDD() {
+    document.querySelectorAll('.folder-dd').forEach(d => d.classList.remove('open'));
+    activeDDId = null;
+  }
+
+  function toggleItem(folderId, key) {
+    const f = folders.find(x => x.id == folderId);
+    if (!f) return;
+    const i = f.items.indexOf(key);
+    if (i === -1) {
+      f.items.push(key);
+      toast('Saved to ' + f.name);
+      // Mark save btn red if it's a scan save
+      if (key.startsWith('scan:')) {
+        const scanName = key.replace('scan:', '');
+        document.querySelectorAll('.scan-cell').forEach(cell => {
+          if (cell.querySelector('.scl-name')?.textContent === scanName) {
+            const btn = cell.querySelector('.save-btn');
+            if (btn) btn.classList.add('saved');
+          }
+        });
+      }
+    } else {
+      f.items.splice(i, 1);
+      toast('Removed from ' + f.name);
+      // Un-mark if no other folder holds this scan
+      if (key.startsWith('scan:')) {
+        const scanName = key.replace('scan:', '');
+        const stillSaved = folders.some(folder => folder.items.includes(key));
+        if (!stillSaved) {
+          document.querySelectorAll('.scan-cell').forEach(cell => {
+            if (cell.querySelector('.scl-name')?.textContent === scanName) {
+              const btn = cell.querySelector('.save-btn');
+              if (btn) btn.classList.remove('saved');
+            }
+          });
+        }
+      }
+    }
+    // Re-render the open dropdown's folder list
+    if (activeDDId) {
+      const fl = document.getElementById('fl-' + activeDDId);
+      if (fl) fl.innerHTML = folderRowsHTML(key);
+    }
+  }
+
+  function createFolder(key, inputId) {
+    const input = document.getElementById('ni-' + inputId);
+    const name = input ? input.value.trim() : '';
+    if (!name) return;
+    const color = FOLDER_COLORS[nextFolderId % FOLDER_COLORS.length];
+    const f = { id: nextFolderId++, name, color, items: [key] };
+    folders.push(f);
+    toast('Folder "' + name + '" created');
+    if (key.startsWith('scan:')) {
+      const scanName = key.replace('scan:', '');
+      document.querySelectorAll('.scan-cell').forEach(cell => {
+        if (cell.querySelector('.scl-name')?.textContent === scanName) {
+          const btn = cell.querySelector('.save-btn');
+          if (btn) btn.classList.add('saved');
+        }
+      });
+    }
+    if (activeDDId) {
+      const dd = document.getElementById(activeDDId);
+      if (dd) {
+        const fl = document.getElementById('fl-' + activeDDId);
+        if (fl) fl.innerHTML = folderRowsHTML(key);
+        if (input) input.value = '';
+      }
+    }
+  }
+
+  // Close dropdowns on outside click, but NOT if that click also triggers lightbox
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.folder-dd') &&
+        !e.target.closest('.save-btn') &&
+        !e.target.closest('.save-whole-btn')) {
+      closeAllDD();
+    }
+  });
+</script>
+</body>
+</html>
