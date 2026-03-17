@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Folders — Pressings.xyz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; scroll-behavior: smooth; }
+
+:root {
+  --paper:  #f4f1eb;
+  --ink:    #0f0f0f;
+  --mid:    #6b6b6b;
+  --light:  #c8c4bb;
+  --rule:   #d4d0c8;
+  --red:    #d42b2b;
+  --white:  #ffffff;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.022;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: var(--paper); border-bottom: 1px solid var(--ink);
+  display: grid; grid-template-columns: 200px 1fr auto;
+  align-items: stretch; height: 48px;
+}
+.nav-logo-cell { border-right: 1px solid var(--ink); display: flex; align-items: center; padding: 0 20px; text-decoration: none; }
+.nav-logo-mark { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink); }
+.nav-logo-mark sup { font-size: 9px; color: var(--red); vertical-align: super; margin-left: 1px; }
+.nav-links-cell { display: flex; align-items: center; padding: 0 24px; }
+.nav-links { display: flex; list-style: none; gap: 32px; }
+.nav-links a { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.15s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-links a.active { color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 1px; }
+.nav-actions { display: flex; align-items: stretch; border-left: 1px solid var(--ink); }
+.nav-btn { display: flex; align-items: center; padding: 0 20px; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; color: var(--mid); border-right: 1px solid var(--rule); transition: all 0.15s; white-space: nowrap; }
+.nav-btn:hover { color: var(--ink); background: var(--rule); }
+.nav-btn-filled { background: var(--ink); color: var(--paper); border-right: none; }
+.nav-btn-filled:hover { background: var(--red); color: var(--white); }
+
+/* ── PAGE HEADER ── */
+.page-header {
+  padding-top: 48px;
+  border-bottom: 1px solid var(--ink);
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+}
+.ph-left { border-right: 1px solid var(--rule); padding: 32px 20px; display: flex; flex-direction: column; justify-content: space-between; }
+.ph-vol { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--red); letter-spacing: 0.14em; text-transform: uppercase; }
+.ph-vert { writing-mode: vertical-lr; transform: rotate(180deg); font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light); margin-top: 24px; }
+.ph-mid { padding: 32px 48px; }
+.ph-breadcrumb { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+.ph-breadcrumb a, .ph-breadcrumb span { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); text-decoration: none; transition: color 0.15s; }
+.ph-breadcrumb a:hover { color: var(--mid); }
+.ph-breadcrumb .sep { color: var(--red); }
+.ph-breadcrumb .current { color: var(--ink); }
+.page-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: clamp(56px, 7vw, 108px); line-height: 0.88; text-transform: uppercase; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 32px; }
+.page-title .red { color: var(--red); display: block; }
+.page-title .outline { -webkit-text-stroke: 1.5px var(--ink); color: transparent; display: block; }
+.ph-desc { font-size: 13px; line-height: 1.75; color: var(--mid); font-weight: 300; max-width: 480px; padding-top: 24px; border-top: 1px solid var(--rule); }
+.ph-right { border-left: 1px solid var(--rule); padding: 32px 24px; display: flex; flex-direction: column; gap: 24px; min-width: 160px; justify-content: center; }
+.ph-stat-n { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 48px; line-height: 1; color: var(--ink); display: block; }
+.ph-stat-l { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--light); display: block; margin-top: 2px; }
+
+/* ── TOOLBAR ── */
+.folders-toolbar {
+  border-bottom: 1px solid var(--ink);
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  height: 48px;
+}
+.ft-left { border-right: 1px solid var(--rule); display: flex; align-items: center; padding: 0 20px; }
+.ft-left span { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
+.ft-mid { display: flex; align-items: center; padding: 0 24px; gap: 8px; }
+.sort-btn { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 12px; background: transparent; color: var(--mid); border: 1px solid var(--rule); cursor: pointer; transition: all 0.15s; border-radius: 2px; }
+.sort-btn:hover { color: var(--ink); border-color: var(--ink); }
+.sort-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.ft-right { display: flex; align-items: center; padding: 0 24px; border-left: 1px solid var(--rule); }
+.new-folder-btn { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 8px 16px; background: var(--ink); color: var(--paper); border: none; cursor: pointer; transition: background 0.15s; white-space: nowrap; }
+.new-folder-btn:hover { background: var(--red); }
+
+/* ── FOLDERS GRID ── */
+.folders-section { padding: 40px; border-bottom: 1px solid var(--ink); }
+.folders-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+
+/* ── FOLDER CARD ── */
+.folder-card {
+  background: var(--white);
+  position: relative;
+  cursor: pointer;
+  transition: background 0.15s;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease, background 0.15s;
+}
+.folder-card.visible { opacity: 1; transform: translateY(0); }
+.folder-card:hover { background: var(--paper); }
+.folder-card:hover .fc-arrow { opacity: 1; transform: translateX(0); }
+.folder-card:hover .fc-preview-item { transform: scale(1.03); }
+
+/* Preview grid inside card — 4 tiny thumbnails */
+.fc-preview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+.fc-preview-item {
+  background: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+}
+.fc-preview-item.empty { background: var(--paper); }
+.fpi-1 { background: #e8e4dc; }
+.fpi-2 { background: #dde4e8; }
+.fpi-3 { background: #e4dde8; }
+.fpi-4 { background: #e8e0dc; }
+.fpi-5 { background: #dce8e4; }
+.fpi-6 { background: #e8dce4; }
+
+/* Color accent bar at top */
+.fc-accent {
+  height: 3px;
+  width: 100%;
+}
+.accent-red { background: var(--red); }
+.accent-blue { background: #185FA5; }
+.accent-green { background: #3B6D11; }
+.accent-amber { background: #BA7517; }
+.accent-ink { background: var(--ink); }
+
+.fc-body { padding: 16px 18px 18px; border-top: 1px solid var(--rule); }
+.fc-name {
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fc-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.fc-count { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); }
+.fc-arrow { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--red); opacity: 0; transform: translateX(-4px); transition: all 0.2s; }
+
+/* Folder actions on hover */
+.fc-actions {
+  position: absolute;
+  top: 10px; right: 10px;
+  display: none;
+  gap: 4px;
+  z-index: 5;
+}
+.folder-card:hover .fc-actions { display: flex; }
+.fc-action-btn {
+  width: 26px; height: 26px;
+  background: rgba(244,241,235,0.95);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--mid);
+  transition: all 0.15s;
+}
+.fc-action-btn:hover { background: var(--white); border-color: var(--ink); color: var(--ink); }
+.fc-action-btn.del:hover { border-color: var(--red); color: var(--red); }
+
+/* New folder card */
+.folder-card-new {
+  background: transparent;
+  border: 1px dashed var(--rule);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.15s;
+  min-height: 200px;
+}
+.folder-card-new:hover { border-color: var(--ink); background: rgba(15,15,15,0.02); }
+.fc-new-icon { font-family: 'IBM Plex Mono', monospace; font-size: 24px; color: var(--light); transition: color 0.15s; line-height: 1; }
+.folder-card-new:hover .fc-new-icon { color: var(--ink); }
+.fc-new-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--light); transition: color 0.15s; }
+.folder-card-new:hover .fc-new-label { color: var(--ink); }
+
+/* ── FOLDER DETAIL VIEW ── */
+.folder-detail { display: none; border-bottom: 1px solid var(--ink); }
+.folder-detail.open { display: block; }
+
+.fd-header {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  border-bottom: 1px solid var(--rule);
+  background: var(--ink);
+}
+.fd-left { border-right: 1px solid rgba(255,255,255,0.1); padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+.fd-back { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(244,241,235,0.4); cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.15s; background: none; border: none; padding: 0; }
+.fd-back:hover { color: var(--paper); }
+.fd-accent { height: 2px; width: 32px; margin-top: 8px; }
+.fd-mid { padding: 20px 32px; }
+.fd-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 36px; text-transform: uppercase; color: var(--paper); line-height: 1; }
+.fd-subtitle { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(244,241,235,0.4); margin-top: 4px; }
+.fd-right { border-left: 1px solid rgba(255,255,255,0.1); padding: 20px 24px; display: flex; align-items: center; gap: 8px; }
+.fd-action { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 8px 14px; background: transparent; color: rgba(244,241,235,0.5); border: 1px solid rgba(244,241,235,0.15); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.fd-action:hover { color: var(--paper); border-color: rgba(244,241,235,0.4); }
+.fd-action.export { background: var(--red); color: var(--white); border-color: var(--red); }
+.fd-action.export:hover { background: #b52222; }
+
+/* Items grid inside folder */
+.fd-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border-top: 1px solid var(--rule);
+}
+
+.fd-item {
+  background: var(--white);
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.fd-item:hover { background: var(--paper); }
+.fd-item:hover .fd-item-overlay { opacity: 1; }
+.fd-item-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.fd-item-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 5px 8px; background: rgba(244,241,235,0.92); border-top: 1px solid var(--rule); }
+.fd-item-label span { font-family: 'IBM Plex Mono', monospace; font-size: 7px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fd-item-label small { font-family: 'IBM Plex Mono', monospace; font-size: 6px; color: var(--light); display: block; margin-top: 1px; }
+.fd-item-overlay { position: absolute; inset: 0; background: rgba(15,15,15,0.75); opacity: 0; transition: opacity 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.fd-overlay-btn { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 10px; border: 1px solid rgba(244,241,235,0.3); color: var(--paper); background: transparent; cursor: pointer; transition: all 0.15s; }
+.fd-overlay-btn:hover { background: var(--paper); color: var(--ink); }
+.fd-overlay-btn.remove { border-color: rgba(212,43,43,0.5); color: rgba(212,43,43,0.8); }
+.fd-overlay-btn.remove:hover { background: var(--red); color: var(--white); border-color: var(--red); }
+
+.fd-empty { padding: 80px 40px; text-align: center; }
+.fd-empty p { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--light); }
+.fd-empty a { color: var(--red); text-decoration: none; }
+
+/* ── MODAL ── */
+.modal-overlay { position: fixed; inset: 0; background: rgba(15,15,15,0.7); z-index: 400; display: none; align-items: center; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--white); border: 1px solid var(--ink); width: 400px; }
+.modal-header { padding: 16px 20px; border-bottom: 1px solid var(--rule); display: flex; align-items: center; justify-content: space-between; background: var(--ink); }
+.modal-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 18px; text-transform: uppercase; color: var(--paper); }
+.modal-close { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: rgba(244,241,235,0.4); cursor: pointer; background: none; border: none; padding: 4px; transition: color 0.15s; }
+.modal-close:hover { color: var(--paper); }
+.modal-body { padding: 24px 20px; }
+.modal-label { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--light); display: block; margin-bottom: 8px; }
+.modal-input { width: 100%; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.06em; padding: 10px 12px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); outline: none; transition: border-color 0.15s; }
+.modal-input:focus { border-color: var(--ink); }
+.modal-color-row { display: flex; gap: 8px; margin-top: 16px; }
+.color-swatch { width: 28px; height: 28px; border: 2px solid transparent; cursor: pointer; transition: all 0.15s; border-radius: 2px; }
+.color-swatch.selected { border-color: var(--ink); transform: scale(1.1); }
+.modal-footer { padding: 16px 20px; border-top: 1px solid var(--rule); display: flex; gap: 8px; justify-content: flex-end; }
+.modal-btn { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 9px 18px; cursor: pointer; transition: all 0.15s; border: 1px solid var(--rule); background: transparent; color: var(--mid); }
+.modal-btn:hover { border-color: var(--ink); color: var(--ink); }
+.modal-btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.modal-btn.primary:hover { background: var(--red); border-color: var(--red); }
+.modal-btn.danger { border-color: rgba(212,43,43,0.3); color: var(--red); }
+.modal-btn.danger:hover { background: var(--red); color: var(--white); border-color: var(--red); }
+
+/* Move item modal */
+.move-folder-list { list-style: none; display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
+.move-folder-opt { display: flex; align-items: center; gap: 10px; padding: 10px 12px; cursor: pointer; border: 1px solid var(--rule); transition: all 0.15s; border-radius: 2px; }
+.move-folder-opt:hover { border-color: var(--ink); background: var(--paper); }
+.move-folder-opt.selected { border-color: var(--red); background: rgba(212,43,43,0.04); }
+.mfo-icon { width: 14px; height: 11px; border-radius: 1px 3px 3px 3px; position: relative; flex-shrink: 0; }
+.mfo-icon::before { content: ''; position: absolute; top: -3px; left: 0; width: 6px; height: 3px; border-radius: 1px 1px 0 0; background: inherit; }
+.mfo-name { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: var(--ink); }
+
+/* Toast */
+.toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(8px); background: var(--ink); color: var(--paper); font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 10px 18px; opacity: 0; transition: opacity 0.2s, transform 0.2s; pointer-events: none; z-index: 600; white-space: nowrap; border-radius: 2px; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── FOOTER ── */
+footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: center; height: 48px; }
+.footer-logo-cell { border-right: 1px solid var(--rule); padding: 0 20px; height: 100%; display: flex; align-items: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); }
+.footer-logo-cell sup { color: var(--red); font-size: 7px; }
+.footer-mid { padding: 0 24px; font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); }
+.footer-right { padding: 0 24px; font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); border-left: 1px solid var(--rule); height: 100%; display: flex; align-items: center; }
+
+.reveal { opacity: 0; transform: translateY(16px); animation: revealUp 0.55s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+@keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
+.d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.15s; }
+</style>
+</head>
+<body>
+
+<!-- MODALS -->
+<!-- New / Rename folder -->
+<div class="modal-overlay" id="folderModal" onclick="closeModal('folderModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-title" id="folderModalTitle">New Folder</span>
+      <button class="modal-close" onclick="closeModal('folderModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <label class="modal-label">Folder name</label>
+      <input class="modal-input" id="folderNameInput" type="text" placeholder="e.g. Gatefold Reference" onkeydown="if(event.key==='Enter')submitFolderModal()"/>
+      <label class="modal-label" style="margin-top:20px;">Colour</label>
+      <div class="modal-color-row" id="colorRow">
+        <div class="color-swatch selected" style="background:#d42b2b;" data-color="accent-red" onclick="selectColor(this)"></div>
+        <div class="color-swatch" style="background:#185FA5;" data-color="accent-blue" onclick="selectColor(this)"></div>
+        <div class="color-swatch" style="background:#3B6D11;" data-color="accent-green" onclick="selectColor(this)"></div>
+        <div class="color-swatch" style="background:#BA7517;" data-color="accent-amber" onclick="selectColor(this)"></div>
+        <div class="color-swatch" style="background:#0f0f0f;" data-color="accent-ink" onclick="selectColor(this)"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-btn" onclick="closeModal('folderModal')">Cancel</button>
+      <button class="modal-btn primary" onclick="submitFolderModal()">Save Folder</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete confirm -->
+<div class="modal-overlay" id="deleteModal" onclick="closeModal('deleteModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-title">Delete Folder</span>
+      <button class="modal-close" onclick="closeModal('deleteModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--mid);line-height:1.7;">Are you sure you want to delete <strong id="deleteFolderName" style="color:var(--ink);font-weight:500;"></strong>? All saved items in this folder will be removed. This cannot be undone.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-btn" onclick="closeModal('deleteModal')">Cancel</button>
+      <button class="modal-btn danger" onclick="confirmDelete()">Delete Folder</button>
+    </div>
+  </div>
+</div>
+
+<!-- Move item -->
+<div class="modal-overlay" id="moveModal" onclick="closeModal('moveModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-title">Move to Folder</span>
+      <button class="modal-close" onclick="closeModal('moveModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <label class="modal-label">Choose destination</label>
+      <ul class="move-folder-list" id="moveFolderList"></ul>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-btn" onclick="closeModal('moveModal')">Cancel</button>
+      <button class="modal-btn primary" onclick="confirmMove()">Move Item</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo-cell">
+    <span class="nav-logo-mark">Pressings<sup>.xyz</sup></span>
+  </a>
+  <div class="nav-links-cell">
+    <ul class="nav-links">
+      <li><a href="index.html">Archive</a></li>
+      <li><a href="#">Formats</a></li>
+      <li><a href="designers.html">Designers</a></li>
+      <li><a href="#">Labels</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </div>
+  <div class="nav-actions">
+    <a href="#" class="nav-btn active">My Folders</a>
+    <a href="#" class="nav-btn nav-btn-filled">Get Access</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="ph-left">
+    <span class="ph-vol">My Account</span>
+    <span class="ph-vert">Inspiration Archive</span>
+  </div>
+  <div class="ph-mid reveal d1">
+    <div class="ph-breadcrumb">
+      <a href="index.html">Archive</a>
+      <span class="sep">/</span>
+      <span class="current">My Folders</span>
+    </div>
+    <h1 class="page-title">
+      My
+      <span class="red">Inspo</span>
+      <span class="outline">Folders</span>
+    </h1>
+    <p class="ph-desc">Your saved scans and pressings, organised into folders. Use them as moodboards, reference decks, or export to PDF to share with collaborators.</p>
+  </div>
+  <div class="ph-right reveal d2">
+    <div>
+      <span class="ph-stat-n" id="statFolders">3</span>
+      <span class="ph-stat-l">Folders</span>
+    </div>
+    <div>
+      <span class="ph-stat-n" id="statItems" style="color:var(--red)">0</span>
+      <span class="ph-stat-l">Saved Items</span>
+    </div>
+  </div>
+</header>
+
+<!-- TOOLBAR -->
+<div class="folders-toolbar">
+  <div class="ft-left"><span id="folderCountLabel">3 folders</span></div>
+  <div class="ft-mid">
+    <button class="sort-btn active" onclick="setSort(this,'name')">A–Z</button>
+    <button class="sort-btn" onclick="setSort(this,'count')">Most items</button>
+    <button class="sort-btn" onclick="setSort(this,'recent')">Recent</button>
+  </div>
+  <div class="ft-right">
+    <button class="new-folder-btn" onclick="openNewFolderModal()">+ New Folder</button>
+  </div>
+</div>
+
+<!-- FOLDERS GRID -->
+<section class="folders-section" id="foldersSection">
+  <div class="folders-grid" id="foldersGrid">
+    <!-- rendered by JS -->
+  </div>
+</section>
+
+<!-- FOLDER DETAIL -->
+<div class="folder-detail" id="folderDetail">
+  <div class="fd-header">
+    <div class="fd-left">
+      <button class="fd-back" onclick="closeDetail()">← All Folders</button>
+      <div class="fd-accent" id="fdAccent"></div>
+    </div>
+    <div class="fd-mid">
+      <div class="fd-title" id="fdTitle">Folder Name</div>
+      <div class="fd-subtitle" id="fdSubtitle">0 items</div>
+    </div>
+    <div class="fd-right">
+      <button class="fd-action" onclick="openRenameModal()">Rename</button>
+      <button class="fd-action export" onclick="exportPDF()">↓ Export PDF</button>
+    </div>
+  </div>
+  <div class="fd-grid" id="fdGrid"></div>
+</div>
+
+<footer>
+  <div class="footer-logo-cell">Pressings<sup>.xyz</sup></div>
+  <div class="footer-mid">© 2025 · Built by a collector, for designers</div>
+  <div class="footer-right">Vol. 01 — Est. 2025</div>
+</footer>
+
+<script>
+  // ── DATA ──
+  // Sample folders with some pre-saved items to demonstrate the UI
+  let folders = [
+    {
+      id: 1, name: 'Typography Ref', color: 'accent-red', createdAt: Date.now() - 86400000 * 3,
+      items: [
+        { key: 'scan:Front Cover', label: 'Front Cover', pressing: 'Kind of Blue', bg: '#e2dfd6' },
+        { key: 'scan:Spine', label: 'Spine', pressing: 'Kind of Blue', bg: '#e8e5dc' },
+        { key: 'scan:Label — Side A', label: 'Label — Side A', pressing: 'Kind of Blue', bg: '#e5e2d9' },
+      ]
+    },
+    {
+      id: 2, name: 'Jazz Sleeves', color: 'accent-blue', createdAt: Date.now() - 86400000 * 2,
+      items: [
+        { key: 'pressing:Kind of Blue — Miles Davis', label: 'Kind of Blue', pressing: 'Full Pressing', bg: '#e2dfd6' },
+        { key: 'scan:Back Cover', label: 'Back Cover', pressing: 'Kind of Blue', bg: '#dbd8cf' },
+      ]
+    },
+    {
+      id: 3, name: 'Minimal Covers', color: 'accent-green', createdAt: Date.now() - 86400000,
+      items: []
+    },
+  ];
+  let nextId = 4;
+  let currentFolderId = null;
+  let editingFolderId = null;
+  let deletingFolderId = null;
+  let movingItem = null;
+  let moveFromFolderId = null;
+  let selectedColor = 'accent-red';
+  let currentSort = 'name';
+
+  const COLOR_MAP = {
+    'accent-red':   '#d42b2b',
+    'accent-blue':  '#185FA5',
+    'accent-green': '#3B6D11',
+    'accent-amber': '#BA7517',
+    'accent-ink':   '#0f0f0f',
+  };
+
+  // ── UTILITIES ──
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  function updateStats() {
+    const total = folders.reduce((s, f) => s + f.items.length, 0);
+    document.getElementById('statFolders').textContent = folders.length;
+    document.getElementById('statItems').textContent = total;
+    document.getElementById('folderCountLabel').textContent = folders.length + ' folder' + (folders.length !== 1 ? 's' : '');
+  }
+
+  function sortedFolders() {
+    const f = [...folders];
+    if (currentSort === 'name') f.sort((a, b) => a.name.localeCompare(b.name));
+    if (currentSort === 'count') f.sort((a, b) => b.items.length - a.items.length);
+    if (currentSort === 'recent') f.sort((a, b) => b.createdAt - a.createdAt);
+    return f;
+  }
+
+  // ── RENDER GRID ──
+  function renderGrid() {
+    const grid = document.getElementById('foldersGrid');
+    const sorted = sortedFolders();
+    grid.innerHTML = '';
+
+    sorted.forEach((f, i) => {
+      const card = document.createElement('div');
+      card.className = 'folder-card';
+      card.dataset.id = f.id;
+
+      // Preview thumbnails
+      const previewItems = [...f.items].slice(0, 4);
+      while (previewItems.length < 4) previewItems.push(null);
+      const bgClasses = ['fpi-1','fpi-2','fpi-3','fpi-4','fpi-5','fpi-6'];
+
+      card.innerHTML = `
+        <div class="fc-accent ${f.color}"></div>
+        <div class="fc-preview">
+          ${previewItems.map((item, idx) => item
+            ? `<div class="fc-preview-item" style="background:${item.bg};">
+                <svg width="50%" viewBox="0 0 60 60" opacity="0.3">
+                  <circle cx="30" cy="30" r="24" stroke="#0f0f0f" stroke-width="1" fill="none"/>
+                  <circle cx="30" cy="30" r="6" fill="#0f0f0f" opacity="0.4"/>
+                </svg>
+              </div>`
+            : `<div class="fc-preview-item empty ${bgClasses[idx]}"></div>`
+          ).join('')}
+        </div>
+        <div class="fc-body">
+          <span class="fc-name">${f.name}</span>
+          <div class="fc-meta">
+            <span class="fc-count">${f.items.length} item${f.items.length !== 1 ? 's' : ''}</span>
+            <span class="fc-arrow">→</span>
+          </div>
+        </div>
+        <div class="fc-actions">
+          <button class="fc-action-btn" title="Rename" onclick="openRenameModalFor(event,${f.id})">✎</button>
+          <button class="fc-action-btn del" title="Delete" onclick="openDeleteModal(event,${f.id})">✕</button>
+        </div>
+      `;
+
+      card.addEventListener('click', () => openFolder(f.id));
+
+      grid.appendChild(card);
+
+      // Stagger entrance
+      setTimeout(() => card.classList.add('visible'), i * 60);
+    });
+
+    // New folder card
+    const newCard = document.createElement('div');
+    newCard.className = 'folder-card-new';
+    newCard.innerHTML = `<span class="fc-new-icon">+</span><span class="fc-new-label">New Folder</span>`;
+    newCard.onclick = openNewFolderModal;
+    grid.appendChild(newCard);
+
+    updateStats();
+  }
+
+  // ── FOLDER DETAIL ──
+  function openFolder(id) {
+    currentFolderId = id;
+    const f = folders.find(x => x.id === id);
+    if (!f) return;
+
+    document.getElementById('fdTitle').textContent = f.name;
+    document.getElementById('fdSubtitle').textContent = f.items.length + ' item' + (f.items.length !== 1 ? 's' : '');
+    document.getElementById('fdAccent').style.background = COLOR_MAP[f.color] || '#d42b2b';
+
+    renderDetailGrid(f);
+
+    document.getElementById('foldersSection').style.display = 'none';
+    document.getElementById('folderDetail').classList.add('open');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function renderDetailGrid(f) {
+    const grid = document.getElementById('fdGrid');
+
+    if (f.items.length === 0) {
+      grid.innerHTML = `<div class="fd-empty" style="grid-column:1/-1;"><p>No items saved yet. <a href="index.html">Browse the archive →</a></p></div>`;
+      return;
+    }
+
+    grid.innerHTML = f.items.map((item, idx) => `
+      <div class="fd-item">
+        <div class="fd-item-inner" style="background:${item.bg};">
+          <svg width="55%" viewBox="0 0 100 100" opacity="0.25">
+            <circle cx="50" cy="50" r="44" stroke="#0f0f0f" stroke-width="1" fill="none"/>
+            <circle cx="50" cy="50" r="10" fill="#0f0f0f" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="fd-item-label">
+          <span>${item.label}</span>
+          <small>${item.pressing}</small>
+        </div>
+        <div class="fd-item-overlay">
+          <button class="fd-overlay-btn" onclick="openMoveModal(${idx})">Move</button>
+          <button class="fd-overlay-btn remove" onclick="removeItem(${idx})">Remove</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function closeDetail() {
+    currentFolderId = null;
+    document.getElementById('foldersSection').style.display = '';
+    document.getElementById('folderDetail').classList.remove('open');
+    renderGrid();
+  }
+
+  function removeItem(itemIdx) {
+    const f = folders.find(x => x.id === currentFolderId);
+    if (!f) return;
+    const removed = f.items.splice(itemIdx, 1)[0];
+    toast('Removed "' + removed.label + '" from folder');
+    document.getElementById('fdSubtitle').textContent = f.items.length + ' item' + (f.items.length !== 1 ? 's' : '');
+    renderDetailGrid(f);
+    updateStats();
+  }
+
+  // ── MODALS ──
+  function openModal(id) { document.getElementById(id).classList.add('open'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+  function selectColor(el) {
+    document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedColor = el.dataset.color;
+  }
+
+  function openNewFolderModal() {
+    editingFolderId = null;
+    document.getElementById('folderModalTitle').textContent = 'New Folder';
+    document.getElementById('folderNameInput').value = '';
+    document.querySelectorAll('.color-swatch').forEach((s, i) => s.classList.toggle('selected', i === 0));
+    selectedColor = 'accent-red';
+    openModal('folderModal');
+    setTimeout(() => document.getElementById('folderNameInput').focus(), 100);
+  }
+
+  function openRenameModalFor(e, id) {
+    e.stopPropagation();
+    const f = folders.find(x => x.id === id);
+    if (!f) return;
+    editingFolderId = id;
+    document.getElementById('folderModalTitle').textContent = 'Rename Folder';
+    document.getElementById('folderNameInput').value = f.name;
+    document.querySelectorAll('.color-swatch').forEach(s => {
+      s.classList.toggle('selected', s.dataset.color === f.color);
+    });
+    selectedColor = f.color;
+    openModal('folderModal');
+    setTimeout(() => document.getElementById('folderNameInput').focus(), 100);
+  }
+
+  function openRenameModal() {
+    if (!currentFolderId) return;
+    openRenameModalFor({ stopPropagation: () => {} }, currentFolderId);
+  }
+
+  function submitFolderModal() {
+    const name = document.getElementById('folderNameInput').value.trim();
+    if (!name) return;
+    if (editingFolderId) {
+      const f = folders.find(x => x.id === editingFolderId);
+      f.name = name;
+      f.color = selectedColor;
+      toast('Folder renamed to "' + name + '"');
+      if (currentFolderId === editingFolderId) {
+        document.getElementById('fdTitle').textContent = name;
+        document.getElementById('fdAccent').style.background = COLOR_MAP[selectedColor];
+      }
+    } else {
+      folders.push({ id: nextId++, name, color: selectedColor, createdAt: Date.now(), items: [] });
+      toast('Folder "' + name + '" created');
+    }
+    closeModal('folderModal');
+    renderGrid();
+  }
+
+  function openDeleteModal(e, id) {
+    e.stopPropagation();
+    deletingFolderId = id;
+    const f = folders.find(x => x.id === id);
+    document.getElementById('deleteFolderName').textContent = '"' + f.name + '"';
+    openModal('deleteModal');
+  }
+
+  function confirmDelete() {
+    const f = folders.find(x => x.id === deletingFolderId);
+    folders = folders.filter(x => x.id !== deletingFolderId);
+    toast('Folder "' + f.name + '" deleted');
+    closeModal('deleteModal');
+    if (currentFolderId === deletingFolderId) closeDetail();
+    renderGrid();
+  }
+
+  // ── MOVE ITEM ──
+  function openMoveModal(itemIdx) {
+    const f = folders.find(x => x.id === currentFolderId);
+    movingItem = f.items[itemIdx];
+    moveFromFolderId = currentFolderId;
+
+    const list = document.getElementById('moveFolderList');
+    list.innerHTML = folders
+      .filter(x => x.id !== currentFolderId)
+      .map(x => `
+        <li class="move-folder-opt" data-id="${x.id}" onclick="selectMoveTarget(this)">
+          <div class="mfo-icon" style="background:${COLOR_MAP[x.color]};"></div>
+          <span class="mfo-name">${x.name}</span>
+        </li>
+      `).join('');
+
+    openModal('moveModal');
+  }
+
+  function selectMoveTarget(el) {
+    document.querySelectorAll('.move-folder-opt').forEach(x => x.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function confirmMove() {
+    const selected = document.querySelector('.move-folder-opt.selected');
+    if (!selected) { toast('Please select a folder'); return; }
+    const targetId = parseInt(selected.dataset.id);
+    const target = folders.find(x => x.id === targetId);
+    const source = folders.find(x => x.id === moveFromFolderId);
+
+    // Remove from source
+    source.items = source.items.filter(x => x.key !== movingItem.key);
+    // Add to target
+    target.items.push(movingItem);
+
+    toast('Moved to "' + target.name + '"');
+    closeModal('moveModal');
+
+    const f = folders.find(x => x.id === currentFolderId);
+    document.getElementById('fdSubtitle').textContent = f.items.length + ' item' + (f.items.length !== 1 ? 's' : '');
+    renderDetailGrid(f);
+    updateStats();
+  }
+
+  // ── SORT ──
+  function setSort(el, sort) {
+    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    currentSort = sort;
+    renderGrid();
+  }
+
+  // ── EXPORT PDF ──
+  function exportPDF() {
+    const f = folders.find(x => x.id === currentFolderId);
+    if (!f) return;
+    toast('Preparing "' + f.name + '" PDF export…');
+    // In production this would call a server-side PDF generator
+    // For now we trigger the browser print dialog styled for the folder
+    setTimeout(() => {
+      const w = window.open('', '_blank');
+      const color = COLOR_MAP[f.color] || '#d42b2b';
+      w.document.write(`
+        <!DOCTYPE html><html><head>
+        <title>${f.name} — Pressings.xyz</title>
+        <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+        <style>
+          * { box-sizing: border-box; margin: 0; padding: 0; }
+          body { background: #f4f1eb; font-family: 'IBM Plex Mono', monospace; padding: 40px; }
+          .pdf-header { border-bottom: 3px solid ${color}; padding-bottom: 24px; margin-bottom: 32px; display: flex; align-items: flex-end; justify-content: space-between; }
+          .pdf-title { font-family: 'Barlow Condensed', sans-serif; font-size: 48px; font-weight: 700; text-transform: uppercase; color: #0f0f0f; line-height: 1; }
+          .pdf-meta { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: #6b6b6b; text-align: right; }
+          .pdf-meta strong { color: #0f0f0f; display: block; font-size: 11px; margin-bottom: 4px; }
+          .pdf-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+          .pdf-item { background: #fff; border: 1px solid #d4d0c8; }
+          .pdf-thumb { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
+          .pdf-item-label { padding: 8px 10px; border-top: 1px solid #d4d0c8; }
+          .pdf-item-label span { font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: #0f0f0f; display: block; }
+          .pdf-item-label small { font-size: 7px; color: #c8c4bb; margin-top: 1px; display: block; }
+          .pdf-footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #d4d0c8; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: #c8c4bb; display: flex; justify-content: space-between; }
+          @media print { body { padding: 20px; } }
+        </style></head><body>
+        <div class="pdf-header">
+          <div class="pdf-title">${f.name}</div>
+          <div class="pdf-meta"><strong>Pressings.xyz</strong>${f.items.length} items · ${new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })}</div>
+        </div>
+        <div class="pdf-grid">
+          ${f.items.map(item => `
+            <div class="pdf-item">
+              <div class="pdf-thumb" style="background:${item.bg};">
+                <svg width="55%" viewBox="0 0 100 100" opacity="0.2">
+                  <circle cx="50" cy="50" r="44" stroke="#0f0f0f" stroke-width="1.5" fill="none"/>
+                  <circle cx="50" cy="50" r="10" fill="#0f0f0f"/>
+                </svg>
+              </div>
+              <div class="pdf-item-label">
+                <span>${item.label}</span>
+                <small>${item.pressing}</small>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="pdf-footer">
+          <span>pressings.xyz — physical music packaging archive</span>
+          <span>Exported ${new Date().toLocaleDateString()}</span>
+        </div>
+        <script>window.onload = () => window.print();<\/script>
+        </body></html>
+      `);
+      w.document.close();
+    }, 600);
+  }
+
+  // ── INIT ──
+  renderGrid();
+</script>
+</body>
+</html>
