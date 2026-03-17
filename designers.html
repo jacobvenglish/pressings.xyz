@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Designers — Pressings.xyz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; scroll-behavior: smooth; }
+
+:root {
+  --paper:  #f4f1eb;
+  --ink:    #0f0f0f;
+  --mid:    #6b6b6b;
+  --light:  #c8c4bb;
+  --rule:   #d4d0c8;
+  --red:    #d42b2b;
+  --white:  #ffffff;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.022;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  background: var(--paper);
+  border-bottom: 1px solid var(--ink);
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  align-items: stretch;
+  height: 48px;
+}
+.nav-logo-cell {
+  border-right: 1px solid var(--ink);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  text-decoration: none;
+}
+.nav-logo-mark {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.nav-logo-mark sup { font-size: 9px; color: var(--red); vertical-align: super; margin-left: 1px; }
+.nav-links-cell { display: flex; align-items: center; padding: 0 24px; }
+.nav-links { display: flex; list-style: none; gap: 32px; }
+.nav-links a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mid);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a.active { color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 1px; }
+.nav-actions { display: flex; align-items: stretch; border-left: 1px solid var(--ink); }
+.nav-btn {
+  display: flex; align-items: center;
+  padding: 0 20px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+  text-decoration: none; color: var(--mid);
+  border-right: 1px solid var(--rule);
+  transition: all 0.15s; white-space: nowrap;
+}
+.nav-btn:hover { color: var(--ink); background: var(--rule); }
+.nav-btn-filled { background: var(--ink); color: var(--paper); border-right: none; }
+.nav-btn-filled:hover { background: var(--red); color: var(--white); }
+
+/* ── PAGE HEADER ── */
+.page-header {
+  padding-top: 48px;
+  border-bottom: 1px solid var(--ink);
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+}
+
+.ph-left {
+  border-right: 1px solid var(--rule);
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.ph-vol {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--red);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.ph-vert {
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--light);
+  margin-top: 24px;
+}
+
+.ph-mid { padding: 32px 48px; }
+.ph-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.ph-breadcrumb a, .ph-breadcrumb span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--light);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.ph-breadcrumb a:hover { color: var(--mid); }
+.ph-breadcrumb .sep { color: var(--red); }
+.ph-breadcrumb .current { color: var(--ink); }
+
+.page-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: clamp(56px, 7vw, 108px);
+  line-height: 0.88;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 32px;
+}
+.page-title .outline {
+  -webkit-text-stroke: 1.5px var(--ink);
+  color: transparent;
+  display: block;
+}
+.page-title .red { color: var(--red); display: block; }
+
+.ph-desc {
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--mid);
+  font-weight: 300;
+  max-width: 480px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+
+.ph-right {
+  border-left: 1px solid var(--rule);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 160px;
+  justify-content: center;
+}
+.ph-stat-n {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1;
+  color: var(--ink);
+  display: block;
+}
+.ph-stat-l {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--light);
+  display: block;
+  margin-top: 2px;
+}
+
+/* ── ROLE FILTER STRIP ── */
+.role-strip {
+  border-bottom: 1px solid var(--ink);
+  display: grid;
+  grid-template-columns: 200px repeat(4, 1fr);
+}
+.role-strip-label {
+  border-right: 1px solid var(--rule);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+}
+.role-strip-label span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+.role-cell {
+  border-right: 1px solid var(--rule);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.role-cell:last-child { border-right: none; }
+.role-cell:hover { background: var(--rule); }
+.role-cell.active { background: var(--ink); }
+.role-cell.active .rc-name { color: var(--paper); }
+.role-cell.active .rc-count { color: var(--red); }
+.rc-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  transition: color 0.15s;
+}
+.rc-count {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--light);
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+/* ── MAIN LAYOUT ── */
+.designers-wrap {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  border-bottom: 1px solid var(--ink);
+}
+
+/* ── SIDEBAR ── */
+.designers-sidebar {
+  border-right: 1px solid var(--ink);
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.sidebar-section-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--light);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--rule);
+}
+.sidebar-list { list-style: none; display: flex; flex-direction: column; }
+.sidebar-list li a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  transition: color 0.12s;
+}
+.sidebar-list li:last-child a { border-bottom: none; }
+.sidebar-list li a:hover { color: var(--ink); }
+.sidebar-list li a.active { color: var(--red); }
+.sidebar-list li a .count { font-size: 8px; color: var(--light); }
+.sidebar-list li a.active .count { color: var(--red); }
+
+/* ── DESIGNERS MAIN ── */
+.designers-main { }
+
+.designers-toolbar {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--rule);
+  height: 40px;
+}
+.toolbar-search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 10px;
+  border-right: 1px solid var(--rule);
+}
+.toolbar-search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  outline: none;
+}
+.toolbar-search input::placeholder { color: var(--light); }
+.search-icon { font-size: 14px; color: var(--light); }
+.toolbar-count {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--light);
+  letter-spacing: 0.08em;
+}
+
+/* ── ROLE SECTION ── */
+.role-section {
+  border-bottom: 1px solid var(--rule);
+}
+.role-section:last-child { border-bottom: none; }
+
+.role-section-header {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--rule);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.role-section-header:hover { background: rgba(212,43,43,0.03); }
+
+.role-section-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--red);
+  letter-spacing: 0.14em;
+}
+.role-section-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  line-height: 1;
+}
+.role-section-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.role-section-meta span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--light);
+}
+.role-toggle {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  color: var(--light);
+  transition: transform 0.2s;
+}
+.role-section.collapsed .role-toggle { transform: rotate(-90deg); }
+
+/* ── DESIGNER TABLE ── */
+.designer-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.designer-table thead tr {
+  border-bottom: 1px solid var(--rule);
+}
+.designer-table thead th {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--light);
+  font-weight: 400;
+  text-align: left;
+  padding: 10px 16px;
+  background: var(--paper);
+}
+.designer-table thead th:first-child { padding-left: 24px; }
+
+.designer-row {
+  border-bottom: 1px solid var(--rule);
+  transition: background 0.12s;
+  cursor: pointer;
+}
+.designer-row:last-child { border-bottom: none; }
+.designer-row:hover { background: rgba(15,15,15,0.025); }
+.designer-row:hover .dr-name { color: var(--red); }
+
+.designer-row td {
+  padding: 16px;
+  vertical-align: middle;
+}
+.designer-row td:first-child { padding-left: 24px; }
+
+/* Name + initials */
+.dr-name-cell { display: flex; align-items: center; gap: 14px; }
+.dr-initials {
+  width: 36px; height: 36px;
+  border: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--mid);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.15s;
+}
+.designer-row:hover .dr-initials {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.dr-name {
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  display: block;
+  transition: color 0.15s;
+}
+.dr-dates {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  color: var(--light);
+  letter-spacing: 0.08em;
+  display: block;
+  margin-top: 2px;
+}
+
+/* Labels cell */
+.dr-labels { display: flex; flex-wrap: wrap; gap: 4px; }
+.dr-label-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border: 1px solid var(--rule);
+  color: var(--mid);
+  white-space: nowrap;
+}
+
+/* Pressings count */
+.dr-count {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--ink);
+  line-height: 1;
+}
+.dr-count-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--light);
+  display: block;
+  margin-top: 1px;
+}
+
+/* Era tag */
+.dr-era {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+
+/* Aesthetic tags */
+.dr-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.dr-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* Arrow */
+.dr-arrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  color: var(--rule);
+  transition: color 0.15s, transform 0.15s;
+}
+.designer-row:hover .dr-arrow { color: var(--red); transform: translateX(3px); }
+
+/* Collapsed state */
+.role-section.collapsed .role-section-body { display: none; }
+
+/* ── FOOTER ── */
+footer {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  align-items: center;
+  height: 48px;
+}
+.footer-logo-cell {
+  border-right: 1px solid var(--rule);
+  padding: 0 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.footer-logo-cell sup { color: var(--red); font-size: 7px; }
+.footer-mid {
+  padding: 0 24px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--light);
+}
+.footer-right {
+  padding: 0 24px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--light);
+  border-left: 1px solid var(--rule);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* ── ANIMATIONS ── */
+.reveal { opacity: 0; transform: translateY(16px); animation: revealUp 0.55s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+@keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
+.d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.15s; } .d3 { animation-delay: 0.25s; }
+
+.designer-row { opacity: 0; transform: translateY(8px); transition: opacity 0.35s ease, transform 0.35s ease, background 0.12s; }
+.designer-row.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo-cell">
+    <span class="nav-logo-mark">Pressings<sup>.xyz</sup></span>
+  </a>
+  <div class="nav-links-cell">
+    <ul class="nav-links">
+      <li><a href="index.html">Archive</a></li>
+      <li><a href="#">Formats</a></li>
+      <li><a href="#" class="active">Designers</a></li>
+      <li><a href="#">Labels</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </div>
+  <div class="nav-actions">
+    <a href="#" class="nav-btn">Log in</a>
+    <a href="#" class="nav-btn nav-btn-filled">Get Access</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="ph-left">
+    <span class="ph-vol">Index 02</span>
+    <span class="ph-vert">Design Credits</span>
+  </div>
+  <div class="ph-mid reveal d1">
+    <div class="ph-breadcrumb">
+      <a href="index.html">Archive</a>
+      <span class="sep">/</span>
+      <span class="current">Designers</span>
+    </div>
+    <h1 class="page-title">
+      The
+      <span class="red">People</span>
+      <span class="outline">Behind It</span>
+    </h1>
+    <p class="ph-desc">Every art director, graphic designer, photographer, and illustrator credited across the archive. The names the sleeve never quite says loud enough.</p>
+  </div>
+  <div class="ph-right reveal d2">
+    <div>
+      <span class="ph-stat-n">94</span>
+      <span class="ph-stat-l">Designers</span>
+    </div>
+    <div>
+      <span class="ph-stat-n" style="color:var(--red)">31</span>
+      <span class="ph-stat-l">Art Directors</span>
+    </div>
+    <div>
+      <span class="ph-stat-n">38</span>
+      <span class="ph-stat-l">Photographers</span>
+    </div>
+    <div>
+      <span class="ph-stat-n">25</span>
+      <span class="ph-stat-l">Illustrators</span>
+    </div>
+  </div>
+</header>
+
+<!-- ROLE FILTER STRIP -->
+<div class="role-strip">
+  <div class="role-strip-label"><span>Filter by role</span></div>
+  <div class="role-cell active" onclick="filterRole(this,'all')"><span class="rc-name">All</span><span class="rc-count">94</span></div>
+  <div class="role-cell" onclick="filterRole(this,'art-directors')"><span class="rc-name">Art Directors</span><span class="rc-count">31</span></div>
+  <div class="role-cell" onclick="filterRole(this,'photographers')"><span class="rc-name">Photographers</span><span class="rc-count">38</span></div>
+  <div class="role-cell" onclick="filterRole(this,'illustrators')"><span class="rc-name">Illustrators</span><span class="rc-count">25</span></div>
+</div>
+
+<!-- MAIN -->
+<div class="designers-wrap">
+
+  <!-- Sidebar -->
+  <aside class="designers-sidebar">
+    <div>
+      <p class="sidebar-section-title">Era</p>
+      <ul class="sidebar-list">
+        <li><a href="#" class="active">All Eras <span class="count">94</span></a></li>
+        <li><a href="#">1950s <span class="count">4</span></a></li>
+        <li><a href="#">1960s <span class="count">18</span></a></li>
+        <li><a href="#">1970s <span class="count">22</span></a></li>
+        <li><a href="#">1980s <span class="count">19</span></a></li>
+        <li><a href="#">1990s <span class="count">16</span></a></li>
+        <li><a href="#">2000s+ <span class="count">15</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="sidebar-section-title">Label</p>
+      <ul class="sidebar-list">
+        <li><a href="#">Columbia <span class="count">14</span></a></li>
+        <li><a href="#">ECM <span class="count">8</span></a></li>
+        <li><a href="#">Blue Note <span class="count">11</span></a></li>
+        <li><a href="#">Factory <span class="count">6</span></a></li>
+        <li><a href="#">4AD <span class="count">9</span></a></li>
+        <li><a href="#">Warp <span class="count">7</span></a></li>
+        <li><a href="#">Rough Trade <span class="count">5</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="sidebar-section-title">Aesthetic</p>
+      <ul class="sidebar-list">
+        <li><a href="#">Minimalist <span class="count">28</span></a></li>
+        <li><a href="#">Typographic <span class="count">19</span></a></li>
+        <li><a href="#">Photographic <span class="count">24</span></a></li>
+        <li><a href="#">Illustrated <span class="count">14</span></a></li>
+        <li><a href="#">Brutalist <span class="count">9</span></a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <div class="designers-main">
+
+    <div class="designers-toolbar">
+      <div class="toolbar-search">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="searchInput" placeholder="Search designers, labels, era..." oninput="filterSearch()">
+      </div>
+      <div class="toolbar-count" id="toolbarCount">94 designers</div>
+    </div>
+
+    <!-- ── ART DIRECTORS ── -->
+    <div class="role-section" id="section-art-directors">
+      <div class="role-section-header" onclick="toggleSection('art-directors')">
+        <span class="role-section-num">01</span>
+        <span class="role-section-title">Art Directors</span>
+        <div class="role-section-meta">
+          <span>31 credited</span>
+          <span class="role-toggle">↓</span>
+        </div>
+      </div>
+      <div class="role-section-body">
+        <table class="designer-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Associated Labels</th>
+              <th>Era</th>
+              <th>Aesthetic</th>
+              <th>Pressings</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="designer-row" onclick="window.location='#'">
+              <td><div class="dr-name-cell"><div class="dr-initials">NF</div><div><span class="dr-name">Neil Fujita</span><span class="dr-dates">1921 – 2004</span></div></div></td>
+              <td><div class="dr-labels"><span class="dr-label-tag">Columbia</span></div></td>
+              <td><span class="dr-era">1955 – 1971</span></td>
+              <td><div class="dr-tags"><span class="dr-tag">Minimalist</span><span class="dr-tag">Typographic</span></div></td>
+              <td><span class="dr-count">12</span><span class="dr-count-label">Pressings</span></td>
+              <td><span class="dr-arrow">→</span></td>
+            </tr>
+            <tr class="designer-row" onclick="window.location='#'">
+              <td><div class="dr-name-cell"><div class="dr-initials">TK</div><div><span class="dr-name">Tibor Kalman</span><span class="dr-dates">1949 – 1999</span></div></div></td>
+              <td><div class="dr-labels"><span class="dr-label-tag">Sire</span><span class="dr-label-tag">Island</span></div></td>
+              <td><span class="dr-era">1979 – 1999</span></td>
+              <td><div class="dr-tags"><span class="dr-tag">Conceptual</span><span class="dr-tag">Brutalist</span></div></td>
+              <td><span class="dr-count">8</span><span class="dr-count-label">Pressings</span></td>
+              <td><span class="dr-arrow">→</span></td>
+            </tr>
+            <tr class="designer-row" onclick="window.location='#'">
+              <td><div class="dr-name-cell"><div class="dr-initials">PS</div><div><span class="dr-name">Peter Saville</span><span class="dr-dates">b. 1955</span></div></div></td>
+              <td><div class="dr-labels"><span class="dr-label-tag">Factory</span><span class="dr-label-tag">Dindisc</span></div></td>
+              <td><span class="dr-era">1978 – present</span></td>
+              <td><div class="dr-tags"><span class="dr-tag">Minimalist</span><span class="dr-tag">Typographic</span></div></td>
+              <td><span class="dr-count">14</span><span class="dr-count-label">Pressings</span></td>
+              <td><span class="dr-arrow">→</span></td>
+            </tr>
+            <tr class="designer-row" onclick="window.location='#'">
+              <td><div class="dr-name-cell"><div class="dr-initials">VH</div><div><span class="dr-name">Vaughan Oliver</span><span class="dr-dates">1957 – 2019</span></div></div></td>
+              <td><div class="dr-labels"><span class="dr-label-tag">4AD</span></div></td>
+              <td><span class="dr-era">1981 – 2019</span></td>
+              <td><div class="dr-tags"><span class="dr-tag">Painterly</span><span class="dr-tag">Dark</span></div></td>
+              <td><span class="dr-count">9</span><span class="dr-count-label">Pressings</span></td>
+              <td><span class="dr-arrow">→</span></td>
+            </tr>
+            <tr class="designer-row" onclick="window.location='#'">
+              <td><div class="dr-name-cell"><div class="dr-initials">RH</div><div><span class="dr-name">Reid Miles</span><span class="dr-dates">1927 – 1993</span></div></div></td>
+              <td><div class="dr-labels"><span class="dr-label-tag">Blue Note</span></div></td>
+              <td><span class="dr-era">1956 – 1967</span></td>
+              <td><div class="dr-tags"><span class="dr-tag">Typographic</span><span class="dr-tag">Geometric</span></div></td>
+              <td><span class="dr-count">18</span><span class="dr-count-label">Pressings</span></td>
+              <td><span class="dr-arrow">→</span></td>
+            </tr>
+            <tr class="designer-row" onclick="window.location='#'">
+              <td><div class="dr-name-cell"><div class="dr-initials">BU</div><div><span class="dr-name">Barney Bubbles</span><span class="dr-dates">1942 – 1983</span></div></div></td>
+              <td><div class="dr-labels"><span class="dr-label-tag">Stiff</span><span class="dr-label-tag">Radar</span><span class="dr-label-tag">F-Beat</span></div></td>
+              <td><span class="dr-era">1968 – 1983</span></td>
+              <td><div class="dr-tags"><span class="dr-tag">Conceptual</span><span class="dr-tag">Psychedelic</span></div></td>
+              <td><span class="dr-count">7</span><span class="dr-count-label">Pressings</span></td>
+              <td><span class="dr-arrow">→</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── PHOTOGRAPHERS ── -->
+    <div class="role-section" id="section-photographers">
+      <div class="role-section-header" onclick="toggleSection('photographers')">
+        <span class="role-section-num">02</span>
+        <span class="role-section-title">Photographers</span>
+        <div class="role-section-meta">
+          <span>38 credited</span>
+          <span class="role-toggle">↓</span>
+        </div>
+      </div>
+      <div class="role-section-body">
+        <table class="designer-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Associated Labels</th>
+              <th>Era</th>
+              <th>Aesthetic</th>
+              <th>Pressings</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="designer-row" onclick="window.location='#'">
+              <td><div class="dr-name-cell"><div class="dr-initials">DH</div><div><span class="dr-name">Don Hunstein</span><span class="dr-dates">1928 – 2021</span></div></div></td>
+              <td><div class="dr-labels"><span class="dr-label-tag">Columbia</span></div></td>
+              <td><span class="dr-era">1955 – 1983</span></td>
+              <td><div class="dr-tags"><span class="dr-tag">Documentary</span><span class="dr-tag">Studio</span></div></td>
+              <td><span class="dr-count">9</span><span class="dr-count-label">Pressings</span></td>
+              <td><span class="dr-arrow">→</span></td>
+            </tr>
+            <tr class="designer-row" onclick="window.location='#'">
+              <td><div class="dr-name-cell"><div class="dr-initials">FW</div><div><span class="dr-name">Francis Wolff</span><span class="dr-dates">1907 – 1971</span></div></div></td>
+              <td><div class="dr-labels"><span class="dr-label-tag">Blue Note</span></div></td>
+              <td><span class="dr-era">1938 – 1971</span></td>
+              <td><div class="dr-tags"><span class="dr-tag">Monochrome</span><span class="dr-tag">Intimate</span></div></td>
+              <td><span class="dr-count">16</span><span class="dr-count-label">Pressings</span></td>
+              <td><span class="dr-arrow">→</span></td>
+            </tr>
+            <tr class="designer-row" onclick="window.location='#'">
+              <td><div class="dr-name-cell"><div class="dr-initials">NT</div><div><span class="dr-name">Nick Turner</span><span class="dr-dates">active 1990s</span></div></div></td>
+              <td><div class="dr-labels"><span class="dr-label-tag">Go! Discs</span><span class="dr-label-tag">London</span></div></td>
+              <td><span class="dr-era">1990 – 2002</span></td>
+              <td><div class="dr-tags"><span class="dr-tag">Cinematic</span><span class="dr-tag">Dark</span></div></td>
+              <td><span class="dr-count">5</span><span class="dr-count-label">Pressings</span></td>
+              <td><span class="dr-arrow">→</span></td>
+            </tr>
+            <tr class="designer-row" onclick="window.location='#'">
+              <td><div class="dr-name-cell"><div class="dr-initials">AB</div><div><span class="dr-name">Anton Corbijn</span><span class="dr-dates">b. 1955</span></div></div></td>
+              <td><div class="dr-labels"><span class="dr-label-tag">Factory</span><span class="dr-label-tag">Mute</span><span class="dr-label-tag">Island</span></div></td>
+              <td><span class="dr-era">1979 – present</span></td>
+              <td><div class="dr-tags"><span class="dr-tag">Monochrome</span><span class="dr-tag">Portrait</span></div></td>
+              <td><span class="dr-count">11</span><span class="dr-count-label">Pressings</span></td>
+              <td><span class="dr-arrow">→</span></td>
+            </tr>
+            <tr class="designer-row" onclick="window.location='#'">
+              <td><div class="dr-name-cell"><div class="dr-initials">SB</div><div><span class="dr-name">Storm Thorgerson</span><span class="dr-dates">1944 – 2013</span></div></div></td>
+              <td><div class="dr-labels"><span class="dr-label-tag">Harvest</span><span class="dr-label-tag">EMI</span></div></td>
+              <td><span class="dr-era">1968 – 2013</span></td>
+              <td><div class="dr-tags"><span class="dr-tag">Surreal</span><span class="dr-tag">Conceptual</span></div></td>
+              <td><span class="dr-count">7</span><span class="dr-count-label">Pressings</span></td>
+              <td><span class="dr-arrow">→</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── ILLUSTRATORS ── -->
+    <div class="role-section" id="section-illustrators">
+      <div class="role-section-header" onclick="toggleSection('illustrators')">
+        <span class="role-section-num">03</span>
+        <span class="role-section-title">Illustrators</span>
+        <div class="role-section-meta">
+          <span>25 credited</span>
+          <span class="role-toggle">↓</span>
+        </div>
+      </div>
+      <div class="role-section-body">
+        <table class="designer-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Associated Labels</th>
+              <th>Era</th>
+              <th>Aesthetic</th>
+              <th>Pressings</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="designer-row" onclick="window.location='#'">
+              <td><div class="dr-name-cell"><div class="dr-initials">AK</div><div><span class="dr-name">Alan Aldridge</span><span class="dr-dates">b. 1943</span></div></div></td>
+              <td><div class="dr-labels"><span class="dr-label-tag">Parlophone</span><span class="dr-label-tag">EMI</span></div></td>
+              <td><span class="dr-era">1964 – 1975</span></td>
+              <td><div class="dr-tags"><span class="dr-tag">Psychedelic</span><span class="dr-tag">Pop Art</span></div></td>
+              <td><span class="dr-count">6</span><span class="dr-count-label">Pressings</span></td>
+              <td><span class="dr-arrow">→</span></td>
+            </tr>
+            <tr class="designer-row" onclick="window.location='#'">
+              <td><div class="dr-name-cell"><div class="dr-initials">RG</div><div><span class="dr-name">Roger Dean</span><span class="dr-dates">b. 1944</span></div></div></td>
+              <td><div class="dr-labels"><span class="dr-label-tag">Atlantic</span><span class="dr-label-tag">Manticore</span></div></td>
+              <td><span class="dr-era">1971 – 1980</span></td>
+              <td><div class="dr-tags"><span class="dr-tag">Fantasy</span><span class="dr-tag">Painterly</span></div></td>
+              <td><span class="dr-count">8</span><span class="dr-count-label">Pressings</span></td>
+              <td><span class="dr-arrow">→</span></td>
+            </tr>
+            <tr class="designer-row" onclick="window.location='#'">
+              <td><div class="dr-name-cell"><div class="dr-initials">WS</div><div><span class="dr-name">Wes Wilson</span><span class="dr-dates">b. 1937</span></div></div></td>
+              <td><div class="dr-labels"><span class="dr-label-tag">Fillmore</span><span class="dr-label-tag">Capitol</span></div></td>
+              <td><span class="dr-era">1966 – 1972</span></td>
+              <td><div class="dr-tags"><span class="dr-tag">Psychedelic</span><span class="dr-tag">Hand-lettered</span></div></td>
+              <td><span class="dr-count">4</span><span class="dr-count-label">Pressings</span></td>
+              <td><span class="dr-arrow">→</span></td>
+            </tr>
+            <tr class="designer-row" onclick="window.location='#'">
+              <td><div class="dr-name-cell"><div class="dr-initials">HB</div><div><span class="dr-name">Hipgnosis</span><span class="dr-dates">1968 – 1983</span></div></div></td>
+              <td><div class="dr-labels"><span class="dr-label-tag">Harvest</span><span class="dr-label-tag">Charisma</span><span class="dr-label-tag">Swan Song</span></div></td>
+              <td><span class="dr-era">1968 – 1983</span></td>
+              <td><div class="dr-tags"><span class="dr-tag">Surreal</span><span class="dr-tag">Photomontage</span></div></td>
+              <td><span class="dr-count">11</span><span class="dr-count-label">Pressings</span></td>
+              <td><span class="dr-arrow">→</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo-cell">Pressings<sup>.xyz</sup></div>
+  <div class="footer-mid">© 2025 · Built by a collector, for designers</div>
+  <div class="footer-right">Vol. 01 — Est. 2025</div>
+</footer>
+
+<script>
+  // Entrance animation
+  const rows = document.querySelectorAll('.designer-row');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 30);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  rows.forEach(r => obs.observe(r));
+
+  // Role filter strip
+  function filterRole(el, role) {
+    document.querySelectorAll('.role-cell').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    const sections = ['art-directors','photographers','illustrators'];
+    sections.forEach(s => {
+      const sec = document.getElementById('section-' + s);
+      if (role === 'all' || role === s) {
+        sec.style.display = '';
+      } else {
+        sec.style.display = 'none';
+      }
+    });
+  }
+
+  // Collapse/expand sections
+  function toggleSection(id) {
+    const sec = document.getElementById('section-' + id);
+    sec.classList.toggle('collapsed');
+  }
+
+  // Search
+  function filterSearch() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    let visible = 0;
+    document.querySelectorAll('.designer-row').forEach(row => {
+      const text = row.textContent.toLowerCase();
+      const show = text.includes(q);
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    document.getElementById('toolbarCount').textContent = visible + ' designers';
+  }
+
+  // Sidebar filter active state
+  document.querySelectorAll('.sidebar-list a').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const parent = a.closest('.sidebar-list');
+      parent.querySelectorAll('a').forEach(x => x.classList.remove('active'));
+      a.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
