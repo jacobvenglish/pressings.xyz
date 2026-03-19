@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Labels — Pressings.xyz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; scroll-behavior: smooth; }
+
+:root {
+  --paper:  #f4f1eb;
+  --ink:    #0f0f0f;
+  --mid:    #6b6b6b;
+  --light:  #c8c4bb;
+  --rule:   #d4d0c8;
+  --red:    #d42b2b;
+  --white:  #ffffff;
+}
+
+body { background: var(--paper); color: var(--ink); font-family: 'Barlow', sans-serif; font-weight: 400; overflow-x: hidden; cursor: crosshair; }
+body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); opacity: 0.022; pointer-events: none; z-index: 1000; }
+
+/* ── NAV ── */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: var(--paper); border-bottom: 1px solid var(--ink); display: grid; grid-template-columns: 200px 1fr auto; align-items: stretch; height: 48px; }
+.nav-logo-cell { border-right: 1px solid var(--ink); display: flex; align-items: center; padding: 0 20px; text-decoration: none; }
+.nav-logo-mark { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink); }
+.nav-logo-mark sup { font-size: 9px; color: var(--red); vertical-align: super; margin-left: 1px; }
+.nav-links-cell { display: flex; align-items: center; padding: 0 24px; }
+.nav-links { display: flex; list-style: none; gap: 32px; }
+.nav-links a { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.15s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-links a.active { color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 1px; }
+.nav-actions { display: flex; align-items: stretch; border-left: 1px solid var(--ink); }
+.nav-btn { display: flex; align-items: center; padding: 0 20px; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; color: var(--mid); border-right: 1px solid var(--rule); transition: all 0.15s; white-space: nowrap; }
+.nav-btn:hover { color: var(--ink); background: var(--rule); }
+.nav-btn-filled { background: var(--ink); color: var(--paper); border-right: none; }
+.nav-btn-filled:hover { background: var(--red); color: var(--white); }
+
+/* ── PAGE HEADER ── */
+.page-header { padding-top: 48px; border-bottom: 1px solid var(--ink); display: grid; grid-template-columns: 200px 1fr auto; }
+.ph-left { border-right: 1px solid var(--rule); padding: 32px 20px; display: flex; flex-direction: column; justify-content: space-between; }
+.ph-vol { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--red); letter-spacing: 0.14em; text-transform: uppercase; }
+.ph-vert { writing-mode: vertical-lr; transform: rotate(180deg); font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light); margin-top: 24px; }
+.ph-mid { padding: 32px 48px; }
+.ph-breadcrumb { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+.ph-breadcrumb a, .ph-breadcrumb span { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); text-decoration: none; transition: color 0.15s; }
+.ph-breadcrumb a:hover { color: var(--mid); }
+.ph-breadcrumb .sep { color: var(--red); }
+.ph-breadcrumb .current { color: var(--ink); }
+.page-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: clamp(56px, 7vw, 108px); line-height: 0.88; text-transform: uppercase; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 32px; }
+.page-title .red { color: var(--red); display: block; }
+.page-title .outline { -webkit-text-stroke: 1.5px var(--ink); color: transparent; display: block; }
+.ph-desc { font-size: 13px; line-height: 1.75; color: var(--mid); font-weight: 300; max-width: 480px; padding-top: 24px; border-top: 1px solid var(--rule); }
+.ph-right { border-left: 1px solid var(--rule); padding: 32px 24px; display: flex; flex-direction: column; gap: 24px; min-width: 160px; justify-content: center; }
+.ph-stat-n { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 48px; line-height: 1; color: var(--ink); display: block; }
+.ph-stat-l { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--light); display: block; margin-top: 2px; }
+
+/* ── ERA STRIP ── */
+.era-strip { border-bottom: 1px solid var(--ink); display: grid; grid-template-columns: 200px repeat(6, 1fr); }
+.era-strip-label { border-right: 1px solid var(--rule); padding: 14px 20px; display: flex; align-items: center; }
+.era-strip-label span { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
+.era-cell { border-right: 1px solid var(--rule); padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: background 0.15s; }
+.era-cell:last-child { border-right: none; }
+.era-cell:hover { background: var(--rule); }
+.era-cell.active { background: var(--ink); }
+.era-cell.active .ec-name { color: var(--paper); }
+.era-cell.active .ec-count { color: var(--red); }
+.ec-name { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); transition: color 0.15s; }
+.ec-count { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 18px; color: var(--light); line-height: 1; transition: color 0.15s; }
+
+/* ── MAIN LAYOUT ── */
+.labels-wrap { display: grid; grid-template-columns: 200px 1fr; border-bottom: 1px solid var(--ink); }
+.labels-sidebar { border-right: 1px solid var(--ink); padding: 32px 20px; display: flex; flex-direction: column; gap: 32px; }
+.sidebar-section-title { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--light); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+.sidebar-list { list-style: none; display: flex; flex-direction: column; }
+.sidebar-list li a { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); text-decoration: none; border-bottom: 1px solid var(--rule); transition: color 0.12s; }
+.sidebar-list li:last-child a { border-bottom: none; }
+.sidebar-list li a:hover { color: var(--ink); }
+.sidebar-list li a.active { color: var(--red); }
+.sidebar-list li a .count { font-size: 8px; color: var(--light); }
+.sidebar-list li a.active .count { color: var(--red); }
+
+/* ── TOOLBAR ── */
+.labels-toolbar { display: flex; align-items: stretch; border-bottom: 1px solid var(--rule); height: 40px; }
+.toolbar-search { flex: 1; display: flex; align-items: center; padding: 0 16px; gap: 10px; border-right: 1px solid var(--rule); }
+.toolbar-search input { flex: 1; border: none; background: transparent; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--ink); outline: none; }
+.toolbar-search input::placeholder { color: var(--light); }
+.search-icon { font-size: 14px; color: var(--light); }
+.toolbar-sort { display: flex; align-items: center; padding: 0 16px; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); border-right: 1px solid var(--rule); }
+.toolbar-count { display: flex; align-items: center; padding: 0 16px; font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--light); letter-spacing: 0.08em; }
+
+/* ── LABELS GRID ── */
+.labels-main {}
+.labels-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border-top: 1px solid var(--rule); }
+
+/* ── LABEL CARD ── */
+.label-card {
+  background: var(--white);
+  position: relative;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease, background 0.15s;
+}
+.label-card.visible { opacity: 1; transform: translateY(0); }
+.label-card:hover { background: var(--paper); }
+.label-card:hover .lc-arrow { opacity: 1; transform: translateX(0); }
+.label-card:hover .lc-name { color: var(--red); }
+
+/* Top accent bar — era colour coded */
+.lc-accent { height: 4px; width: 100%; }
+.era-50s { background: #8B7355; }
+.era-60s { background: #C4A030; }
+.era-70s { background: #D4502B; }
+.era-80s { background: #2B5BA8; }
+.era-90s { background: #2B8A3E; }
+.era-00s { background: #6B2BA8; }
+.era-multi { background: linear-gradient(90deg, #C4A030 0%, #D4502B 33%, #2B5BA8 66%, #2B8A3E 100%); }
+
+.lc-body { padding: 20px 22px; flex: 1; display: flex; flex-direction: column; gap: 16px; border-bottom: 1px solid var(--rule); }
+.lc-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.lc-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 28px; text-transform: uppercase; letter-spacing: 0.01em; color: var(--ink); line-height: 0.95; transition: color 0.15s; }
+.lc-country { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--light); margin-top: 4px; display: block; }
+.lc-count-block { text-align: right; flex-shrink: 0; }
+.lc-count-n { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 36px; color: var(--ink); line-height: 1; display: block; }
+.lc-count-l { font-family: 'IBM Plex Mono', monospace; font-size: 7px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--light); display: block; }
+
+.lc-meta { display: flex; flex-direction: column; gap: 6px; }
+.lc-meta-row { display: flex; align-items: flex-start; gap: 10px; }
+.lc-meta-key { font-family: 'IBM Plex Mono', monospace; font-size: 7px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--light); flex-shrink: 0; width: 56px; padding-top: 1px; }
+.lc-meta-val { font-family: 'Barlow', sans-serif; font-size: 11px; color: var(--mid); font-weight: 300; line-height: 1.4; }
+
+/* Notable releases — tiny cover row */
+.lc-releases { display: flex; gap: 4px; }
+.lc-release-thumb {
+  width: 32px; height: 32px;
+  border: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: border-color 0.15s;
+}
+.label-card:hover .lc-release-thumb { border-color: var(--light); }
+
+/* Genre tags */
+.lc-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.lc-tag { font-family: 'IBM Plex Mono', monospace; font-size: 7px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 7px; border: 1px solid var(--rule); color: var(--mid); }
+
+/* Footer row */
+.lc-footer { display: flex; align-items: center; justify-content: space-between; padding: 10px 22px; }
+.lc-era { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); }
+.lc-arrow { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--red); opacity: 0; transform: translateX(-4px); transition: all 0.2s; }
+
+/* ── FOOTER ── */
+footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: center; height: 48px; }
+.footer-logo-cell { border-right: 1px solid var(--rule); padding: 0 20px; height: 100%; display: flex; align-items: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); }
+.footer-logo-cell sup { color: var(--red); font-size: 7px; }
+.footer-mid { padding: 0 24px; font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); }
+.footer-right { padding: 0 24px; font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); border-left: 1px solid var(--rule); height: 100%; display: flex; align-items: center; }
+
+.reveal { opacity: 0; transform: translateY(16px); animation: revealUp 0.55s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+@keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
+.d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.15s; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo-cell">
+    <span class="nav-logo-mark">Pressings<sup>.xyz</sup></span>
+  </a>
+  <div class="nav-links-cell">
+    <ul class="nav-links">
+      <li><a href="index.html">Archive</a></li>
+      <li><a href="#">Formats</a></li>
+      <li><a href="designers.html">Designers</a></li>
+      <li><a href="labels.html" class="active">Labels</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </div>
+  <div class="nav-actions">
+    <a href="folders.html" class="nav-btn">My Folders</a>
+    <a href="#" class="nav-btn nav-btn-filled">Get Access</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="ph-left">
+    <span class="ph-vol">Index 03</span>
+    <span class="ph-vert">Record Labels</span>
+  </div>
+  <div class="ph-mid reveal d1">
+    <div class="ph-breadcrumb">
+      <a href="index.html">Archive</a>
+      <span class="sep">/</span>
+      <span class="current">Labels</span>
+    </div>
+    <h1 class="page-title">
+      The
+      <span class="red">Labels</span>
+      <span class="outline">Behind It</span>
+    </h1>
+    <p class="ph-desc">Every record label in the archive — the institutions, independents, and imprints whose visual identity shaped how music looks as much as how it sounds.</p>
+  </div>
+  <div class="ph-right reveal d2">
+    <div>
+      <span class="ph-stat-n">183</span>
+      <span class="ph-stat-l">Labels</span>
+    </div>
+    <div>
+      <span class="ph-stat-n" style="color:var(--red)">247</span>
+      <span class="ph-stat-l">Pressings</span>
+    </div>
+    <div>
+      <span class="ph-stat-n">14</span>
+      <span class="ph-stat-l">Countries</span>
+    </div>
+  </div>
+</header>
+
+<!-- ERA STRIP -->
+<div class="era-strip">
+  <div class="era-strip-label"><span>Filter by era</span></div>
+  <div class="era-cell active" onclick="filterEra(this,'all')"><span class="ec-name">All</span><span class="ec-count">183</span></div>
+  <div class="era-cell" onclick="filterEra(this,'1950s')"><span class="ec-name">1950s</span><span class="ec-count">12</span></div>
+  <div class="era-cell" onclick="filterEra(this,'1960s')"><span class="ec-name">1960s</span><span class="ec-count">28</span></div>
+  <div class="era-cell" onclick="filterEra(this,'1970s')"><span class="ec-name">1970s</span><span class="ec-count">41</span></div>
+  <div class="era-cell" onclick="filterEra(this,'1980s')"><span class="ec-name">1980s</span><span class="ec-count">52</span></div>
+  <div class="era-cell" onclick="filterEra(this,'1990s+')"><span class="ec-name">1990s+</span><span class="ec-count">50</span></div>
+</div>
+
+<!-- MAIN -->
+<div class="labels-wrap">
+
+  <!-- Sidebar -->
+  <aside class="labels-sidebar">
+    <div>
+      <p class="sidebar-section-title">Country</p>
+      <ul class="sidebar-list">
+        <li><a href="#" class="active" data-filter="country" data-val="all">All <span class="count">183</span></a></li>
+        <li><a href="#" data-filter="country" data-val="usa">USA <span class="count">74</span></a></li>
+        <li><a href="#" data-filter="country" data-val="uk">UK <span class="count">61</span></a></li>
+        <li><a href="#" data-filter="country" data-val="germany">Germany <span class="count">18</span></a></li>
+        <li><a href="#" data-filter="country" data-val="japan">Japan <span class="count">14</span></a></li>
+        <li><a href="#" data-filter="country" data-val="france">France <span class="count">9</span></a></li>
+        <li><a href="#" data-filter="country" data-val="other">Other <span class="count">7</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="sidebar-section-title">Genre Focus</p>
+      <ul class="sidebar-list">
+        <li><a href="#" data-filter="genre" data-val="all">All <span class="count">183</span></a></li>
+        <li><a href="#" data-filter="genre" data-val="jazz">Jazz <span class="count">32</span></a></li>
+        <li><a href="#" data-filter="genre" data-val="rock">Rock <span class="count">44</span></a></li>
+        <li><a href="#" data-filter="genre" data-val="electronic">Electronic <span class="count">28</span></a></li>
+        <li><a href="#" data-filter="genre" data-val="soul">Soul / R&B <span class="count">19</span></a></li>
+        <li><a href="#" data-filter="genre" data-val="classical">Classical <span class="count">14</span></a></li>
+        <li><a href="#" data-filter="genre" data-val="indie">Indie <span class="count">22</span></a></li>
+        <li><a href="#" data-filter="genre" data-val="experimental">Experimental <span class="count">11</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="sidebar-section-title">Type</p>
+      <ul class="sidebar-list">
+        <li><a href="#" data-filter="type" data-val="all">All <span class="count">183</span></a></li>
+        <li><a href="#" data-filter="type" data-val="major">Major <span class="count">48</span></a></li>
+        <li><a href="#" data-filter="type" data-val="independent">Independent <span class="count">112</span></a></li>
+        <li><a href="#" data-filter="type" data-val="imprint">Imprint <span class="count">23</span></a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <div class="labels-main">
+    <div class="labels-toolbar">
+      <div class="toolbar-search">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="labelSearch" placeholder="Search labels, artists, country..." oninput="filterLabels()">
+      </div>
+      <div class="toolbar-sort">Sort: <span style="color:var(--ink);margin-left:4px;">Most Pressings</span></div>
+      <div class="toolbar-count" id="labelCount">12 labels</div>
+    </div>
+
+    <div class="labels-grid" id="labelsGrid">
+
+      <!-- Columbia -->
+      <div class="label-card" data-era="1950s" data-country="usa" data-genre="jazz rock" data-type="major" data-name="columbia">
+        <div class="lc-accent era-multi"></div>
+        <div class="lc-body">
+          <div class="lc-header">
+            <div>
+              <div class="lc-name">Columbia</div>
+              <span class="lc-country">USA · Est. 1888</span>
+            </div>
+            <div class="lc-count-block">
+              <span class="lc-count-n">24</span>
+              <span class="lc-count-l">Pressings</span>
+            </div>
+          </div>
+          <div class="lc-meta">
+            <div class="lc-meta-row"><span class="lc-meta-key">Type</span><span class="lc-meta-val">Major · Now Sony Music</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Known for</span><span class="lc-meta-val">Miles Davis, Bob Dylan, Bruce Springsteen, Simon & Garfunkel</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Designer</span><span class="lc-meta-val">Neil Fujita, Bob Cato</span></div>
+          </div>
+          <div class="lc-releases">
+            <div class="lc-release-thumb" style="background:#e2dfd6;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" stroke="rgba(15,15,15,0.15)" stroke-width="1" fill="none"/><circle cx="20" cy="20" r="4" fill="rgba(15,15,15,0.1)"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e0ddd4;"><svg width="70%" viewBox="0 0 40 40"><rect x="6" y="6" width="28" height="28" stroke="rgba(15,15,15,0.12)" stroke-width="1" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e8e5dc;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" stroke="rgba(15,15,15,0.1)" stroke-width="1" fill="none" stroke-dasharray="2 3"/></svg></div>
+            <div class="lc-release-thumb" style="background:#dbd8cf;"><svg width="70%" viewBox="0 0 40 40"><polygon points="20,4 36,32 4,32" stroke="rgba(15,15,15,0.12)" stroke-width="1" fill="none"/></svg></div>
+          </div>
+          <div class="lc-tags"><span class="lc-tag">Jazz</span><span class="lc-tag">Rock</span><span class="lc-tag">Folk</span><span class="lc-tag">Soul</span></div>
+        </div>
+        <div class="lc-footer">
+          <span class="lc-era">1888 — Present</span>
+          <span class="lc-arrow">→</span>
+        </div>
+      </div>
+
+      <!-- Blue Note -->
+      <div class="label-card" data-era="1950s" data-country="usa" data-genre="jazz" data-type="independent" data-name="blue note">
+        <div class="lc-accent era-50s"></div>
+        <div class="lc-body">
+          <div class="lc-header">
+            <div>
+              <div class="lc-name">Blue Note</div>
+              <span class="lc-country">USA · Est. 1939</span>
+            </div>
+            <div class="lc-count-block">
+              <span class="lc-count-n">18</span>
+              <span class="lc-count-l">Pressings</span>
+            </div>
+          </div>
+          <div class="lc-meta">
+            <div class="lc-meta-row"><span class="lc-meta-key">Type</span><span class="lc-meta-val">Independent · Now Universal</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Known for</span><span class="lc-meta-val">Art Blakey, John Coltrane, Thelonious Monk, Herbie Hancock</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Designer</span><span class="lc-meta-val">Reid Miles · Francis Wolff (photo)</span></div>
+          </div>
+          <div class="lc-releases">
+            <div class="lc-release-thumb" style="background:#e5e2d9;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" stroke="rgba(15,15,15,0.15)" stroke-width="1" fill="none"/><circle cx="20" cy="20" r="3" fill="rgba(15,15,15,0.12)"/></svg></div>
+            <div class="lc-release-thumb" style="background:#dddad1;"><svg width="70%" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" stroke="rgba(15,15,15,0.12)" stroke-width="1" fill="rgba(15,15,15,0.04)"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e3e0d7;"><svg width="70%" viewBox="0 0 40 40"><line x1="20" y1="4" x2="20" y2="36" stroke="rgba(15,15,15,0.1)" stroke-width="1"/><line x1="4" y1="20" x2="36" y2="20" stroke="rgba(15,15,15,0.1)" stroke-width="1"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e8e4dc;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" stroke="rgba(15,15,15,0.08)" fill="none"/><circle cx="20" cy="20" r="8" stroke="rgba(15,15,15,0.08)" fill="none"/></svg></div>
+          </div>
+          <div class="lc-tags"><span class="lc-tag">Jazz</span><span class="lc-tag">Hard Bop</span><span class="lc-tag">Soul Jazz</span></div>
+        </div>
+        <div class="lc-footer">
+          <span class="lc-era">1939 — Present</span>
+          <span class="lc-arrow">→</span>
+        </div>
+      </div>
+
+      <!-- Factory -->
+      <div class="label-card" data-era="1980s" data-country="uk" data-genre="rock indie" data-type="independent" data-name="factory">
+        <div class="lc-accent era-80s"></div>
+        <div class="lc-body">
+          <div class="lc-header">
+            <div>
+              <div class="lc-name">Factory</div>
+              <span class="lc-country">UK · Est. 1978</span>
+            </div>
+            <div class="lc-count-block">
+              <span class="lc-count-n">14</span>
+              <span class="lc-count-l">Pressings</span>
+            </div>
+          </div>
+          <div class="lc-meta">
+            <div class="lc-meta-row"><span class="lc-meta-key">Type</span><span class="lc-meta-val">Independent · Dissolved 1992</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Known for</span><span class="lc-meta-val">Joy Division, New Order, Happy Mondays, The Durutti Column</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Designer</span><span class="lc-meta-val">Peter Saville</span></div>
+          </div>
+          <div class="lc-releases">
+            <div class="lc-release-thumb" style="background:#dce4e8;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" stroke="rgba(15,15,15,0.1)" fill="none"/><circle cx="20" cy="20" r="10" stroke="rgba(15,15,15,0.07)" fill="none"/><circle cx="20" cy="20" r="4" stroke="rgba(15,15,15,0.07)" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#dde4e8;"><svg width="70%" viewBox="0 0 40 40"><rect x="6" y="6" width="28" height="28" stroke="rgba(15,15,15,0.1)" fill="rgba(15,15,15,0.03)"/><rect x="12" y="12" width="16" height="16" fill="rgba(15,15,15,0.04)"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e4dde8;"><svg width="70%" viewBox="0 0 40 40"><polygon points="20,5 35,30 5,30" stroke="rgba(15,15,15,0.1)" stroke-width="1" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e8e0dc;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" stroke="rgba(15,15,15,0.1)" stroke-width="1" fill="none" stroke-dasharray="2 2"/></svg></div>
+          </div>
+          <div class="lc-tags"><span class="lc-tag">Post-Punk</span><span class="lc-tag">New Wave</span><span class="lc-tag">Electronic</span></div>
+        </div>
+        <div class="lc-footer">
+          <span class="lc-era">1978 — 1992</span>
+          <span class="lc-arrow">→</span>
+        </div>
+      </div>
+
+      <!-- ECM -->
+      <div class="label-card" data-era="1970s" data-country="germany" data-genre="jazz experimental" data-type="independent" data-name="ecm">
+        <div class="lc-accent era-70s"></div>
+        <div class="lc-body">
+          <div class="lc-header">
+            <div>
+              <div class="lc-name">ECM</div>
+              <span class="lc-country">Germany · Est. 1969</span>
+            </div>
+            <div class="lc-count-block">
+              <span class="lc-count-n">11</span>
+              <span class="lc-count-l">Pressings</span>
+            </div>
+          </div>
+          <div class="lc-meta">
+            <div class="lc-meta-row"><span class="lc-meta-key">Type</span><span class="lc-meta-val">Independent · Active</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Known for</span><span class="lc-meta-val">Keith Jarrett, Pat Metheny, Jan Garbarek, Arvo Pärt</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Designer</span><span class="lc-meta-val">Barbara Wojirsch · Dieter Rehm</span></div>
+          </div>
+          <div class="lc-releases">
+            <div class="lc-release-thumb" style="background:#e8e4dc;"><svg width="70%" viewBox="0 0 40 40"><rect x="4" y="18" width="32" height="4" fill="rgba(15,15,15,0.08)"/><rect x="18" y="4" width="4" height="32" fill="rgba(15,15,15,0.08)"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e4e8dc;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" stroke="rgba(15,15,15,0.12)" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#dce8e0;"><svg width="70%" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" stroke="rgba(15,15,15,0.1)" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e8e0dc;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" stroke="rgba(15,15,15,0.08)" fill="rgba(15,15,15,0.03)"/><circle cx="20" cy="20" r="4" fill="rgba(15,15,15,0.08)"/></svg></div>
+          </div>
+          <div class="lc-tags"><span class="lc-tag">Jazz</span><span class="lc-tag">Contemporary Classical</span><span class="lc-tag">Ambient</span></div>
+        </div>
+        <div class="lc-footer">
+          <span class="lc-era">1969 — Present</span>
+          <span class="lc-arrow">→</span>
+        </div>
+      </div>
+
+      <!-- 4AD -->
+      <div class="label-card" data-era="1980s" data-country="uk" data-genre="indie rock experimental" data-type="independent" data-name="4ad">
+        <div class="lc-accent era-80s"></div>
+        <div class="lc-body">
+          <div class="lc-header">
+            <div>
+              <div class="lc-name">4AD</div>
+              <span class="lc-country">UK · Est. 1979</span>
+            </div>
+            <div class="lc-count-block">
+              <span class="lc-count-n">9</span>
+              <span class="lc-count-l">Pressings</span>
+            </div>
+          </div>
+          <div class="lc-meta">
+            <div class="lc-meta-row"><span class="lc-meta-key">Type</span><span class="lc-meta-val">Independent · Active</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Known for</span><span class="lc-meta-val">Cocteau Twins, The Pixies, Throwing Muses, Dead Can Dance</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Designer</span><span class="lc-meta-val">Vaughan Oliver (v23)</span></div>
+          </div>
+          <div class="lc-releases">
+            <div class="lc-release-thumb" style="background:#e4dde8;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" stroke="rgba(15,15,15,0.1)" fill="rgba(15,15,15,0.03)"/><polygon points="20,8 30,28 10,28" stroke="rgba(15,15,15,0.08)" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#dce4e8;"><svg width="70%" viewBox="0 0 40 40"><rect x="6" y="14" width="28" height="12" stroke="rgba(15,15,15,0.1)" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e8dce4;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" stroke="rgba(15,15,15,0.08)" fill="none" stroke-dasharray="1 3"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e4e8dc;"><svg width="70%" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="12" stroke="rgba(15,15,15,0.1)" fill="none"/></svg></div>
+          </div>
+          <div class="lc-tags"><span class="lc-tag">Dream Pop</span><span class="lc-tag">Gothic</span><span class="lc-tag">Alternative</span></div>
+        </div>
+        <div class="lc-footer">
+          <span class="lc-era">1979 — Present</span>
+          <span class="lc-arrow">→</span>
+        </div>
+      </div>
+
+      <!-- Warp -->
+      <div class="label-card" data-era="1990s+" data-country="uk" data-genre="electronic experimental" data-type="independent" data-name="warp">
+        <div class="lc-accent era-90s"></div>
+        <div class="lc-body">
+          <div class="lc-header">
+            <div>
+              <div class="lc-name">Warp</div>
+              <span class="lc-country">UK · Est. 1989</span>
+            </div>
+            <div class="lc-count-block">
+              <span class="lc-count-n">7</span>
+              <span class="lc-count-l">Pressings</span>
+            </div>
+          </div>
+          <div class="lc-meta">
+            <div class="lc-meta-row"><span class="lc-meta-key">Type</span><span class="lc-meta-val">Independent · Active</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Known for</span><span class="lc-meta-val">Aphex Twin, Boards of Canada, Autechre, Squarepusher</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Designer</span><span class="lc-meta-val">The Designers Republic</span></div>
+          </div>
+          <div class="lc-releases">
+            <div class="lc-release-thumb" style="background:#dce8e4;"><svg width="70%" viewBox="0 0 40 40"><rect x="6" y="6" width="28" height="28" stroke="rgba(15,15,15,0.1)" fill="none"/><line x1="6" y1="20" x2="34" y2="20" stroke="rgba(15,15,15,0.08)"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e4e8dc;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" stroke="rgba(15,15,15,0.08)" fill="none"/><rect x="14" y="14" width="12" height="12" fill="rgba(15,15,15,0.06)"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e8e4dc;"><svg width="70%" viewBox="0 0 40 40"><polygon points="20,4 36,32 4,32" stroke="rgba(15,15,15,0.08)" fill="rgba(15,15,15,0.03)"/></svg></div>
+            <div class="lc-release-thumb" style="background:#dde4e8;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" stroke="rgba(15,15,15,0.1)" fill="none"/><circle cx="20" cy="20" r="6" fill="rgba(15,15,15,0.06)"/></svg></div>
+          </div>
+          <div class="lc-tags"><span class="lc-tag">IDM</span><span class="lc-tag">Techno</span><span class="lc-tag">Experimental</span></div>
+        </div>
+        <div class="lc-footer">
+          <span class="lc-era">1989 — Present</span>
+          <span class="lc-arrow">→</span>
+        </div>
+      </div>
+
+      <!-- Rough Trade -->
+      <div class="label-card" data-era="1980s" data-country="uk" data-genre="indie rock" data-type="independent" data-name="rough trade">
+        <div class="lc-accent era-80s"></div>
+        <div class="lc-body">
+          <div class="lc-header">
+            <div>
+              <div class="lc-name">Rough Trade</div>
+              <span class="lc-country">UK · Est. 1978</span>
+            </div>
+            <div class="lc-count-block">
+              <span class="lc-count-n">6</span>
+              <span class="lc-count-l">Pressings</span>
+            </div>
+          </div>
+          <div class="lc-meta">
+            <div class="lc-meta-row"><span class="lc-meta-key">Type</span><span class="lc-meta-val">Independent · Active</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Known for</span><span class="lc-meta-val">The Smiths, Strokes, Arcade Fire, Sufjan Stevens</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Designer</span><span class="lc-meta-val">Various · Morrissey era Caryn Gough</span></div>
+          </div>
+          <div class="lc-releases">
+            <div class="lc-release-thumb" style="background:#e8e4dc;"><svg width="70%" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" stroke="rgba(15,15,15,0.1)" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e0ddd4;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" stroke="rgba(15,15,15,0.12)" fill="none"/><circle cx="20" cy="20" r="3" fill="rgba(15,15,15,0.1)"/></svg></div>
+            <div class="lc-release-thumb" style="background:#dbd8cf;"><svg width="70%" viewBox="0 0 40 40"><polygon points="20,5 35,30 5,30" stroke="rgba(15,15,15,0.1)" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e8e5dc;"><svg width="70%" viewBox="0 0 40 40"><line x1="4" y1="12" x2="36" y2="12" stroke="rgba(15,15,15,0.08)"/><line x1="4" y1="20" x2="36" y2="20" stroke="rgba(15,15,15,0.08)"/><line x1="4" y1="28" x2="36" y2="28" stroke="rgba(15,15,15,0.08)"/></svg></div>
+          </div>
+          <div class="lc-tags"><span class="lc-tag">Indie Rock</span><span class="lc-tag">Post-Punk</span><span class="lc-tag">Alternative</span></div>
+        </div>
+        <div class="lc-footer">
+          <span class="lc-era">1978 — Present</span>
+          <span class="lc-arrow">→</span>
+        </div>
+      </div>
+
+      <!-- Harvest -->
+      <div class="label-card" data-era="1970s" data-country="uk" data-genre="rock" data-type="imprint" data-name="harvest">
+        <div class="lc-accent era-70s"></div>
+        <div class="lc-body">
+          <div class="lc-header">
+            <div>
+              <div class="lc-name">Harvest</div>
+              <span class="lc-country">UK · Est. 1969</span>
+            </div>
+            <div class="lc-count-block">
+              <span class="lc-count-n">7</span>
+              <span class="lc-count-l">Pressings</span>
+            </div>
+          </div>
+          <div class="lc-meta">
+            <div class="lc-meta-row"><span class="lc-meta-key">Type</span><span class="lc-meta-val">Imprint of EMI · Dissolved 1994</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Known for</span><span class="lc-meta-val">Pink Floyd, Electric Light Orchestra, Soft Machine, Syd Barrett</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Designer</span><span class="lc-meta-val">Hipgnosis · Storm Thorgerson</span></div>
+          </div>
+          <div class="lc-releases">
+            <div class="lc-release-thumb" style="background:#e2dfd6;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" stroke="rgba(15,15,15,0.1)" fill="none" stroke-dasharray="2 3"/><circle cx="20" cy="20" r="3" fill="rgba(212,43,43,0.15)"/></svg></div>
+            <div class="lc-release-thumb" style="background:#dddad1;"><svg width="70%" viewBox="0 0 40 40"><rect x="6" y="6" width="28" height="28" stroke="rgba(15,15,15,0.1)" fill="none" rx="14"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e5e2d9;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" stroke="rgba(15,15,15,0.12)" fill="none"/><circle cx="20" cy="20" r="10" stroke="rgba(15,15,15,0.06)" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e3e0d7;"><svg width="70%" viewBox="0 0 40 40"><polygon points="20,4 36,34 4,34" stroke="rgba(15,15,15,0.1)" fill="rgba(15,15,15,0.03)"/></svg></div>
+          </div>
+          <div class="lc-tags"><span class="lc-tag">Progressive Rock</span><span class="lc-tag">Psychedelic</span><span class="lc-tag">Art Rock</span></div>
+        </div>
+        <div class="lc-footer">
+          <span class="lc-era">1969 — 1994</span>
+          <span class="lc-arrow">→</span>
+        </div>
+      </div>
+
+      <!-- Go! Discs -->
+      <div class="label-card" data-era="1990s+" data-country="uk" data-genre="rock indie" data-type="independent" data-name="go discs">
+        <div class="lc-accent era-90s"></div>
+        <div class="lc-body">
+          <div class="lc-header">
+            <div>
+              <div class="lc-name">Go! Discs</div>
+              <span class="lc-country">UK · Est. 1983</span>
+            </div>
+            <div class="lc-count-block">
+              <span class="lc-count-n">5</span>
+              <span class="lc-count-l">Pressings</span>
+            </div>
+          </div>
+          <div class="lc-meta">
+            <div class="lc-meta-row"><span class="lc-meta-key">Type</span><span class="lc-meta-val">Independent · Dissolved 1998</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Known for</span><span class="lc-meta-val">Portishead, Billy Bragg, The La's, Gomez</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Designer</span><span class="lc-meta-val">Nick Turner · Various</span></div>
+          </div>
+          <div class="lc-releases">
+            <div class="lc-release-thumb" style="background:#dbd8cf;"><svg width="70%" viewBox="0 0 40 40"><polygon points="20,5 34,30 6,30" stroke="rgba(15,15,15,0.12)" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e8e5dc;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" stroke="rgba(15,15,15,0.1)" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e2dfd6;"><svg width="70%" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" stroke="rgba(15,15,15,0.1)" fill="rgba(15,15,15,0.03)"/></svg></div>
+            <div class="lc-release-thumb" style="background:#dddad1;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" stroke="rgba(15,15,15,0.08)" fill="none" stroke-dasharray="1 2"/></svg></div>
+          </div>
+          <div class="lc-tags"><span class="lc-tag">Trip-Hop</span><span class="lc-tag">Indie</span><span class="lc-tag">Alternative</span></div>
+        </div>
+        <div class="lc-footer">
+          <span class="lc-era">1983 — 1998</span>
+          <span class="lc-arrow">→</span>
+        </div>
+      </div>
+
+      <!-- Sire -->
+      <div class="label-card" data-era="1980s" data-country="usa" data-genre="rock" data-type="imprint" data-name="sire">
+        <div class="lc-accent era-80s"></div>
+        <div class="lc-body">
+          <div class="lc-header">
+            <div>
+              <div class="lc-name">Sire</div>
+              <span class="lc-country">USA · Est. 1966</span>
+            </div>
+            <div class="lc-count-block">
+              <span class="lc-count-n">8</span>
+              <span class="lc-count-l">Pressings</span>
+            </div>
+          </div>
+          <div class="lc-meta">
+            <div class="lc-meta-row"><span class="lc-meta-key">Type</span><span class="lc-meta-val">Imprint of Warner · Active</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Known for</span><span class="lc-meta-val">Talking Heads, Ramones, Madonna, The Pretenders, Depeche Mode</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Designer</span><span class="lc-meta-val">M&Co (Tibor Kalman) · Various</span></div>
+          </div>
+          <div class="lc-releases">
+            <div class="lc-release-thumb" style="background:#dde4e8;"><svg width="70%" viewBox="0 0 40 40"><rect x="6" y="6" width="28" height="28" stroke="rgba(15,15,15,0.12)" fill="none"/><rect x="14" y="14" width="12" height="12" fill="rgba(15,15,15,0.06)"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e4dde8;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" stroke="rgba(15,15,15,0.1)" fill="none"/><circle cx="20" cy="20" r="5" fill="rgba(15,15,15,0.08)"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e8dce4;"><svg width="70%" viewBox="0 0 40 40"><line x1="4" y1="20" x2="36" y2="20" stroke="rgba(15,15,15,0.1)"/><circle cx="20" cy="20" r="10" stroke="rgba(15,15,15,0.08)" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#dce4e8;"><svg width="70%" viewBox="0 0 40 40"><polygon points="20,4 36,32 4,32" stroke="rgba(15,15,15,0.08)" fill="none"/></svg></div>
+          </div>
+          <div class="lc-tags"><span class="lc-tag">New Wave</span><span class="lc-tag">Punk</span><span class="lc-tag">Pop</span></div>
+        </div>
+        <div class="lc-footer">
+          <span class="lc-era">1966 — Present</span>
+          <span class="lc-arrow">→</span>
+        </div>
+      </div>
+
+      <!-- Wild Bunch -->
+      <div class="label-card" data-era="1990s+" data-country="uk" data-genre="electronic" data-type="independent" data-name="wild bunch">
+        <div class="lc-accent era-90s"></div>
+        <div class="lc-body">
+          <div class="lc-header">
+            <div>
+              <div class="lc-name">Wild Bunch</div>
+              <span class="lc-country">UK · Est. 1987</span>
+            </div>
+            <div class="lc-count-block">
+              <span class="lc-count-n">4</span>
+              <span class="lc-count-l">Pressings</span>
+            </div>
+          </div>
+          <div class="lc-meta">
+            <div class="lc-meta-row"><span class="lc-meta-key">Type</span><span class="lc-meta-val">Independent · Became Virgin / Circa</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Known for</span><span class="lc-meta-val">Massive Attack, Tricky, early Bristol sound</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Designer</span><span class="lc-meta-val">Tom Hingston · Various</span></div>
+          </div>
+          <div class="lc-releases">
+            <div class="lc-release-thumb" style="background:#e8dce4;"><svg width="70%" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="12" stroke="rgba(15,15,15,0.1)" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#dce8e0;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" stroke="rgba(15,15,15,0.08)" fill="none"/><rect x="14" y="14" width="12" height="12" stroke="rgba(15,15,15,0.06)" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e4e8dc;"><svg width="70%" viewBox="0 0 40 40"><line x1="20" y1="4" x2="20" y2="36" stroke="rgba(15,15,15,0.1)"/><line x1="4" y1="20" x2="36" y2="20" stroke="rgba(15,15,15,0.1)"/><circle cx="20" cy="20" r="6" stroke="rgba(15,15,15,0.08)" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e8e0dc;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" stroke="rgba(15,15,15,0.1)" fill="rgba(15,15,15,0.02)"/></svg></div>
+          </div>
+          <div class="lc-tags"><span class="lc-tag">Trip-Hop</span><span class="lc-tag">Hip-Hop</span><span class="lc-tag">Soul</span></div>
+        </div>
+        <div class="lc-footer">
+          <span class="lc-era">1987 — 1992</span>
+          <span class="lc-arrow">→</span>
+        </div>
+      </div>
+
+      <!-- Warner -->
+      <div class="label-card" data-era="1960s" data-country="usa" data-genre="rock soul" data-type="major" data-name="warner">
+        <div class="lc-accent era-multi"></div>
+        <div class="lc-body">
+          <div class="lc-header">
+            <div>
+              <div class="lc-name">Warner</div>
+              <span class="lc-country">USA · Est. 1958</span>
+            </div>
+            <div class="lc-count-block">
+              <span class="lc-count-n">9</span>
+              <span class="lc-count-l">Pressings</span>
+            </div>
+          </div>
+          <div class="lc-meta">
+            <div class="lc-meta-row"><span class="lc-meta-key">Type</span><span class="lc-meta-val">Major · Warner Music Group</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Known for</span><span class="lc-meta-val">Prince, Fleetwood Mac, Van Morrison, R.E.M., Madonna</span></div>
+            <div class="lc-meta-row"><span class="lc-meta-key">Designer</span><span class="lc-meta-val">Various in-house</span></div>
+          </div>
+          <div class="lc-releases">
+            <div class="lc-release-thumb" style="background:#e8e4dc;"><svg width="70%" viewBox="0 0 40 40"><line x1="20" y1="2" x2="20" y2="38" stroke="rgba(15,15,15,0.1)"/><circle cx="20" cy="20" r="12" stroke="rgba(15,15,15,0.08)" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#dce8e4;"><svg width="70%" viewBox="0 0 40 40"><rect x="6" y="6" width="28" height="28" stroke="rgba(15,15,15,0.1)" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e0ddd4;"><svg width="70%" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" stroke="rgba(15,15,15,0.1)" fill="none"/><circle cx="20" cy="20" r="8" stroke="rgba(15,15,15,0.06)" fill="none"/></svg></div>
+            <div class="lc-release-thumb" style="background:#e8dce4;"><svg width="70%" viewBox="0 0 40 40"><polygon points="20,5 35,31 5,31" stroke="rgba(15,15,15,0.08)" fill="rgba(15,15,15,0.03)"/></svg></div>
+          </div>
+          <div class="lc-tags"><span class="lc-tag">Rock</span><span class="lc-tag">Pop</span><span class="lc-tag">R&B</span><span class="lc-tag">Funk</span></div>
+        </div>
+        <div class="lc-footer">
+          <span class="lc-era">1958 — Present</span>
+          <span class="lc-arrow">→</span>
+        </div>
+      </div>
+
+    </div><!-- /labels-grid -->
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo-cell">Pressings<sup>.xyz</sup></div>
+  <div class="footer-mid">© 2025 · Built by a collector, for designers</div>
+  <div class="footer-right">Vol. 01 — Est. 2025</div>
+</footer>
+
+<script>
+  // Entrance animation
+  const cards = document.querySelectorAll('.label-card');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  cards.forEach(c => obs.observe(c));
+
+  // State
+  let activeEra = 'all';
+  let activeCountry = 'all';
+  let activeGenre = 'all';
+  let activeType = 'all';
+  let searchQuery = '';
+
+  function applyFilters() {
+    let visible = 0;
+    cards.forEach(card => {
+      const era     = card.dataset.era || '';
+      const country = card.dataset.country || '';
+      const genre   = card.dataset.genre || '';
+      const type    = card.dataset.type || '';
+      const name    = card.dataset.name || '';
+      const text    = card.textContent.toLowerCase();
+
+      const matchEra     = activeEra === 'all' || era === activeEra;
+      const matchCountry = activeCountry === 'all' || country === activeCountry;
+      const matchGenre   = activeGenre === 'all' || genre.includes(activeGenre);
+      const matchType    = activeType === 'all' || type === activeType;
+      const matchSearch  = searchQuery === '' || text.includes(searchQuery);
+
+      const show = matchEra && matchCountry && matchGenre && matchType && matchSearch;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    document.getElementById('labelCount').textContent = visible + ' label' + (visible !== 1 ? 's' : '');
+  }
+
+  // Era filter
+  function filterEra(el, era) {
+    document.querySelectorAll('.era-cell').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    activeEra = era;
+    applyFilters();
+  }
+
+  // Sidebar filters
+  document.querySelectorAll('.sidebar-list a').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const parent = a.closest('.sidebar-list');
+      parent.querySelectorAll('a').forEach(x => x.classList.remove('active'));
+      a.classList.add('active');
+      const filter = a.dataset.filter;
+      const val = a.dataset.val;
+      if (filter === 'country') activeCountry = val;
+      if (filter === 'genre') activeGenre = val;
+      if (filter === 'type') activeType = val;
+      applyFilters();
+    });
+  });
+
+  // Search
+  document.getElementById('labelSearch').addEventListener('input', function() {
+    searchQuery = this.value.trim().toLowerCase();
+    applyFilters();
+  });
+
+  // Card clicks — placeholder for now
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const name = card.dataset.name;
+      if (name === 'columbia') window.location = 'record.html';
+    });
+  });
+</script>
+</body>
+</html>
