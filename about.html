@@ -140,6 +140,60 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
 @keyframes revealUp { to { opacity:1;transform:translateY(0); } }
 .d1{animation-delay:0.05s}.d2{animation-delay:0.15s}.d3{animation-delay:0.25s}
 .placeholder { background:rgba(212,43,43,0.08);border-bottom:1px dashed var(--red);color:var(--red);font-style:italic; }
+
+/* ── HAMBURGER ── */
+.nav-hamburger { display:none; flex-direction:column; justify-content:center; gap:5px; padding:0 20px; cursor:pointer; background:none; border:none; border-left:1px solid var(--rule); height:100%; }
+.nav-hamburger span { display:block; width:20px; height:1.5px; background:var(--ink); transition:all 0.2s; }
+.nav-hamburger.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity:0; }
+.nav-hamburger.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+.mobile-menu { display:none; position:fixed; top:48px; left:0; right:0; background:var(--paper); border-bottom:1px solid var(--ink); z-index:190; flex-direction:column; }
+.mobile-menu.open { display:flex; }
+.mobile-menu a { font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--mid); text-decoration:none; padding:16px 24px; border-bottom:1px solid var(--rule); transition:color 0.15s; }
+.mobile-menu a:hover { color:var(--ink); }
+.mobile-menu a.filled { background:var(--ink); color:var(--paper); border-bottom:none; }
+.mobile-menu a.filled:hover { background:var(--red); }
+@media (max-width:768px) {
+  nav { grid-template-columns:1fr auto; }
+  .nav-links-cell { display:none; }
+  .nav-actions { display:none; }
+  .nav-hamburger { display:flex; }
+  footer { grid-template-columns:1fr; height:auto; }
+  .footer-logo-cell { border-right:none; border-bottom:1px solid var(--rule); padding:16px 20px; height:auto; }
+  .footer-mid { padding:12px 20px; border-bottom:1px solid var(--rule); }
+  .footer-right { border-left:none; padding:12px 20px; height:auto; }
+
+  .about-hero { grid-template-columns:1fr; min-height:unset; }
+  .hero-left { border-right:none; border-bottom:1px solid var(--rule); padding:16px 20px; flex-direction:row; align-items:center; gap:16px; }
+  .hero-vert { display:none; }
+  .hero-mid { padding:32px 20px; }
+  .about-title { font-size:clamp(52px,13vw,80px); margin-bottom:28px; }
+  .about-statement p { font-size:13px; }
+  .quick-facts { gap:20px; padding-top:24px; }
+  .qf-n { font-size:28px; }
+  .hero-right { border-left:none; border-top:1px solid var(--rule); }
+  .what-section { grid-template-columns:1fr; }
+  .ws-left { display:none; }
+  .ws-col { padding:32px 20px; border-right:none; border-bottom:1px solid var(--rule); }
+  .ws-col:last-child { border-bottom:none; }
+  .diff-section { grid-template-columns:1fr; }
+  .diff-left { display:none; }
+  .diff-right { padding:32px 20px; }
+  .diff-heading { font-size:clamp(32px,9vw,48px); }
+  .diff-table { font-size:11px; }
+  .diff-table td { padding:10px 8px; }
+  .diff-table td:first-child { width:120px; }
+  .built-section { grid-template-columns:1fr; }
+  .bs-left { display:none; }
+  .bs-col { padding:32px 20px; border-right:none; border-bottom:1px solid var(--rule); }
+  .bs-col:last-child { border-bottom:none; }
+  .colophon { grid-template-columns:1fr; }
+  .colophon-left { display:none; }
+  .colophon-mid { padding:32px 20px; }
+  .colophon-heading { font-size:clamp(36px,10vw,56px); }
+  .colophon-right { border-left:none; border-top:1px solid var(--rule); padding:28px 20px; flex-direction:row; flex-wrap:wrap; gap:16px; }
+  .cta-row { flex-wrap:wrap; }
+}
 </style>
 </head>
 <body>
@@ -159,7 +213,18 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
     <a href="folders.html" class="nav-btn">My Folders</a>
     <a href="#" class="nav-btn nav-btn-filled">Get Access</a>
   </div>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Archive</a>
+  <a href="formats.html">Formats</a>
+  <a href="designers.html">Designers</a>
+  <a href="labels.html">Labels</a>
+  <a href="about.html">About</a>
+  <a href="folders.html">My Folders</a>
+  <a href="#" class="filled">Get Access</a>
+</div>
 
 <!-- HERO -->
 <section class="about-hero">
@@ -209,7 +274,7 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
     <div class="hr-section">
       <span class="hr-label">Contact</span>
       <ul class="contact-list">
-        <li><a href="mailto:hello@pressings.xyz">Email <span>→</span></a></li>
+        <li><a href="/cdn-cgi/l/email-protection#59313c35353619292b3c2a2a30373e2a77212023">Email <span>→</span></a></li>
         <li><a href="#" target="_blank">Instagram <span>↗</span></a></li>
         <li><a href="#" target="_blank">LinkedIn <span>↗</span></a></li>
         <li><a href="#" target="_blank">Are.na <span>↗</span></a></li>
@@ -287,7 +352,7 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
     <h2 class="colophon-heading">Say<br><span class="red">Hello</span></h2>
     <p class="colophon-body">If you work in physical music packaging, run a label, or are a designer whose work appears in the archive — I'd love to hear from you. I'm also open to collaboration, commissions, and conversations about design.</p>
     <div class="cta-row">
-      <a href="mailto:hello@pressings.xyz" class="cta-primary">Send an Email →</a>
+      <a href="/cdn-cgi/l/email-protection#325a575e5e5d7242405741415b5c55411c4a4b48" class="cta-primary">Send an Email →</a>
       <a href="index.html" class="cta-secondary">Browse the Archive</a>
     </div>
   </div>
@@ -303,8 +368,3 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
 <footer>
   <div class="footer-logo-cell">Pressings<sup>.xyz</sup></div>
   <div class="footer-mid">© 2025 · Built by a collector, for designers</div>
-  <div class="footer-right">Vol. 01 — Est. 2025</div>
-</footer>
-
-</body>
-</html>

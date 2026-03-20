@@ -180,6 +180,63 @@ footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: cent
 .reveal { opacity: 0; transform: translateY(16px); animation: revealUp 0.55s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
 @keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
 .d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.15s; }
+
+/* ── HAMBURGER ── */
+.nav-hamburger { display:none; flex-direction:column; justify-content:center; gap:5px; padding:0 20px; cursor:pointer; background:none; border:none; border-left:1px solid var(--rule); height:100%; }
+.nav-hamburger span { display:block; width:20px; height:1.5px; background:var(--ink); transition:all 0.2s; }
+.nav-hamburger.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity:0; }
+.nav-hamburger.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+.mobile-menu { display:none; position:fixed; top:48px; left:0; right:0; background:var(--paper); border-bottom:1px solid var(--ink); z-index:190; flex-direction:column; }
+.mobile-menu.open { display:flex; }
+.mobile-menu a { font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--mid); text-decoration:none; padding:16px 24px; border-bottom:1px solid var(--rule); transition:color 0.15s; }
+.mobile-menu a:hover { color:var(--ink); }
+.mobile-menu a.filled { background:var(--ink); color:var(--paper); border-bottom:none; }
+.mobile-menu a.filled:hover { background:var(--red); }
+@media (max-width:768px) {
+  nav { grid-template-columns:1fr auto; }
+  .nav-links-cell { display:none; }
+  .nav-actions { display:none; }
+  .nav-hamburger { display:flex; }
+  footer { grid-template-columns:1fr; height:auto; }
+  .footer-logo-cell { border-right:none; border-bottom:1px solid var(--rule); padding:16px 20px; height:auto; }
+  .footer-mid { padding:12px 20px; border-bottom:1px solid var(--rule); }
+  .footer-right { border-left:none; padding:12px 20px; height:auto; }
+
+  .page-header { grid-template-columns:1fr; }
+  .ph-left { border-right:none; border-bottom:1px solid var(--rule); padding:16px 20px; flex-direction:row; align-items:center; gap:16px; }
+  .ph-vert { display:none; }
+  .ph-mid { padding:32px 20px; }
+  .page-title { font-size:clamp(48px,13vw,72px); }
+  .ph-right { border-left:none; border-top:1px solid var(--rule); display:grid; grid-template-columns:repeat(3,1fr); padding:0; }
+  .ph-right > div { padding:16px; border-right:1px solid var(--rule); }
+  .ph-right > div:last-child { border-right:none; }
+  .ph-stat-n { font-size:28px; }
+  .format-nav { grid-template-columns:repeat(4,1fr); top:48px; }
+  .fn-label { display:none; }
+  .fn-cell { padding:10px 8px; }
+  .fnc-count { font-size:14px; }
+  .format-section-header { grid-template-columns:1fr; }
+  .fsh-left { border-right:none; border-bottom:1px solid var(--rule); padding:16px 20px; flex-direction:row; align-items:center; gap:16px; }
+  .fsh-illustration { display:none; }
+  .fsh-mid { padding:24px 20px; }
+  .fsh-title { font-size:clamp(36px,10vw,56px); }
+  .fsh-right { border-left:none; border-top:1px solid var(--rule); flex-direction:row; padding:0; gap:0; }
+  .fsh-stat { flex:1; padding:16px; border-right:1px solid var(--rule); }
+  .fsh-stat:last-child { border-right:none; }
+  .fsh-stat-n { font-size:28px; }
+  .fsh-toggle { display:none; }
+  .format-section-body { grid-template-columns:1fr; }
+  .fsb-sidebar { border-right:none; border-bottom:1px solid var(--rule); padding:16px 20px; }
+  .sub-format-list { flex-direction:row; flex-wrap:wrap; gap:4px; }
+  .sub-format-list li { border-bottom:none; }
+  .sub-format-btn { border:1px solid var(--rule); padding:5px 10px; font-size:8px; }
+  .sub-format-btn.active { background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  .fsb-main { padding:20px; }
+  .spec-header { flex-direction:column; gap:16px; }
+  .spec-grid { grid-template-columns:1fr; }
+  .spec-cell.full { grid-column:1; }
+}
 </style>
 </head>
 <body>
@@ -199,7 +256,18 @@ footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: cent
     <a href="folders.html" class="nav-btn">My Folders</a>
     <a href="#" class="nav-btn nav-btn-filled">Get Access</a>
   </div>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Archive</a>
+  <a href="formats.html">Formats</a>
+  <a href="designers.html">Designers</a>
+  <a href="labels.html">Labels</a>
+  <a href="about.html">About</a>
+  <a href="folders.html">My Folders</a>
+  <a href="#" class="filled">Get Access</a>
+</div>
 
 <!-- PAGE HEADER -->
 <header class="page-header">
@@ -929,6 +997,9 @@ footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: cent
 </footer>
 
 <script>
+  function toggleMenu(){var m=document.getElementById('mobileMenu'),b=document.getElementById('hamburger');m.classList.toggle('open');b.classList.toggle('open');}
+  document.addEventListener('click',function(e){var m=document.getElementById('mobileMenu'),b=document.getElementById('hamburger');if(m&&b&&!m.contains(e.target)&&!b.contains(e.target)){m.classList.remove('open');b.classList.remove('open');}});
+
   // Format nav active state
   function setFormatNav(el) {
     document.querySelectorAll('.fn-cell').forEach(c => c.classList.remove('active'));

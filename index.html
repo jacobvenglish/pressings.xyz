@@ -720,6 +720,131 @@ footer {
 .d2 { animation-delay: 0.15s; }
 .d3 { animation-delay: 0.25s; }
 .d4 { animation-delay: 0.35s; }
+
+/* ── HAMBURGER (hidden on desktop) ── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 20px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-left: 1px solid var(--rule);
+  height: 100%;
+}
+.nav-hamburger span {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background: var(--ink);
+  transition: all 0.2s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile drawer */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 48px; left: 0; right: 0;
+  background: var(--paper);
+  border-bottom: 1px solid var(--ink);
+  z-index: 190;
+  flex-direction: column;
+  padding: 0;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mid);
+  text-decoration: none;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--rule);
+  transition: color 0.15s;
+}
+.mobile-menu a:hover { color: var(--ink); }
+.mobile-menu a.active { color: var(--ink); }
+.mobile-menu a.filled { background: var(--ink); color: var(--paper); border-bottom: none; }
+.mobile-menu a.filled:hover { background: var(--red); }
+
+/* ── MOBILE BREAKPOINT ── */
+@media (max-width: 768px) {
+
+  /* Nav */
+  nav { grid-template-columns: 1fr auto; }
+  .nav-links-cell { display: none; }
+  .nav-actions { display: none; }
+  .nav-hamburger { display: flex; }
+
+  /* Hero top strip */
+  .hero-top { grid-template-columns: 1fr; }
+  .hero-index { border-right: none; border-bottom: 1px solid var(--rule); }
+  .hero-breadcrumb { border-right: none; border-bottom: 1px solid var(--rule); overflow-x: auto; }
+  .hero-count { display: none; }
+
+  /* Hero main */
+  .hero-main { grid-template-columns: 1fr; }
+  .hero-col-a { display: none; }
+  .hero-col-b { padding: 32px 20px; }
+  .hero-tagline { font-size: clamp(52px, 14vw, 80px); margin-bottom: 24px; }
+  .hero-desc-row { flex-direction: column; gap: 24px; }
+  .hero-cta-block { flex-direction: row; flex-wrap: wrap; }
+  .hero-col-c {
+    border-left: none;
+    border-top: 1px solid var(--rule);
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 0;
+    min-width: unset;
+  }
+  .hero-col-c > div {
+    flex: 1;
+    min-width: 80px;
+    padding: 20px 16px;
+    border-right: 1px solid var(--rule);
+  }
+  .hero-col-c > div:last-child { border-right: none; }
+  .stat-n { font-size: 32px; }
+
+  /* Format strip */
+  .format-strip { grid-template-columns: repeat(3, 1fr); }
+  .format-strip-label { display: none; }
+  .format-pill-cell { padding: 12px 10px; }
+  .fp-count { font-size: 14px; }
+
+  /* Archive layout */
+  .archive-wrap { grid-template-columns: 1fr; }
+  .archive-sidebar { display: none; }
+
+  /* Toolbar */
+  .toolbar-sort { display: none; }
+  .archive-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Load row */
+  .load-row { padding: 20px; }
+
+  /* Manifesto */
+  .manifesto { grid-template-columns: 1fr; }
+  .manifesto-left { display: none; }
+  .manifesto-mid { padding: 40px 20px; border-right: none; border-bottom: 1px solid var(--rule); }
+  .manifesto-right { padding: 32px 20px; }
+
+  /* Footer */
+  footer { grid-template-columns: 1fr; height: auto; }
+  .footer-logo-cell { border-right: none; border-bottom: 1px solid var(--rule); padding: 16px 20px; height: auto; }
+  .footer-mid { padding: 12px 20px; border-bottom: 1px solid var(--rule); }
+  .footer-right { border-left: none; border-bottom: none; padding: 12px 20px; height: auto; }
+
+  /* General spacing */
+  .cta-primary, .cta-secondary { padding: 12px 18px; font-size: 9px; }
+}
 </style>
 </head>
 <body>
@@ -741,7 +866,20 @@ footer {
     <a href="folders.html" class="nav-btn">My Folders</a>
     <a href="#" class="nav-btn nav-btn-filled">Get Access</a>
   </div>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" class="active">Archive</a>
+  <a href="formats.html">Formats</a>
+  <a href="designers.html">Designers</a>
+  <a href="labels.html">Labels</a>
+  <a href="about.html">About</a>
+  <a href="folders.html">My Folders</a>
+  <a href="#" class="filled">Get Access</a>
+</div>
 
 <section class="hero">
   <div class="hero-top">
@@ -934,6 +1072,23 @@ footer {
 </footer>
 
 <script>
+  // ── HAMBURGER MENU ──
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const btn = document.getElementById('hamburger');
+    menu.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+  // Close menu on outside click
+  document.addEventListener('click', e => {
+    const menu = document.getElementById('mobileMenu');
+    const btn = document.getElementById('hamburger');
+    if (!menu.contains(e.target) && !btn.contains(e.target)) {
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+    }
+  });
+
   // ── STATE ──
   let activeFormat = 'all';
   let activePackaging = 'all';
