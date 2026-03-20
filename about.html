@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Pressings.xyz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; scroll-behavior: smooth; }
+:root { --paper:#f4f1eb;--ink:#0f0f0f;--mid:#6b6b6b;--light:#c8c4bb;--rule:#d4d0c8;--red:#d42b2b;--white:#ffffff; }
+body { background:var(--paper);color:var(--ink);font-family:'Barlow',sans-serif;font-weight:400;overflow-x:hidden;cursor:crosshair; }
+body::before { content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:0.022;pointer-events:none;z-index:1000; }
+nav { position:fixed;top:0;left:0;right:0;z-index:200;background:var(--paper);border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr auto;align-items:stretch;height:48px; }
+.nav-logo-cell { border-right:1px solid var(--ink);display:flex;align-items:center;padding:0 20px;text-decoration:none; }
+.nav-logo-mark { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;letter-spacing:0.04em;text-transform:uppercase;color:var(--ink); }
+.nav-logo-mark sup { font-size:9px;color:var(--red);vertical-align:super;margin-left:1px; }
+.nav-links-cell { display:flex;align-items:center;padding:0 24px; }
+.nav-links { display:flex;list-style:none;gap:32px; }
+.nav-links a { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color 0.15s; }
+.nav-links a:hover { color:var(--ink); }
+.nav-links a.active { color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:1px; }
+.nav-actions { display:flex;align-items:stretch;border-left:1px solid var(--ink); }
+.nav-btn { display:flex;align-items:center;padding:0 20px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;color:var(--mid);border-right:1px solid var(--rule);transition:all 0.15s;white-space:nowrap; }
+.nav-btn:hover { color:var(--ink);background:var(--rule); }
+.nav-btn-filled { background:var(--ink);color:var(--paper);border-right:none; }
+.nav-btn-filled:hover { background:var(--red);color:var(--white); }
+
+/* HERO */
+.about-hero { padding-top:48px;border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr 300px;min-height:70vh; }
+.hero-left { border-right:1px solid var(--rule);padding:40px 20px;display:flex;flex-direction:column;justify-content:space-between; }
+.hero-index { font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--red);letter-spacing:0.14em;text-transform:uppercase; }
+.hero-vert { writing-mode:vertical-lr;transform:rotate(180deg);font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--light);margin-top:24px; }
+.hero-site-mark { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--light); }
+.hero-site-mark span { color:var(--red); }
+.hero-mid { padding:48px;display:flex;flex-direction:column;justify-content:space-between; }
+.about-title { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(64px,9vw,140px);line-height:0.88;text-transform:uppercase;letter-spacing:-0.02em;color:var(--ink);margin-bottom:48px; }
+.about-title .red { color:var(--red);display:block; }
+.about-title .outline { -webkit-text-stroke:1.5px var(--ink);color:transparent;display:block; }
+.about-statement { max-width:560px; }
+.about-statement p { font-size:14px;line-height:1.85;color:var(--ink);font-weight:300;margin-bottom:20px; }
+.about-statement p:last-child { margin-bottom:0; }
+.about-statement strong { font-weight:500; }
+.about-statement em { font-style:italic;color:var(--mid); }
+.quick-facts { display:flex;gap:40px;padding-top:40px;border-top:1px solid var(--rule); }
+.qf-n { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:40px;color:var(--ink);line-height:1;display:block; }
+.qf-l { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--light);display:block;margin-top:3px; }
+.hero-right { border-left:1px solid var(--rule);display:flex;flex-direction:column; }
+.hr-section { padding:24px;border-bottom:1px solid var(--rule); }
+.hr-section:last-child { border-bottom:none;flex:1; }
+.hr-label { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--light);margin-bottom:14px;display:block; }
+.contact-list { list-style:none;display:flex;flex-direction:column; }
+.contact-list li { border-bottom:1px solid var(--rule); }
+.contact-list li:last-child { border-bottom:none; }
+.contact-list a { display:flex;align-items:center;justify-content:space-between;padding:9px 0;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color 0.15s; }
+.contact-list a:hover { color:var(--red); }
+.availability { display:flex;align-items:center;gap:10px; }
+.status-dot { width:8px;height:8px;border-radius:50%;background:#3B6D11;flex-shrink:0;animation:pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+.status-text { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid); }
+.status-text strong { color:var(--ink);font-weight:500; }
+
+/* WHAT THIS IS */
+.what-section { border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr 1fr; }
+.ws-left { border-right:1px solid var(--rule);padding:48px 20px;display:flex;align-items:flex-end; }
+.ws-vert { writing-mode:vertical-lr;transform:rotate(180deg);font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--red); }
+.ws-col { padding:48px;border-right:1px solid var(--rule); }
+.ws-col:last-child { border-right:none; }
+.ws-heading { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;text-transform:uppercase;color:var(--ink);margin-bottom:16px;display:flex;align-items:center;gap:10px; }
+.ws-num { color:var(--red);font-size:11px;font-family:'IBM Plex Mono',monospace;letter-spacing:0.1em; }
+.ws-body { font-size:13px;line-height:1.8;color:var(--mid);font-weight:300; }
+.ws-body strong { font-weight:500;color:var(--ink); }
+.ws-body a { color:var(--ink);border-bottom:1px solid var(--rule); }
+
+/* DIFF TABLE */
+.diff-section { border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr; }
+.diff-left { border-right:1px solid var(--rule);padding:48px 20px;display:flex;align-items:flex-end; }
+.diff-left-vert { writing-mode:vertical-lr;transform:rotate(180deg);font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--light); }
+.diff-right { padding:48px; }
+.diff-heading { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(36px,4vw,60px);text-transform:uppercase;line-height:0.92;color:var(--ink);margin-bottom:40px;letter-spacing:-0.01em; }
+.diff-heading .red { color:var(--red); }
+.diff-heading .outline { -webkit-text-stroke:1.5px var(--ink);color:transparent; }
+.diff-table { width:100%;border-collapse:collapse; }
+.diff-table thead th { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--light);font-weight:400;text-align:left;padding:8px 16px;border-bottom:1px solid var(--rule); }
+.diff-table thead th:first-child { padding-left:0; }
+.diff-table tbody tr { border-bottom:1px solid var(--rule); }
+.diff-table tbody tr:last-child { border-bottom:none; }
+.diff-table td { padding:14px 16px;font-size:13px;vertical-align:top; }
+.diff-table td:first-child { padding-left:0;font-weight:500;color:var(--ink);width:180px; }
+.diff-table td:nth-child(2) { color:var(--mid);font-weight:300; }
+.diff-table td:nth-child(3) { color:var(--ink); }
+.check { color:var(--red);font-family:'IBM Plex Mono',monospace;font-size:11px; }
+.cross { color:var(--light);font-family:'IBM Plex Mono',monospace;font-size:11px; }
+
+/* HOW IT'S BUILT */
+.built-section { border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr 1fr; }
+.bs-left { border-right:1px solid var(--rule);padding:48px 20px;display:flex;align-items:flex-end; }
+.bs-vert { writing-mode:vertical-lr;transform:rotate(180deg);font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--light); }
+.bs-col { padding:48px;border-right:1px solid var(--rule); }
+.bs-col:last-child { border-right:none; }
+.bs-title { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--light);margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--rule); }
+.tool-list { list-style:none;display:flex;flex-direction:column; }
+.tool-item { display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule); }
+.tool-item:last-child { border-bottom:none; }
+.tool-num { font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--red);letter-spacing:0.1em;flex-shrink:0;margin-top:2px; }
+.tool-name { font-family:'Barlow',sans-serif;font-size:13px;font-weight:500;color:var(--ink);display:block; }
+.tool-desc { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.08em;color:var(--light);display:block;margin-top:2px; }
+.scan-spec-list { list-style:none;display:flex;flex-direction:column; }
+.scan-spec-item { display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--rule); }
+.scan-spec-item:last-child { border-bottom:none; }
+.ss-key { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);flex-shrink:0; }
+.ss-val { font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink);text-align:right; }
+
+/* COLOPHON */
+.colophon { display:grid;grid-template-columns:200px 1fr auto;border-bottom:1px solid var(--ink); }
+.colophon-left { border-right:1px solid var(--rule);padding:48px 20px;display:flex;align-items:flex-end; }
+.colophon-mid { padding:48px; }
+.colophon-heading { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(40px,5vw,72px);text-transform:uppercase;line-height:0.92;letter-spacing:-0.01em;color:var(--ink);margin-bottom:24px; }
+.colophon-heading .red { color:var(--red); }
+.colophon-body { font-size:13px;line-height:1.8;color:var(--mid);font-weight:300;max-width:480px;margin-bottom:32px; }
+.cta-row { display:flex;gap:12px;align-items:center; }
+.cta-primary { display:inline-block;padding:12px 24px;background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;transition:background 0.15s; }
+.cta-primary:hover { background:var(--red); }
+.cta-secondary { display:inline-block;padding:12px 24px;background:transparent;color:var(--mid);font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;border:1px solid var(--rule);transition:all 0.15s; }
+.cta-secondary:hover { border-color:var(--ink);color:var(--ink); }
+.colophon-right { border-left:1px solid var(--rule);padding:48px 32px;display:flex;flex-direction:column;justify-content:center;gap:20px;min-width:200px; }
+.cm-key { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--light);display:block;margin-bottom:4px; }
+.cm-val { font-family:'Barlow',sans-serif;font-size:13px;font-weight:500;color:var(--ink);display:block; }
+
+/* FOOTER */
+footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;height:48px; }
+.footer-logo-cell { border-right:1px solid var(--rule);padding:0 20px;height:100%;display:flex;align-items:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink); }
+.footer-logo-cell sup { color:var(--red);font-size:7px; }
+.footer-mid { padding:0 24px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light); }
+.footer-right { padding:0 24px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light);border-left:1px solid var(--rule);height:100%;display:flex;align-items:center; }
+
+.reveal { opacity:0;transform:translateY(16px);animation:revealUp 0.55s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+@keyframes revealUp { to { opacity:1;transform:translateY(0); } }
+.d1{animation-delay:0.05s}.d2{animation-delay:0.15s}.d3{animation-delay:0.25s}
+.placeholder { background:rgba(212,43,43,0.08);border-bottom:1px dashed var(--red);color:var(--red);font-style:italic; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo-cell"><span class="nav-logo-mark">Pressings<sup>.xyz</sup></span></a>
+  <div class="nav-links-cell">
+    <ul class="nav-links">
+      <li><a href="index.html">Archive</a></li>
+      <li><a href="formats.html">Formats</a></li>
+      <li><a href="designers.html">Designers</a></li>
+      <li><a href="labels.html">Labels</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+    </ul>
+  </div>
+  <div class="nav-actions">
+    <a href="folders.html" class="nav-btn">My Folders</a>
+    <a href="#" class="nav-btn nav-btn-filled">Get Access</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="about-hero">
+  <div class="hero-left">
+    <div>
+      <span class="hero-index">About</span>
+      <span class="hero-vert">Pressings.xyz</span>
+    </div>
+    <span class="hero-site-mark">Pressings<span>.</span>xyz</span>
+  </div>
+
+  <div class="hero-mid">
+    <div>
+      <h1 class="about-title reveal d1">
+        Built
+        <span class="red">By A</span>
+        <span class="outline">Collector</span>
+      </h1>
+      <div class="about-statement reveal d2">
+        <p>Pressings.xyz is a personal archive of physical music packaging. It was built by <strong><span class="placeholder">Your Name</span></strong>, a designer and collector based in <strong><span class="placeholder">Your City</span></strong>, who has spent years accumulating records, CDs, and cassettes — and paying as much attention to the sleeve as to the music inside it.</p>
+        <p>This started as a personal reference library. Every time a record arrived with particularly considered typography, an unexpected print finish, or a gatefold that opened to reveal something worth studying — it went into a folder. Eventually that folder became a system. The system became this site.</p>
+        <p>The goal is to be the resource that didn't exist when I started learning about packaging design — <em>a proper archive that credits the designers, documents the production specs, and treats the sleeve as seriously as the music.</em></p>
+      </div>
+    </div>
+    <div class="quick-facts reveal d3">
+      <div><span class="qf-n">247</span><span class="qf-l">Pressings</span></div>
+      <div><span class="qf-n">94</span><span class="qf-l">Designers</span></div>
+      <div><span class="qf-n">183</span><span class="qf-l">Labels</span></div>
+      <div><span class="qf-n" style="color:var(--red)">2025</span><span class="qf-l">Est.</span></div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hr-section">
+      <span class="hr-label">The person behind it</span>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;text-transform:uppercase;color:var(--ink);line-height:1;margin-bottom:6px;"><span class="placeholder">Your Name</span></div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);margin-bottom:12px;">Designer &amp; Collector · <span class="placeholder">Your City</span></div>
+      <p style="font-size:12px;line-height:1.7;color:var(--mid);font-weight:300;"><span class="placeholder">One or two sentences about yourself — your design background, where you studied, what you're working toward.</span></p>
+    </div>
+    <div class="hr-section">
+      <span class="hr-label">Status</span>
+      <div class="availability">
+        <div class="status-dot"></div>
+        <div class="status-text"><strong>Open</strong> to work &amp; collaboration</div>
+      </div>
+    </div>
+    <div class="hr-section">
+      <span class="hr-label">Contact</span>
+      <ul class="contact-list">
+        <li><a href="mailto:hello@pressings.xyz">Email <span>→</span></a></li>
+        <li><a href="#" target="_blank">Instagram <span>↗</span></a></li>
+        <li><a href="#" target="_blank">LinkedIn <span>↗</span></a></li>
+        <li><a href="#" target="_blank">Are.na <span>↗</span></a></li>
+      </ul>
+    </div>
+    <div class="hr-section">
+      <span class="hr-label">Currently</span>
+      <p style="font-size:12px;line-height:1.7;color:var(--mid);font-weight:300;"><span class="placeholder">What you're doing right now — studying, working somewhere, looking for opportunities in packaging design.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT THIS IS -->
+<section class="what-section">
+  <div class="ws-left"><span class="ws-vert">What this is</span></div>
+  <div class="ws-col">
+    <h2 class="ws-heading"><span class="ws-num">01</span> Not a database</h2>
+    <p class="ws-body">Discogs is a database. It catalogues what exists. Pressings.xyz is an archive — it studies <strong>how things were made</strong>. Every entry is scanned by hand, tagged with production details, and credited to the designers and photographers who made it. The focus is always the packaging as a designed object.</p>
+  </div>
+  <div class="ws-col">
+    <h2 class="ws-heading"><span class="ws-num">02</span> A design resource</h2>
+    <p class="ws-body">The archive is built to be useful to working designers. Every entry includes print finish, packaging type, and any special production features. The <a href="formats.html">Formats</a> section is a full technical reference for anyone designing physical music packaging. Designer credits are searchable and cross-referenced across labels, eras, and aesthetics.</p>
+  </div>
+</section>
+
+<!-- DIFF TABLE -->
+<section class="diff-section">
+  <div class="diff-left"><span class="diff-left-vert">Pressings vs Discogs</span></div>
+  <div class="diff-right">
+    <h2 class="diff-heading">Different<br><span class="red">Thing</span><br><span class="outline">Entirely</span></h2>
+    <table class="diff-table">
+      <thead><tr><th>Feature</th><th>Discogs</th><th>Pressings.xyz</th></tr></thead>
+      <tbody>
+        <tr><td>Focus</td><td>Release identification &amp; trading</td><td>Packaging design &amp; production</td></tr>
+        <tr><td>Design credits</td><td><span class="cross">✕</span> Rarely listed</td><td><span class="check">→</span> Always sought, always credited</td></tr>
+        <tr><td>High-res scans</td><td><span class="cross">✕</span> User photos, variable quality</td><td><span class="check">→</span> 600dpi flatbed scans, consistent</td></tr>
+        <tr><td>Print specs</td><td><span class="cross">✕</span> Not documented</td><td><span class="check">→</span> Finish, board, packaging type</td></tr>
+        <tr><td>Format reference</td><td><span class="cross">✕</span> Not included</td><td><span class="check">→</span> Full technical spec library</td></tr>
+        <tr><td>Prices &amp; market</td><td><span class="check">→</span> Yes</td><td><span class="cross">✕</span> Not the point</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- HOW IT'S BUILT -->
+<section class="built-section">
+  <div class="bs-left"><span class="bs-vert">How it's built</span></div>
+  <div class="bs-col">
+    <p class="bs-title">Tools &amp; workflow</p>
+    <ul class="tool-list">
+      <li class="tool-item"><span class="tool-num">01</span><div><span class="tool-name">Flatbed Scanner</span><span class="tool-desc">600 dpi · RGB · TIFF master files</span></div></li>
+      <li class="tool-item"><span class="tool-num">02</span><div><span class="tool-name">Airtable</span><span class="tool-desc">Archive database · metadata, credits, scan attachments</span></div></li>
+      <li class="tool-item"><span class="tool-num">03</span><div><span class="tool-name">GitHub Pages</span><span class="tool-desc">Static site hosting · free · version controlled</span></div></li>
+      <li class="tool-item"><span class="tool-num">04</span><div><span class="tool-name">HTML / CSS / JS</span><span class="tool-desc">Hand-coded · no framework · one file per page</span></div></li>
+      <li class="tool-item"><span class="tool-num">05</span><div><span class="tool-name">Discogs</span><span class="tool-desc">Reference for pressing verification only</span></div></li>
+    </ul>
+  </div>
+  <div class="bs-col">
+    <p class="bs-title">Scanning standard</p>
+    <ul class="scan-spec-list">
+      <li class="scan-spec-item"><span class="ss-key">Resolution</span><span class="ss-val">600 dpi</span></li>
+      <li class="scan-spec-item"><span class="ss-key">Colour mode</span><span class="ss-val">RGB</span></li>
+      <li class="scan-spec-item"><span class="ss-key">Master format</span><span class="ss-val">TIFF</span></li>
+      <li class="scan-spec-item"><span class="ss-key">Web format</span><span class="ss-val">JPG · 90% quality</span></li>
+      <li class="scan-spec-item"><span class="ss-key">What is scanned</span><span class="ss-val">Front, back, spine, inner sleeve, gatefold, booklet, labels, disc, inserts</span></li>
+      <li class="scan-spec-item"><span class="ss-key">Naming</span><span class="ss-val">001_Artist_Title_FRONT.tif</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- COLOPHON -->
+<section class="colophon">
+  <div class="colophon-left"><span class="bs-vert">Get in touch</span></div>
+  <div class="colophon-mid">
+    <h2 class="colophon-heading">Say<br><span class="red">Hello</span></h2>
+    <p class="colophon-body">If you work in physical music packaging, run a label, or are a designer whose work appears in the archive — I'd love to hear from you. I'm also open to collaboration, commissions, and conversations about design.</p>
+    <div class="cta-row">
+      <a href="mailto:hello@pressings.xyz" class="cta-primary">Send an Email →</a>
+      <a href="index.html" class="cta-secondary">Browse the Archive</a>
+    </div>
+  </div>
+  <div class="colophon-right">
+    <div><span class="cm-key">Site</span><span class="cm-val">Pressings.xyz</span></div>
+    <div><span class="cm-key">Launched</span><span class="cm-val">2025</span></div>
+    <div><span class="cm-key">Built with</span><span class="cm-val">HTML · CSS · JS</span></div>
+    <div><span class="cm-key">Hosted on</span><span class="cm-val">GitHub Pages</span></div>
+    <div><span class="cm-key">Location</span><span class="cm-val"><span class="placeholder">Your City</span></span></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo-cell">Pressings<sup>.xyz</sup></div>
+  <div class="footer-mid">© 2025 · Built by a collector, for designers</div>
+  <div class="footer-right">Vol. 01 — Est. 2025</div>
+</footer>
+
+</body>
+</html>
