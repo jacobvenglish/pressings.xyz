@@ -246,6 +246,35 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
   .footer-logo-cell { border-right:none; border-bottom:1px solid var(--rule); padding:16px 20px; height:auto; }
   .footer-mid { padding:12px 20px; border-bottom:1px solid var(--rule); }
   .footer-right { border-left:none; padding:12px 20px; height:auto; }
+  /* ── TOP OVERLAP FIX ── */
+  .record-header { padding-top: 48px; position: relative; z-index: 1; }
+  .rh-left { 
+    border-right: none; 
+    border-bottom: 1px solid var(--rule); 
+    padding: 20px 20px 16px;
+    flex-direction: column; 
+    align-items: flex-start; 
+    gap: 10px;
+    min-height: unset;
+  }
+  .rh-id { font-size: 9px; }
+  .rh-format-block { 
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    margin-top: 0; 
+    gap: 4px;
+  }
+  .rh-format-tag { font-size: 7px; padding: 3px 6px; }
+  .record-nav { 
+    position: relative; 
+    z-index: 1;
+    grid-template-columns: 1fr;
+  }
+  .record-nav-divider { display: none; }
+  .record-nav-cell { padding: 18px 20px; border-bottom: 1px solid var(--rule); }
+  .record-nav-cell.next { justify-content: flex-start; text-align: left; }
+  .rnc-title { font-size: 16px; }
+  .rnc-artist { font-size: 8px; }
 }.nav-links-cell,.nav-actions{display:none}.nav-hamburger{display:flex}
   .record-header{grid-template-columns:1fr}.rh-left{border-right:none;border-bottom:1px solid var(--rule);padding:16px 20px;flex-direction:row;gap:12px;align-items:center}.rh-format-block{flex-direction:row;flex-wrap:wrap;margin-top:0}.rh-mid{padding:24px 20px}.record-title{font-size:clamp(28px,8vw,48px)}.rh-right{border-left:none;border-top:1px solid var(--rule);display:grid;grid-template-columns:1fr 1fr;padding:0}.meta-row{padding:12px 16px;border-right:1px solid var(--rule)}.meta-row:nth-child(even){border-right:none}
   .scan-section-header{grid-template-columns:1fr}.ssh-label{display:none}.ssh-tabs{padding:0 16px;overflow-x:auto}.scan-tab{font-size:8px;padding:0 10px}.scan-grid-wrap{grid-template-columns:1fr}.scan-sidebar{display:none}.scan-main{padding:12px}.scan-grid{grid-template-columns:repeat(2,1fr)}
