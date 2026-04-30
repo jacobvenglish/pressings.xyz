@@ -221,7 +221,43 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
 .d1{animation-delay:0.05s}.d2{animation-delay:0.12s}.d3{animation-delay:0.2s}
 
 @media (max-width:768px) {
-  nav { grid-template-columns:1fr auto; }
+  /* ── MOBILE RECORD PAGE FIXES ── */
+  .record-header { padding-top: 48px; }
+  .rh-left { border-right:none; border-bottom:1px solid var(--rule); padding:16px 20px; flex-direction:column; align-items:flex-start; gap:8px; }
+  .rh-format-block { flex-direction:row; flex-wrap:wrap; margin-top:4px; }
+  .rh-mid { padding:24px 20px; }
+  .rh-breadcrumb { flex-wrap:wrap; row-gap:4px; }
+  .record-title { font-size:clamp(36px,10vw,56px); margin-top:8px; }
+  .record-artist { font-size:clamp(18px,5vw,28px); }
+  .record-subtitle { font-size:10px; }
+  .rh-right { border-left:none; border-top:1px solid var(--rule); display:grid; grid-template-columns:1fr 1fr; padding:0; }
+  .meta-row { padding:12px 16px; border-bottom:1px solid var(--rule); border-right:1px solid var(--rule); }
+  .meta-row:nth-child(even) { border-right:none; }
+  .meta-row:last-child { border-bottom:none; }
+  .scan-section-header { grid-template-columns:1fr; }
+  .ssh-label { display:none; }
+  .ssh-tabs { padding:0 16px; overflow-x:auto; gap:0; }
+  .scan-tab { font-size:8px; padding:0 10px; flex-shrink:0; }
+  .scan-grid-wrap { grid-template-columns:1fr; }
+  .scan-sidebar { display:none; }
+  .scan-main { padding:12px; }
+  .scan-grid { grid-template-columns:repeat(2,1fr); }
+  .info-section { grid-template-columns:1fr; }
+  .info-left { display:none; }
+  .info-mid { padding:28px 20px; border-right:none; border-bottom:1px solid var(--rule); }
+  .info-right { padding:28px 20px; }
+  .production-grid { grid-template-columns:1fr; }
+  .prod-cell { border-right:none !important; }
+  .credits-table td:first-child { width:120px; padding-right:12px; }
+  .record-nav { grid-template-columns:1fr; }
+  .record-nav-divider { display:none; }
+  .record-nav-cell { padding:20px; border-bottom:1px solid var(--rule); }
+  .record-nav-cell.next { justify-content:flex-start; text-align:left; }
+  footer { grid-template-columns:1fr; height:auto; }
+  .footer-logo-cell { border-right:none; border-bottom:1px solid var(--rule); padding:16px 20px; height:auto; }
+  .footer-mid { padding:12px 20px; border-bottom:1px solid var(--rule); }
+  .footer-right { border-left:none; padding:12px 20px; height:auto; }
+}
   .nav-links-cell,.nav-actions { display:none; }
   .nav-hamburger { display:flex; }
   .record-header { grid-template-columns:1fr; }
