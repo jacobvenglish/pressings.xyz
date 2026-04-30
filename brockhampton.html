@@ -35,7 +35,7 @@ nav { position:fixed;top:0;left:0;right:0;z-index:200;background:var(--paper);bo
 .mobile-menu.open { display:flex; }
 .mobile-menu a { font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);text-decoration:none;padding:16px 24px;border-bottom:1px solid var(--rule);transition:color 0.15s; }
 .mobile-menu a.filled { background:var(--ink);color:var(--paper);border-bottom:none; }
-.record-header { padding-top:48px;border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr auto; }
+.record-header { padding-top:48px;border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr auto;position:relative;z-index:1; }
 .rh-left { border-right:1px solid var(--rule);padding:32px 20px;display:flex;flex-direction:column;justify-content:space-between; }
 .rh-id { font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--red);letter-spacing:0.14em;text-transform:uppercase; }
 .rh-format-block { display:flex;flex-direction:column;gap:4px;margin-top:24px; }
@@ -189,7 +189,7 @@ nav { position:fixed;top:0;left:0;right:0;z-index:200;background:var(--paper);bo
 .rel-title { font-family:'Barlow',sans-serif;font-size:11px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;transition:color 0.12s; }
 .rel-artist { font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--light);letter-spacing:0.06em;display:block;margin-top:1px; }
 .rel-year { font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--light);flex-shrink:0; }
-.record-nav { display:grid;grid-template-columns:1fr 1px 1fr;border-bottom:1px solid var(--ink); }
+.record-nav { display:grid;grid-template-columns:1fr 1px 1fr;border-bottom:1px solid var(--ink);position:relative;z-index:1; }
 .record-nav-divider { background:var(--rule); }
 .record-nav-cell { display:flex;align-items:center;gap:20px;padding:24px 40px;text-decoration:none;transition:background 0.15s; }
 .record-nav-cell:hover { background:var(--rule); }
