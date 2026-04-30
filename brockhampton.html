@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROADRUNNER: NEW LIGHT, NEW MACHINE — BROCKHAMPTON · Pressings.xyz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; scroll-behavior: smooth; }
+:root { --paper:#f4f1eb;--ink:#0f0f0f;--mid:#6b6b6b;--light:#c8c4bb;--rule:#d4d0c8;--red:#d42b2b;--white:#ffffff; }
+body { background:var(--paper);color:var(--ink);font-family:'Barlow',sans-serif;font-weight:400;overflow-x:hidden;cursor:crosshair; }
+body::before { content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:0.022;pointer-events:none;z-index:1000; }
+nav { position:fixed;top:0;left:0;right:0;z-index:200;background:var(--paper);border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr auto;align-items:stretch;height:48px; }
+.nav-logo-cell { border-right:1px solid var(--ink);display:flex;align-items:center;padding:0 20px;text-decoration:none; }
+.nav-logo-mark { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;letter-spacing:0.04em;text-transform:uppercase;color:var(--ink); }
+.nav-logo-mark sup { font-size:9px;color:var(--red);vertical-align:super;margin-left:1px; }
+.nav-links-cell { display:flex;align-items:center;padding:0 24px; }
+.nav-links { display:flex;list-style:none;gap:32px; }
+.nav-links a { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color 0.15s; }
+.nav-links a:hover { color:var(--ink); }
+.nav-actions { display:flex;align-items:stretch;border-left:1px solid var(--ink); }
+.nav-btn { display:flex;align-items:center;padding:0 20px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;color:var(--mid);border-right:1px solid var(--rule);transition:all 0.15s;white-space:nowrap; }
+.nav-btn:hover { color:var(--ink);background:var(--rule); }
+.nav-btn-filled { background:var(--ink);color:var(--paper);border-right:none; }
+.nav-btn-filled:hover { background:var(--red); }
+.nav-hamburger { display:none;flex-direction:column;justify-content:center;gap:5px;padding:0 20px;cursor:pointer;background:none;border:none;border-left:1px solid var(--rule);height:100%; }
+.nav-hamburger span { display:block;width:20px;height:1.5px;background:var(--ink);transition:all 0.2s; }
+.nav-hamburger.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity:0; }
+.nav-hamburger.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+.mobile-menu { display:none;position:fixed;top:48px;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--ink);z-index:190;flex-direction:column; }
+.mobile-menu.open { display:flex; }
+.mobile-menu a { font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);text-decoration:none;padding:16px 24px;border-bottom:1px solid var(--rule);transition:color 0.15s; }
+.mobile-menu a.filled { background:var(--ink);color:var(--paper);border-bottom:none; }
+.record-header { padding-top:48px;border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr auto; }
+.rh-left { border-right:1px solid var(--rule);padding:32px 20px;display:flex;flex-direction:column;justify-content:space-between; }
+.rh-id { font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--red);letter-spacing:0.14em;text-transform:uppercase; }
+.rh-format-block { display:flex;flex-direction:column;gap:4px;margin-top:24px; }
+.rh-format-tag { display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.14em;text-transform:uppercase;padding:4px 8px;border:1px solid var(--rule);color:var(--mid);width:fit-content; }
+.rh-format-tag.active { background:var(--ink);color:var(--paper);border-color:var(--ink); }
+.rh-mid { padding:32px 48px; }
+.rh-breadcrumb { display:flex;align-items:center;gap:8px;margin-bottom:20px; }
+.rh-breadcrumb a,.rh-breadcrumb span { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light);text-decoration:none;transition:color 0.15s; }
+.rh-breadcrumb a:hover { color:var(--mid); }
+.rh-breadcrumb .sep { color:var(--red); }
+.rh-breadcrumb .current { color:var(--ink); }
+.record-title { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(32px,4vw,64px);line-height:0.9;text-transform:uppercase;letter-spacing:-0.01em;color:var(--ink);margin-bottom:8px; }
+.record-subtitle { font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);margin-bottom:8px;display:block; }
+.record-artist { font-family:'Barlow Condensed',sans-serif;font-weight:400;font-size:clamp(24px,3vw,40px);text-transform:uppercase;letter-spacing:0.02em;color:var(--mid); }
+.rh-right { border-left:1px solid var(--rule);padding:32px 24px;display:flex;flex-direction:column;min-width:200px; }
+.meta-row { display:flex;flex-direction:column;gap:3px;padding:14px 0;border-bottom:1px solid var(--rule); }
+.meta-row:first-child { padding-top:0; }
+.meta-row:last-child { border-bottom:none; }
+.meta-key { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--light); }
+.meta-val { font-family:'Barlow',sans-serif;font-size:13px;font-weight:500;color:var(--ink); }
+.meta-val a { color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);transition:all 0.15s; }
+.meta-val a:hover { color:var(--red);border-color:var(--red); }
+.scan-section { border-bottom:1px solid var(--ink); }
+.scan-section-header { display:grid;grid-template-columns:200px 1fr;border-bottom:1px solid var(--rule);height:40px; }
+.ssh-label { border-right:1px solid var(--rule);padding:0 20px;display:flex;align-items:center; }
+.ssh-label span { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--light); }
+.ssh-tabs { padding:0 24px;display:flex;align-items:center; }
+.scan-tab { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:0 16px;height:100%;display:flex;align-items:center;cursor:pointer;color:var(--mid);border-right:1px solid var(--rule);transition:all 0.15s;background:transparent;border-top:none;border-bottom:none;border-left:none; }
+.scan-tab:first-child { padding-left:0; }
+.scan-tab:hover { color:var(--ink); }
+.scan-tab.active { color:var(--ink);border-bottom:2px solid var(--red); }
+.scan-grid-wrap { display:grid;grid-template-columns:200px 1fr; }
+.scan-sidebar { border-right:1px solid var(--rule);padding:24px 20px; }
+.scan-count { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--light);margin-bottom:16px;display:block; }
+.scan-type-list { list-style:none;display:flex;flex-direction:column; }
+.scan-type-list li a { display:flex;align-items:center;justify-content:space-between;padding:7px 0;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);text-decoration:none;border-bottom:1px solid var(--rule);transition:color 0.12s; }
+.scan-type-list li:last-child a { border-bottom:none; }
+.scan-type-list li a:hover { color:var(--ink); }
+.scan-type-list li a.active { color:var(--red); }
+.stl-dot { width:5px;height:5px;border-radius:50%;background:var(--rule);flex-shrink:0; }
+.stl-dot.scanned { background:var(--ink); }
+.stl-dot.active-dot { background:var(--red); }
+.scan-main { padding:24px; }
+.scan-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule); }
+.scan-cell { background:var(--white);position:relative;overflow:hidden;cursor:zoom-in;aspect-ratio:1;opacity:0;transform:translateY(8px);transition:opacity 0.4s ease,transform 0.4s ease; }
+.scan-cell.visible { opacity:1;transform:translateY(0); }
+.scan-cell:hover .scan-cell-overlay { opacity:1; }
+.scan-cell img { width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+.scan-cell:hover img { transform:scale(1.04); }
+.scan-cell-label { position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:rgba(244,241,235,0.92);border-top:1px solid var(--rule); }
+.scl-name { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink);display:block; }
+.scl-dim { font-family:'IBM Plex Mono',monospace;font-size:7px;color:var(--light);display:block;margin-top:1px; }
+.scan-cell-overlay { position:absolute;inset:0;background:rgba(15,15,15,0.7);opacity:0;transition:opacity 0.2s;display:flex;align-items:center;justify-content:center;z-index:2; }
+.zoom-icon { font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--paper);letter-spacing:0.1em; }
+.save-btn { position:absolute;top:7px;right:7px;width:28px;height:28px;background:rgba(244,241,235,0.95);border:1px solid var(--rule);border-radius:3px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:10;transition:all 0.15s; }
+.save-btn svg { width:13px;height:13px;stroke:var(--mid);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round; }
+.save-btn:hover { background:var(--white);border-color:var(--ink); }
+.save-btn:hover svg { stroke:var(--ink); }
+.save-btn.saved svg { stroke:var(--red);fill:var(--red); }
+.save-whole-btn { position:absolute;top:7px;left:7px;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:0.1em;text-transform:uppercase;padding:5px 7px;background:rgba(244,241,235,0.95);border:1px solid var(--rule);border-radius:3px;display:none;cursor:pointer;color:var(--mid);z-index:10;white-space:nowrap;transition:all 0.15s;line-height:1; }
+.save-whole-btn:hover { background:var(--white);border-color:var(--ink);color:var(--ink); }
+.scan-cell:hover .save-btn { display:flex; }
+.scan-cell:hover .save-whole-btn { display:block; }
+.folder-dd { position:absolute;top:38px;right:7px;width:210px;background:var(--white);border:1px solid var(--ink);z-index:50;display:none;border-radius:3px;overflow:hidden;box-shadow:0 6px 24px rgba(15,15,15,0.12); }
+.folder-dd.open { display:block; }
+.whole-dd { top:38px;right:auto;left:7px; }
+.dd-head { padding:9px 12px;border-bottom:1px solid var(--rule);background:var(--ink); }
+.dd-head-label { font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(244,241,235,0.5);display:block; }
+.dd-head-name { font-family:'Barlow',sans-serif;font-size:12px;font-weight:500;color:var(--paper);display:block;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.dd-folder-row { display:flex;align-items:center;gap:9px;padding:9px 12px;cursor:pointer;border-bottom:1px solid var(--rule);transition:background 0.1s; }
+.dd-folder-row:last-of-type { border-bottom:none; }
+.dd-folder-row:hover { background:var(--paper); }
+.dd-folder-icon { width:14px;height:11px;border-radius:1px 3px 3px 3px;flex-shrink:0;position:relative; }
+.dd-folder-icon::before { content:'';position:absolute;top:-3px;left:0;width:6px;height:3px;border-radius:1px 1px 0 0;background:inherit; }
+.fi-red{background:var(--red)}.fi-blue{background:#185FA5}.fi-green{background:#3B6D11}.fi-amber{background:#BA7517}
+.dd-folder-name { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.08em;color:var(--ink);flex:1; }
+.dd-folder-count { font-family:'Barlow Condensed',monospace;font-size:14px;font-weight:600;color:var(--light);line-height:1; }
+.dd-check { width:13px;height:13px;border:1px solid var(--rule);border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center; }
+.dd-check.on { background:var(--red);border-color:var(--red); }
+.dd-check.on::after { content:'';width:7px;height:4px;border-left:1.5px solid white;border-bottom:1.5px solid white;transform:rotate(-45deg) translateY(-1px);display:block; }
+.dd-new-section { padding:9px 12px;border-top:1px solid var(--rule);background:var(--paper); }
+.dd-new-input { width:100%;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;padding:6px 9px;border:1px solid var(--rule);background:var(--white);color:var(--ink);outline:none;border-radius:2px; }
+.dd-new-input:focus { border-color:var(--ink); }
+.dd-new-input::placeholder { color:var(--light); }
+.dd-new-row { display:flex;gap:6px;margin-top:7px; }
+.dd-create-btn { flex:1;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;padding:6px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;border-radius:2px;transition:background 0.15s; }
+.dd-create-btn:hover { background:var(--red); }
+.dd-cancel-btn { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;padding:6px 10px;background:transparent;color:var(--mid);border:1px solid var(--rule);cursor:pointer;border-radius:2px; }
+.lightbox { position:fixed;inset:0;background:rgba(15,15,15,0.96);z-index:500;display:none;align-items:center;justify-content:center;cursor:zoom-out; }
+.lightbox.open { display:flex; }
+.lightbox-inner { position:relative;max-width:90vw;max-height:90vh;display:flex;flex-direction:column;align-items:center;gap:16px; }
+.lightbox-img { max-width:80vw;max-height:75vh;object-fit:contain;display:block; }
+.lightbox-meta { display:flex;align-items:center;gap:24px; }
+.lightbox-meta span { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(244,241,235,0.4); }
+.lightbox-meta strong { color:rgba(244,241,235,0.9);font-weight:400; }
+.lightbox-close { position:absolute;top:-40px;right:0;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(244,241,235,0.4);cursor:pointer;transition:color 0.15s;background:none;border:none;padding:8px 0; }
+.lightbox-close:hover { color:var(--paper); }
+.lightbox-nav { display:flex;align-items:center;gap:16px; }
+.lb-nav-btn { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(244,241,235,0.4);background:none;border:1px solid rgba(244,241,235,0.15);padding:8px 16px;cursor:pointer;transition:all 0.15s; }
+.lb-nav-btn:hover { color:var(--paper);border-color:rgba(244,241,235,0.4); }
+.save-toast { position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:10px 18px;border-radius:3px;opacity:0;transition:opacity 0.2s,transform 0.2s;pointer-events:none;z-index:600;white-space:nowrap; }
+.save-toast.show { opacity:1;transform:translateX(-50%) translateY(0); }
+.info-section { border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr 280px; }
+.info-left { border-right:1px solid var(--rule);padding:40px 20px;display:flex;align-items:flex-end; }
+.info-vert { writing-mode:vertical-lr;transform:rotate(180deg);font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--light); }
+.info-mid { padding:40px 48px;border-right:1px solid var(--rule); }
+.info-block { margin-bottom:40px; }
+.info-block:last-child { margin-bottom:0; }
+.info-block-title { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--light);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between; }
+.info-block-title span { color:var(--red); }
+.credits-table { width:100%;border-collapse:collapse; }
+.credits-table tr { border-bottom:1px solid var(--rule); }
+.credits-table tr:last-child { border-bottom:none; }
+.credits-table td { padding:10px 0;font-size:13px;vertical-align:top; }
+.credits-table td:first-child { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light);width:180px;padding-right:24px;padding-top:12px; }
+.credits-table td:last-child { font-family:'Barlow',sans-serif;font-weight:500;color:var(--ink); }
+.credits-table a { color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);transition:all 0.15s; }
+.credits-table a:hover { color:var(--red);border-color:var(--red); }
+.credit-note { font-weight:300;font-size:11px;color:var(--mid);display:block;margin-top:2px; }
+.production-grid { display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule); }
+.prod-cell { padding:14px 16px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule); }
+.prod-cell:nth-child(even) { border-right:none; }
+.prod-cell:nth-last-child(-n+2) { border-bottom:none; }
+.prod-key { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--light);display:block;margin-bottom:4px; }
+.prod-val { font-family:'Barlow',sans-serif;font-size:13px;font-weight:500;color:var(--ink);display:block; }
+.tag-list { display:flex;flex-wrap:wrap;gap:6px; }
+.tag { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;padding:5px 10px;border:1px solid var(--rule);color:var(--mid);transition:all 0.15s;cursor:pointer; }
+.tag:hover { border-color:var(--ink);color:var(--ink); }
+.record-notes { font-size:13px;line-height:1.8;color:var(--mid);font-weight:300;font-style:italic;padding:16px;border-left:2px solid var(--red);background:rgba(212,43,43,0.03); }
+.bonus-tracks { list-style:none;display:flex;flex-direction:column; }
+.bonus-tracks li { display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--rule);font-size:13px;color:var(--mid);font-weight:300; }
+.bonus-tracks li:last-child { border-bottom:none; }
+.bonus-tracks li span { font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--red);letter-spacing:0.1em;flex-shrink:0; }
+.info-right { padding:40px 24px; }
+.label-card { border:1px solid var(--rule);margin-bottom:32px; }
+.label-card-header { padding:14px 16px;border-bottom:1px solid var(--rule);background:var(--ink); }
+.label-card-header span { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--paper); }
+.label-name { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;text-transform:uppercase;letter-spacing:0.02em;color:var(--paper);margin-top:4px;display:block; }
+.label-card-body { padding:16px; }
+.label-stat-row { display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--rule); }
+.label-stat-row:last-child { border-bottom:none; }
+.label-stat-key { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light); }
+.label-stat-val { font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:18px;color:var(--ink); }
+.sidebar-section-title { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--light);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--rule); }
+.related-list { list-style:none; }
+.related-item { display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--rule);cursor:pointer;text-decoration:none; }
+.related-item:last-child { border-bottom:none; }
+.related-item:hover .rel-title { color:var(--red); }
+.rel-thumb { width:36px;height:36px;flex-shrink:0;border:1px solid var(--rule);overflow:hidden; }
+.rel-thumb img { width:100%;height:100%;object-fit:cover; }
+.rel-title { font-family:'Barlow',sans-serif;font-size:11px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;transition:color 0.12s; }
+.rel-artist { font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--light);letter-spacing:0.06em;display:block;margin-top:1px; }
+.rel-year { font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--light);flex-shrink:0; }
+.record-nav { display:grid;grid-template-columns:1fr 1px 1fr;border-bottom:1px solid var(--ink); }
+.record-nav-divider { background:var(--rule); }
+.record-nav-cell { display:flex;align-items:center;gap:20px;padding:24px 40px;text-decoration:none;transition:background 0.15s; }
+.record-nav-cell:hover { background:var(--rule); }
+.record-nav-cell.next { justify-content:flex-end;text-align:right; }
+.rnc-dir { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--light);display:block;margin-bottom:4px; }
+.rnc-title { font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:20px;text-transform:uppercase;color:var(--ink);display:block;line-height:1; }
+.rnc-artist { font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mid);display:block;margin-top:3px;letter-spacing:0.06em; }
+.rnc-arrow { font-family:'IBM Plex Mono',monospace;font-size:20px;color:var(--rule);flex-shrink:0;transition:color 0.15s,transform 0.15s; }
+.record-nav-cell:hover .rnc-arrow { color:var(--red); }
+.record-nav-cell.prev:hover .rnc-arrow { transform:translateX(-3px); }
+.record-nav-cell.next:hover .rnc-arrow { transform:translateX(3px); }
+footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;height:48px; }
+.footer-logo-cell { border-right:1px solid var(--rule);padding:0 20px;height:100%;display:flex;align-items:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink); }
+.footer-logo-cell sup { color:var(--red);font-size:7px; }
+.footer-mid { padding:0 24px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light); }
+.footer-right { padding:0 24px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light);border-left:1px solid var(--rule);height:100%;display:flex;align-items:center; }
+.reveal { opacity:0;transform:translateY(16px);animation:revealUp 0.55s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+@keyframes revealUp { to{opacity:1;transform:translateY(0);} }
+.d1{animation-delay:0.05s}.d2{animation-delay:0.12s}
+@media (max-width:768px) {
+  nav{grid-template-columns:1fr auto}.nav-links-cell,.nav-actions{display:none}.nav-hamburger{display:flex}
+  .record-header{grid-template-columns:1fr}.rh-left{border-right:none;border-bottom:1px solid var(--rule);padding:16px 20px;flex-direction:row;gap:12px;align-items:center}.rh-format-block{flex-direction:row;flex-wrap:wrap;margin-top:0}.rh-mid{padding:24px 20px}.record-title{font-size:clamp(28px,8vw,48px)}.rh-right{border-left:none;border-top:1px solid var(--rule);display:grid;grid-template-columns:1fr 1fr;padding:0}.meta-row{padding:12px 16px;border-right:1px solid var(--rule)}.meta-row:nth-child(even){border-right:none}
+  .scan-section-header{grid-template-columns:1fr}.ssh-label{display:none}.ssh-tabs{padding:0 16px;overflow-x:auto}.scan-tab{font-size:8px;padding:0 10px}.scan-grid-wrap{grid-template-columns:1fr}.scan-sidebar{display:none}.scan-main{padding:12px}.scan-grid{grid-template-columns:repeat(2,1fr)}
+  .info-section{grid-template-columns:1fr}.info-left{display:none}.info-mid{padding:28px 20px;border-right:none;border-bottom:1px solid var(--rule)}.info-right{padding:28px 20px}.production-grid{grid-template-columns:1fr}.prod-cell{border-right:none !important}
+  .record-nav{grid-template-columns:1fr}.record-nav-divider{display:none}.record-nav-cell{padding:20px;border-bottom:1px solid var(--rule)}.record-nav-cell.next{justify-content:flex-start;text-align:left}
+  footer{grid-template-columns:1fr;height:auto}.footer-logo-cell{border-right:none;border-bottom:1px solid var(--rule);padding:16px 20px;height:auto}.footer-mid{padding:12px 20px;border-bottom:1px solid var(--rule)}.footer-right{border-left:none;padding:12px 20px;height:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="save-toast" id="saveToast"></div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-inner" onclick="event.stopPropagation()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <div class="lightbox-meta">
+      <span id="lightboxLabel"><strong>—</strong></span>
+      <span>ROADRUNNER · BROCKHAMPTON · 2021</span>
+    </div>
+    <div class="lightbox-nav">
+      <button class="lb-nav-btn" onclick="lbNav(-1)">← Prev</button>
+      <button class="lb-nav-btn" onclick="lbNav(1)">Next →</button>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo-cell"><span class="nav-logo-mark">Pressings<sup>.xyz</sup></span></a>
+  <div class="nav-links-cell">
+    <ul class="nav-links">
+      <li><a href="index.html">Archive</a></li>
+      <li><a href="formats.html">Formats</a></li>
+      <li><a href="designers.html">Designers</a></li>
+      <li><a href="labels.html">Labels</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </div>
+  <div class="nav-actions">
+    <a href="folders.html" class="nav-btn">My Folders</a>
+    <a href="#" class="nav-btn nav-btn-filled">Get Access</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Archive</a>
+  <a href="formats.html">Formats</a>
+  <a href="designers.html">Designers</a>
+  <a href="labels.html">Labels</a>
+  <a href="about.html">About</a>
+  <a href="folders.html">My Folders</a>
+  <a href="#" class="filled">Get Access</a>
+</div>
+
+<header class="record-header">
+  <div class="rh-left">
+    <span class="rh-id">Pressing #005</span>
+    <div class="rh-format-block">
+      <span class="rh-format-tag active">Cassette</span>
+      <span class="rh-format-tag">White Shell</span>
+      <span class="rh-format-tag">Bonus Tracks</span>
+      <span class="rh-format-tag">Alt. Artwork</span>
+    </div>
+  </div>
+  <div class="rh-mid reveal d1">
+    <div class="rh-breadcrumb">
+      <a href="index.html">Archive</a><span class="sep">/</span>
+      <a href="#">Hip-Hop</a><span class="sep">/</span>
+      <a href="#">BROCKHAMPTON</a><span class="sep">/</span>
+      <span class="current">ROADRUNNER</span>
+    </div>
+    <h1 class="record-title">ROADRUNNER</h1>
+    <span class="record-subtitle">New Light, New Machine</span>
+    <p class="record-artist">BROCKHAMPTON</p>
+  </div>
+  <div class="rh-right reveal d2">
+    <div class="meta-row"><span class="meta-key">Label</span><span class="meta-val">Question Everything, Inc. / <a href="labels.html">RCA</a></span></div>
+    <div class="meta-row"><span class="meta-key">Cat. No.</span><span class="meta-val">19439-87390-4</span></div>
+    <div class="meta-row"><span class="meta-key">Year</span><span class="meta-val">2021</span></div>
+    <div class="meta-row"><span class="meta-key">Country</span><span class="meta-val">USA</span></div>
+    <div class="meta-row"><span class="meta-key">Format</span><span class="meta-val">Cassette · Standard</span></div>
+    <div class="meta-row" style="border-bottom:none;padding-bottom:0;"><span class="meta-key">Condition</span><span class="meta-val">Mint</span></div>
+  </div>
+</header>
+
+<section class="scan-section">
+  <div class="scan-section-header">
+    <div class="ssh-label"><span>Scans</span></div>
+    <div class="ssh-tabs">
+      <button class="scan-tab active" onclick="setTab(this)">All</button>
+      <button class="scan-tab" onclick="setTab(this)">Exterior</button>
+      <button class="scan-tab" onclick="setTab(this)">Interior</button>
+      <button class="scan-tab" onclick="setTab(this)">Object</button>
+    </div>
+  </div>
+  <div class="scan-grid-wrap">
+    <div class="scan-sidebar">
+      <span class="scan-count">9 scans</span>
+      <ul class="scan-type-list">
+        <li><a href="#" class="active">Case — Front <span class="stl-dot active-dot"></span></a></li>
+        <li><a href="#">Case — Back <span class="stl-dot scanned"></span></a></li>
+        <li><a href="#">Spine <span class="stl-dot scanned"></span></a></li>
+        <li><a href="#">J-Card — Front <span class="stl-dot scanned"></span></a></li>
+        <li><a href="#">J-Card — Back <span class="stl-dot scanned"></span></a></li>
+        <li><a href="#">Booklet — Front <span class="stl-dot scanned"></span></a></li>
+        <li><a href="#">Booklet — Back <span class="stl-dot scanned"></span></a></li>
+        <li><a href="#">Cassette — Side A <span class="stl-dot scanned"></span></a></li>
+        <li><a href="#">Cassette — Side B <span class="stl-dot scanned"></span></a></li>
+      </ul>
+    </div>
+    <div class="scan-main">
+      <div class="scan-grid" id="scanGrid">
+
+        <div class="scan-cell" data-idx="0" onclick="openLightbox(0)">
+          <img src="images/005/005_Brockhampton_Roadrunner_CASE-FRONT.png" alt="Case Front" loading="lazy">
+          <div class="scan-cell-label"><span class="scl-name">Case — Front</span><span class="scl-dim">600 dpi · PNG</span></div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-0')">+ Save pressing</button>
+          <button class="save-btn" id="sb-0" onclick="openScanDD(event,'scan-0')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+          <div class="folder-dd" id="scan-0"></div><div class="folder-dd whole-dd" id="whole-0"></div>
+        </div>
+
+        <div class="scan-cell" data-idx="1" onclick="openLightbox(1)">
+          <img src="images/005/005_Brockhampton_Roadrunner_CASE-BACK.png" alt="Case Back" loading="lazy">
+          <div class="scan-cell-label"><span class="scl-name">Case — Back</span><span class="scl-dim">600 dpi · PNG</span></div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-1')">+ Save pressing</button>
+          <button class="save-btn" id="sb-1" onclick="openScanDD(event,'scan-1')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+          <div class="folder-dd" id="scan-1"></div><div class="folder-dd whole-dd" id="whole-1"></div>
+        </div>
+
+        <div class="scan-cell" data-idx="2" onclick="openLightbox(2)">
+          <img src="images/005/005_Brockhampton_Roadrunner_SPINE.png" alt="Spine" loading="lazy">
+          <div class="scan-cell-label"><span class="scl-name">Spine</span><span class="scl-dim">600 dpi · PNG</span></div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-2')">+ Save pressing</button>
+          <button class="save-btn" id="sb-2" onclick="openScanDD(event,'scan-2')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+          <div class="folder-dd" id="scan-2"></div><div class="folder-dd whole-dd" id="whole-2"></div>
+        </div>
+
+        <div class="scan-cell" data-idx="3" onclick="openLightbox(3)">
+          <img src="images/005/005_Brockhampton_Roadrunner_JCARD-FRONT.png" alt="J-Card Front" loading="lazy">
+          <div class="scan-cell-label"><span class="scl-name">J-Card — Front</span><span class="scl-dim">600 dpi · PNG</span></div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-3')">+ Save pressing</button>
+          <button class="save-btn" id="sb-3" onclick="openScanDD(event,'scan-3')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+          <div class="folder-dd" id="scan-3"></div><div class="folder-dd whole-dd" id="whole-3"></div>
+        </div>
+
+        <div class="scan-cell" data-idx="4" onclick="openLightbox(4)">
+          <img src="images/005/005_Brockhampton_Roadrunner_JCARD-BACK.png" alt="J-Card Back" loading="lazy">
+          <div class="scan-cell-label"><span class="scl-name">J-Card — Back</span><span class="scl-dim">600 dpi · PNG</span></div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-4')">+ Save pressing</button>
+          <button class="save-btn" id="sb-4" onclick="openScanDD(event,'scan-4')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+          <div class="folder-dd" id="scan-4"></div><div class="folder-dd whole-dd" id="whole-4"></div>
+        </div>
+
+        <div class="scan-cell" data-idx="5" onclick="openLightbox(5)">
+          <img src="images/005/005_Brockhampton_Roadrunner_BOOKLET-FRONT.png" alt="Booklet Front" loading="lazy">
+          <div class="scan-cell-label"><span class="scl-name">Booklet — Front</span><span class="scl-dim">600 dpi · PNG</span></div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-5')">+ Save pressing</button>
+          <button class="save-btn" id="sb-5" onclick="openScanDD(event,'scan-5')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+          <div class="folder-dd" id="scan-5"></div><div class="folder-dd whole-dd" id="whole-5"></div>
+        </div>
+
+        <div class="scan-cell" data-idx="6" onclick="openLightbox(6)">
+          <img src="images/005/005_Brockhampton_Roadrunner_BOOKLET-BACK.png" alt="Booklet Back" loading="lazy">
+          <div class="scan-cell-label"><span class="scl-name">Booklet — Back</span><span class="scl-dim">600 dpi · PNG</span></div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-6')">+ Save pressing</button>
+          <button class="save-btn" id="sb-6" onclick="openScanDD(event,'scan-6')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+          <div class="folder-dd" id="scan-6"></div><div class="folder-dd whole-dd" id="whole-6"></div>
+        </div>
+
+        <div class="scan-cell" data-idx="7" onclick="openLightbox(7)">
+          <img src="images/005/005_Brockhampton_Roadrunner_CASS-A.png" alt="Cassette Side A" loading="lazy">
+          <div class="scan-cell-label"><span class="scl-name">Cassette — Side A</span><span class="scl-dim">600 dpi · PNG</span></div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-7')">+ Save pressing</button>
+          <button class="save-btn" id="sb-7" onclick="openScanDD(event,'scan-7')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+          <div class="folder-dd" id="scan-7"></div><div class="folder-dd whole-dd" id="whole-7"></div>
+        </div>
+
+        <div class="scan-cell" data-idx="8" onclick="openLightbox(8)">
+          <img src="images/005/005_Brockhampton_Roadrunner_CASS-B.png" alt="Cassette Side B" loading="lazy">
+          <div class="scan-cell-label"><span class="scl-name">Cassette — Side B</span><span class="scl-dim">600 dpi · PNG</span></div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-8')">+ Save pressing</button>
+          <button class="save-btn" id="sb-8" onclick="openScanDD(event,'scan-8')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+          <div class="folder-dd" id="scan-8"></div><div class="folder-dd whole-dd" id="whole-8"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="info-section">
+  <div class="info-left"><span class="info-vert">Pressing Details</span></div>
+  <div class="info-mid">
+
+    <div class="info-block">
+      <div class="info-block-title">Design Credits <span>01</span></div>
+      <table class="credits-table">
+        <tr>
+          <td>Creative Direction</td>
+          <td>
+            Kevin Abstract
+            <span class="credit-note">BROCKHAMPTON co-founder and creative lead</span>
+          </td>
+        </tr>
+        <tr>
+          <td>Art Direction &amp; Graphic Design</td>
+          <td>
+            <a href="designers.html">Henlock Sileshi</a>
+            <span class="credit-note">Full art direction and graphic design for this pressing</span>
+          </td>
+        </tr>
+        <tr>
+          <td>Photography</td>
+          <td>
+            <a href="designers.html">Ashlan Grey</a>
+            <span class="credit-note">Album photography · Also part of BH NRG creative team</span>
+          </td>
+        </tr>
+        <tr>
+          <td>Cassette Photography</td>
+          <td>
+            GOOSIE
+            <span class="credit-note">Photography of the physical cassette object</span>
+          </td>
+        </tr>
+        <tr>
+          <td>BH NRG Assistance</td>
+          <td>
+            Ashlan Grey, Nick Holiday, Weston Freas
+            <span class="credit-note">BROCKHAMPTON's in-house creative team</span>
+          </td>
+        </tr>
+        <tr>
+          <td>Label</td>
+          <td>
+            Question Everything, Inc. / RCA Records
+            <span class="credit-note">Kevin Abstract's imprint under license to RCA</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="info-block">
+      <div class="info-block-title">Print &amp; Production <span>02</span></div>
+      <div class="production-grid">
+        <div class="prod-cell"><span class="prod-key">Format</span><span class="prod-val">Cassette · Standard</span></div>
+        <div class="prod-cell"><span class="prod-key">Shell Colour</span><span class="prod-val">White</span></div>
+        <div class="prod-cell"><span class="prod-key">Colour Palette</span><span class="prod-val">Black, White, Royal Blue</span></div>
+        <div class="prod-cell"><span class="prod-key">Photography Style</span><span class="prod-val">Black &amp; White · Grainy</span></div>
+        <div class="prod-cell"><span class="prod-key">Alt. Artwork</span><span class="prod-val">Joba &amp; Kevin in Luchador Masks</span></div>
+        <div class="prod-cell"><span class="prod-key">Inserts</span><span class="prod-val">J-Card + Booklet</span></div>
+        <div class="prod-cell"><span class="prod-key">Cat. No.</span><span class="prod-val">19439-87390-4</span></div>
+        <div class="prod-cell"><span class="prod-key">Release Date</span><span class="prod-val">2021</span></div>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <div class="info-block-title">Cassette-Exclusive Bonus Tracks <span>03</span></div>
+      <ul class="bonus-tracks">
+        <li><span>B1</span>Roberto's Interlude</li>
+        <li><span>B2</span>Jeremiah</li>
+        <li><span>B3</span>SEX</li>
+        <li><span>B4</span>Pressure / Bow Wow</li>
+      </ul>
+    </div>
+
+    <div class="info-block">
+      <div class="info-block-title">Aesthetic Tags <span>04</span></div>
+      <div class="tag-list">
+        <span class="tag">Black &amp; White</span>
+        <span class="tag">Grainy Photography</span>
+        <span class="tag">Royal Blue</span>
+        <span class="tag">White Shell</span>
+        <span class="tag">Alt Artwork</span>
+        <span class="tag">In-House Creative</span>
+        <span class="tag">Hip-Hop</span>
+        <span class="tag">BH NRG</span>
+        <span class="tag">Bonus Tracks</span>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <div class="info-block-title">Curator Notes <span>05</span></div>
+      <p class="record-notes">
+        BROCKHAMPTON's packaging has always been handled almost entirely in-house through their BH NRG creative collective, and ROADRUNNER is no exception. Kevin Abstract's creative direction, executed by Henlock Sileshi, gives the cassette a deliberately raw quality — grainy black and white photography, royal blue accents, white shell. The alternate J-card artwork featuring Joba and Kevin in luchador masks is a genuinely surprising and playful object. Four cassette-exclusive bonus tracks make this a meaningful physical release rather than a straightforward format transfer.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="info-right">
+    <div class="label-card">
+      <div class="label-card-header">
+        <span>Imprint / Label</span>
+        <span class="label-name">Question Everything</span>
+      </div>
+      <div class="label-card-body">
+        <div class="label-stat-row"><span class="label-stat-key">Under License</span><span class="label-stat-val" style="font-size:13px;">RCA Records</span></div>
+        <div class="label-stat-row"><span class="label-stat-key">Founded by</span><span class="label-stat-val" style="font-size:13px;">Kevin Abstract</span></div>
+        <div class="label-stat-row" style="border-bottom:none;"><span class="label-stat-key">In Archive</span><span class="label-stat-val">1</span></div>
+      </div>
+    </div>
+    <div>
+      <p class="sidebar-section-title">Also in Archive</p>
+      <ul class="related-list">
+        <li class="related-item" onclick="window.location='hippocampus.html'">
+          <div class="rel-thumb"><img src="images/004/004_Hippocampus_Bambi_CASE-FRONT.png" alt="Bambi"></div>
+          <div style="flex:1;min-width:0;"><span class="rel-title">Bambi</span><span class="rel-artist">Hippocampus</span></div>
+          <span class="rel-year">2018</span>
+        </li>
+        <li class="related-item" onclick="window.location='earl.html'">
+          <div class="rel-thumb"><img src="images/002/002_EarlSweatshirt_LiveLaughLove_CASE-FRONT.png" alt="Live Laugh Love"></div>
+          <div style="flex:1;min-width:0;"><span class="rel-title">Live Laugh Love</span><span class="rel-artist">Earl Sweatshirt</span></div>
+          <span class="rel-year">2025</span>
+        </li>
+        <li class="related-item" onclick="window.location='bon-iver.html'">
+          <div class="rel-thumb"><img src="images/001/001_BonIver_II_OUTER-FRONT.png" alt="i,i"></div>
+          <div style="flex:1;min-width:0;"><span class="rel-title">i,i</span><span class="rel-artist">Bon Iver</span></div>
+          <span class="rel-year">2019</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<nav class="record-nav">
+  <a href="hippocampus.html" class="record-nav-cell prev">
+    <span class="rnc-arrow">←</span>
+    <div>
+      <span class="rnc-dir">Previous</span>
+      <span class="rnc-title">Bambi</span>
+      <span class="rnc-artist">Hippocampus · 2018</span>
+    </div>
+  </a>
+  <div class="record-nav-divider"></div>
+  <a href="index.html" class="record-nav-cell next">
+    <div>
+      <span class="rnc-dir">Back to</span>
+      <span class="rnc-title">Archive</span>
+      <span class="rnc-artist">All Pressings</span>
+    </div>
+    <span class="rnc-arrow">→</span>
+  </a>
+</nav>
+
+<footer>
+  <div class="footer-logo-cell">Pressings<sup>.xyz</sup></div>
+  <div class="footer-mid">© 2025 · Built by a collector, for designers</div>
+  <div class="footer-right">Vol. 01 — Est. 2025</div>
+</footer>
+
+<script>
+  function toggleMenu(){const m=document.getElementById('mobileMenu'),b=document.getElementById('hamburger');m.classList.toggle('open');b.classList.toggle('open');}
+  document.addEventListener('click',e=>{const m=document.getElementById('mobileMenu'),b=document.getElementById('hamburger');if(m&&b&&!m.contains(e.target)&&!b.contains(e.target)){m.classList.remove('open');b.classList.remove('open');}});
+  const cells=document.querySelectorAll('.scan-cell');
+  const obs=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);obs.unobserve(e.target);}});},{threshold:0.05});
+  cells.forEach(c=>obs.observe(c));
+  function setTab(el){document.querySelectorAll('.scan-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
+  document.querySelectorAll('.scan-type-list a').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();document.querySelectorAll('.scan-type-list a').forEach(x=>x.classList.remove('active'));a.classList.add('active');});});
+  const scanData=[
+    {src:'images/005/005_Brockhampton_Roadrunner_CASE-FRONT.png',label:'Case — Front'},
+    {src:'images/005/005_Brockhampton_Roadrunner_CASE-BACK.png',label:'Case — Back'},
+    {src:'images/005/005_Brockhampton_Roadrunner_SPINE.png',label:'Spine'},
+    {src:'images/005/005_Brockhampton_Roadrunner_JCARD-FRONT.png',label:'J-Card — Front'},
+    {src:'images/005/005_Brockhampton_Roadrunner_JCARD-BACK.png',label:'J-Card — Back'},
+    {src:'images/005/005_Brockhampton_Roadrunner_BOOKLET-FRONT.png',label:'Booklet — Front'},
+    {src:'images/005/005_Brockhampton_Roadrunner_BOOKLET-BACK.png',label:'Booklet — Back'},
+    {src:'images/005/005_Brockhampton_Roadrunner_CASS-A.png',label:'Cassette — Side A'},
+    {src:'images/005/005_Brockhampton_Roadrunner_CASS-B.png',label:'Cassette — Side B'},
+  ];
+  let currentScan=0;
+  function openLightbox(idx){currentScan=idx;document.getElementById('lightboxImg').src=scanData[idx].src;document.getElementById('lightboxLabel').innerHTML='<strong>'+scanData[idx].label+'</strong>';document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden';}
+  function closeLightbox(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
+  function lbNav(dir){currentScan=(currentScan+dir+scanData.length)%scanData.length;openLightbox(currentScan);}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();if(e.key==='ArrowRight')lbNav(1);if(e.key==='ArrowLeft')lbNav(-1);});
+  const PRESSING_NAME='ROADRUNNER — BROCKHAMPTON';
+  const FOLDER_COLORS=['fi-red','fi-blue','fi-green','fi-amber'];
+  let folders=[{id:1,name:'In-House Creative',color:'fi-red',items:[]},{id:2,name:'Hip-Hop',color:'fi-blue',items:[]},{id:3,name:'B&W Photography',color:'fi-green',items:[]},];
+  let nextFolderId=4,activeDDId=null;
+  function toast(msg){const t=document.getElementById('saveToast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+  function folderRowsHTML(key){return folders.map(f=>{const saved=f.items.includes(key);return`<div class="dd-folder-row" onclick="toggleItem('${f.id}','${key}')"><div class="dd-folder-icon ${f.color}"></div><span class="dd-folder-name">${f.name}</span><span class="dd-folder-count">${f.items.length}</span><div class="dd-check ${saved?'on':''}"></div></div>`;}).join('');}
+  function buildDDHTML(label,subLabel,key,inputId){return`<div class="dd-head"><span class="dd-head-label">${label}</span><span class="dd-head-name">${subLabel}</span></div><div id="fl-${inputId}">${folderRowsHTML(key)}</div><div class="dd-new-section"><input class="dd-new-input" id="ni-${inputId}" placeholder="New folder name…" onkeydown="if(event.key==='Enter')createFolder('${key}','${inputId}')"/><div class="dd-new-row"><button class="dd-create-btn" onclick="createFolder('${key}','${inputId}')">Create + save</button><button class="dd-cancel-btn" onclick="closeAllDD()">Cancel</button></div></div>`;}
+  function openScanDD(e,ddId){e.stopPropagation();const cell=e.target.closest('.scan-cell');const scanName=cell.querySelector('.scl-name').textContent;const key='scan:'+scanName;closeAllDD();const dd=document.getElementById(ddId);dd.innerHTML=buildDDHTML('Save scan',scanName,key,ddId);dd.classList.add('open');activeDDId=ddId;}
+  function openWholeDD(e,ddId){e.stopPropagation();const key='pressing:'+PRESSING_NAME;closeAllDD();const dd=document.getElementById(ddId);dd.innerHTML=buildDDHTML('Save pressing',PRESSING_NAME,key,ddId);dd.classList.add('open');activeDDId=ddId;}
+  function closeAllDD(){document.querySelectorAll('.folder-dd').forEach(d=>d.classList.remove('open'));activeDDId=null;}
+  function toggleItem(folderId,key){const f=folders.find(x=>x.id==folderId);if(!f)return;const i=f.items.indexOf(key);if(i===-1){f.items.push(key);toast('Saved to '+f.name);if(key.startsWith('scan:')){const sn=key.replace('scan:','');document.querySelectorAll('.scan-cell').forEach(c=>{if(c.querySelector('.scl-name')?.textContent===sn){const b=c.querySelector('.save-btn');if(b)b.classList.add('saved');}});}}else{f.items.splice(i,1);toast('Removed from '+f.name);if(key.startsWith('scan:')){const sn=key.replace('scan:','');const still=folders.some(folder=>folder.items.includes(key));if(!still){document.querySelectorAll('.scan-cell').forEach(c=>{if(c.querySelector('.scl-name')?.textContent===sn){const b=c.querySelector('.save-btn');if(b)b.classList.remove('saved');}});}}}if(activeDDId){const fl=document.getElementById('fl-'+activeDDId);if(fl)fl.innerHTML=folderRowsHTML(key);}}
+  function createFolder(key,inputId){const input=document.getElementById('ni-'+inputId);const name=input?input.value.trim():'';if(!name)return;const color=FOLDER_COLORS[nextFolderId%FOLDER_COLORS.length];const f={id:nextFolderId++,name,color,items:[key]};folders.push(f);toast('Folder "'+name+'" created');if(key.startsWith('scan:')){const sn=key.replace('scan:','');document.querySelectorAll('.scan-cell').forEach(c=>{if(c.querySelector('.scl-name')?.textContent===sn){const b=c.querySelector('.save-btn');if(b)b.classList.add('saved');}});}if(activeDDId){const dd=document.getElementById(activeDDId);if(dd){const fl=document.getElementById('fl-'+activeDDId);if(fl)fl.innerHTML=folderRowsHTML(key);if(input)input.value='';}}}
+  document.addEventListener('click',e=>{if(!e.target.closest('.folder-dd')&&!e.target.closest('.save-btn')&&!e.target.closest('.save-whole-btn'))closeAllDD();});
+</script>
+</body>
+</html>
