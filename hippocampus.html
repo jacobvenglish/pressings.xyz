@@ -196,7 +196,7 @@ nav { position:fixed;top:0;left:0;right:0;z-index:200;background:var(--paper);bo
 .record-nav-cell:hover .rnc-arrow { color:var(--red); }
 .record-nav-cell.prev:hover .rnc-arrow { transform:translateX(-3px); }
 .record-nav-cell.next:hover .rnc-arrow { transform:translateX(3px); }
-footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;height:48px; }
+footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;height:48px;position:relative;z-index:1; }
 .footer-logo-cell { border-right:1px solid var(--rule);padding:0 20px;height:100%;display:flex;align-items:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink); }
 .footer-logo-cell sup { color:var(--red);font-size:7px; }
 .footer-mid { padding:0 24px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light); }
