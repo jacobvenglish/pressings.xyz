@@ -12,7 +12,7 @@
 html { font-size: 14px; scroll-behavior: smooth; }
 :root { --paper:#f4f1eb;--ink:#0f0f0f;--mid:#6b6b6b;--light:#c8c4bb;--rule:#d4d0c8;--red:#d42b2b;--white:#ffffff; }
 body { background:var(--paper);color:var(--ink);font-family:'Barlow',sans-serif;font-weight:400;overflow-x:hidden;cursor:crosshair; }
-body::before { content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:0.022;pointer-events:none;z-index:1000; }
+body::before { content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:0.022;pointer-events:none;z-index:-1; }
 
 /* NAV */
 nav { position:fixed;top:0;left:0;right:0;z-index:200;background:var(--paper);border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr auto;align-items:stretch;height:48px; }
@@ -39,7 +39,7 @@ nav { position:fixed;top:0;left:0;right:0;z-index:200;background:var(--paper);bo
 .mobile-menu a.filled { background:var(--ink);color:var(--paper);border-bottom:none; }
 
 /* RECORD HEADER */
-.record-header { padding-top:48px;border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr auto;position:relative;z-index:1; }
+.record-header { padding-top:48px;border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr auto;position:relative;z-index:210; }
 .rh-left { border-right:1px solid var(--rule);padding:32px 20px;display:flex;flex-direction:column;justify-content:space-between; }
 .rh-id { font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--red);letter-spacing:0.14em;text-transform:uppercase; }
 .rh-format-block { display:flex;flex-direction:column;gap:4px;margin-top:24px; }
@@ -196,7 +196,7 @@ nav { position:fixed;top:0;left:0;right:0;z-index:200;background:var(--paper);bo
 .rel-year { font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--light);flex-shrink:0; }
 
 /* PREV/NEXT */
-.record-nav { display:grid;grid-template-columns:1fr 1px 1fr;border-bottom:1px solid var(--ink);position:relative;z-index:1; }
+.record-nav { display:grid;grid-template-columns:1fr 1px 1fr;border-bottom:1px solid var(--ink);position:relative;z-index:210; }
 .record-nav-divider { background:var(--rule); }
 .record-nav-cell { display:flex;align-items:center;gap:20px;padding:24px 40px;text-decoration:none;transition:background 0.15s; }
 .record-nav-cell:hover { background:var(--rule); }
@@ -210,7 +210,7 @@ nav { position:fixed;top:0;left:0;right:0;z-index:200;background:var(--paper);bo
 .record-nav-cell.next:hover .rnc-arrow { transform:translateX(3px); }
 
 /* FOOTER */
-footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;height:48px;position:relative;z-index:1; }
+footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;height:48px;position:relative;z-index:210; }
 .footer-logo-cell { border-right:1px solid var(--rule);padding:0 20px;height:100%;display:flex;align-items:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink); }
 .footer-logo-cell sup { color:var(--red);font-size:7px; }
 .footer-mid { padding:0 24px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light); }
@@ -606,7 +606,7 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
   </div>
 </section>
 
-<nav class="record-nav">
+<div class="record-nav">
   <a href="earl.html" class="record-nav-cell prev">
     <span class="rnc-arrow">←</span>
     <div>
@@ -624,7 +624,7 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
     </div>
     <span class="rnc-arrow">→</span>
   </a>
-</nav>
+</div>
 
 <footer>
   <div class="footer-logo-cell">Pressings<sup>.xyz</sup></div>
