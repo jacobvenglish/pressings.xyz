@@ -633,26 +633,96 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
 </footer>
 
 <script>
-  function toggleMenu(){const m=document.getElementById('mobileMenu'),b=document.getElementById('hamburger');m.classList.toggle('open');b.classList.toggle('open');}
-  document.addEventListener('click',e=>{const m=document.getElementById('mobileMenu'),b=document.getElementById('hamburger');if(m&&b&&!m.contains(e.target)&&!b.contains(e.target)){m.classList.remove('open');b.classList.remove('open');}});
+  // ── AIRTABLE CONFIG ──
+  const AIRTABLE_TOKEN = 'YOUR_TOKEN_HERE';
+  const BASE_ID = 'app7OesxAyA6zbwfp';
+  const TABLE_ID = 'tblzpkLrlIr1iCIyh';
+  const RECORD_TITLE = 'Bloom';
 
-  const cells=document.querySelectorAll('.scan-cell');
-  const obs=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);obs.unobserve(e.target);}});},{threshold:0.05});
-  cells.forEach(c=>obs.observe(c));
-
-  function setTab(el){document.querySelectorAll('.scan-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
-  document.querySelectorAll('.scan-type-list a').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();document.querySelectorAll('.scan-type-list a').forEach(x=>x.classList.remove('active'));a.classList.add('active');});});
-
-  const scanData=[
-    {src:'images/003/003_BeachHouse_Bloom_CASE-FRONT.png',label:'Case — Front'},
-    {src:'images/003/003_BeachHouse_Bloom_CASE-BACK.png',label:'Case — Back'},
-    {src:'images/003/003_BeachHouse_Bloom_SPINE.png',label:'Spine'},
-    {src:'images/003/003_BeachHouse_Bloom_JCARD-FRONT.png',label:'J-Card — Front'},
-    {src:'images/003/003_BeachHouse_Bloom_JCARD-BACK.png',label:'J-Card — Back'},
-    {src:'images/003/003_BeachHouse_Bloom_CASS-A.png',label:'Cassette — Side A'},
-    {src:'images/003/003_BeachHouse_Bloom_CASS-B.png',label:'Cassette — Side B'},
+  // Map Airtable column names to scan labels
+  const SCAN_MAP = [
+    { field: 'Scan: Front Cover',         label: 'Case — Front' },
+    { field: 'Scan: Back Cover',          label: 'Case — Back' },
+    { field: 'Scan: Spine',               label: 'Spine' },
+    { field: 'Scan: J-Card Front',        label: 'J-Card — Front' },
+    { field: 'Scan: J-Card Rear/Spine',   label: 'J-Card — Back' },
+    { field: 'Scan: Cassette (Front)',    label: 'Cassette — Side A' },
+    { field: 'Scan: Cassette (Back)',     label: 'Cassette — Side B' },
   ];
-  let currentScan=0;
+
+  let scanData = [];
+  let currentScan = 0;
+
+  // ── FETCH FROM AIRTABLE ──
+  async function loadScans() {
+    try {
+      const formula = encodeURIComponent(`{Title}="${RECORD_TITLE}"`);
+      const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}?filterByFormula=${formula}&maxRecords=1`;
+      const res = await fetch(url, {
+        headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` }
+      });
+      const data = await res.json();
+
+      if (!data.records || data.records.length === 0) {
+        console.error('No record found for:', RECORD_TITLE);
+        return;
+      }
+
+      const fields = data.records[0].fields;
+      const grid = document.getElementById('scanGrid');
+      grid.innerHTML = '';
+      scanData = [];
+
+      SCAN_MAP.forEach((scan, idx) => {
+        const attachments = fields[scan.field];
+        if (!attachments || attachments.length === 0) return;
+
+        const url = attachments[0].url;
+        scanData.push({ src: url, label: scan.label });
+        const i = scanData.length - 1;
+
+        const cell = document.createElement('div');
+        cell.className = 'scan-cell';
+        cell.dataset.idx = i;
+        cell.onclick = () => openLightbox(i);
+        cell.innerHTML = `
+          <img src="${url}" alt="${scan.label}" loading="lazy">
+          <div class="scan-cell-label">
+            <span class="scl-name">${scan.label}</span>
+            <span class="scl-dim">Airtable · PNG</span>
+          </div>
+          <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+          <button class="save-whole-btn" onclick="openWholeDD(event,'whole-${i}')">+ Save pressing</button>
+          <button class="save-btn" id="sb-${i}" onclick="openScanDD(event,'scan-${i}')">
+            <svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg>
+          </button>
+          <div class="folder-dd" id="scan-${i}"></div>
+          <div class="folder-dd whole-dd" id="whole-${i}"></div>`;
+        grid.appendChild(cell);
+      });
+
+      // Update scan count
+      document.querySelector('.scan-count').textContent = `${scanData.length} scans`;
+
+      // Re-initialise intersection observer for entrance animation
+      const newCells = document.querySelectorAll('.scan-cell');
+      const obs2 = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+          if (e.isIntersecting) {
+            setTimeout(() => e.target.classList.add('visible'), i * 50);
+            obs2.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.05 });
+      newCells.forEach(c => obs2.observe(c));
+
+    } catch(err) {
+      console.error('Airtable fetch error:', err);
+    }
+  }
+
+  // Load scans on page ready
+  loadScans();
   function openLightbox(idx){currentScan=idx;document.getElementById('lightboxImg').src=scanData[idx].src;document.getElementById('lightboxLabel').innerHTML='<strong>'+scanData[idx].label+'</strong>';document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden';}
   function closeLightbox(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
   function lbNav(dir){currentScan=(currentScan+dir+scanData.length)%scanData.length;openLightbox(currentScan);}
