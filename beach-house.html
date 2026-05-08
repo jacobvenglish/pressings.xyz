@@ -656,7 +656,7 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
   // ── FETCH FROM AIRTABLE ──
   async function loadScans() {
     try {
-      const formula = encodeURIComponent(`{Title}="${RECORD_TITLE}"`);
+      const formula = encodeURIComponent(`{Field 1}="${RECORD_TITLE}"`);
       const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}?filterByFormula=${formula}&maxRecords=1`;
       const res = await fetch(url, {
         headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` }
