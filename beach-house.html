@@ -633,17 +633,15 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
 </footer>
 
 <script>
-  // ── HAMBURGER ──
   function toggleMenu(){const m=document.getElementById('mobileMenu'),b=document.getElementById('hamburger');m.classList.toggle('open');b.classList.toggle('open');}
   document.addEventListener('click',e=>{const m=document.getElementById('mobileMenu'),b=document.getElementById('hamburger');if(m&&b&&!m.contains(e.target)&&!b.contains(e.target)){m.classList.remove('open');b.classList.remove('open');}});
 
-  // ── AIRTABLE CONFIG ──
   const AIRTABLE_TOKEN = 'pat0JowfMYa0NojAY.9ddaea5db505b7c680f90786a8e7f99825172992ab1f0c40fef41175916dbafa';
   const BASE_ID = 'app7OesxAyA6zbwfp';
   const TABLE_ID = 'tblzpkLrlIr1iCIyh';
   const RECORD_ID = 'recYvQSVNIA2xLlWH';
 
-  const SCAN_MAP = [{fieldId: 'fldhDc1CfUuJdG1Y3', label: 'Case — Front'}, {fieldId: 'fldqEADFnRYJNLj3Z', label: 'Case — Back'}, {fieldId: 'fldcrPHjBslIULaw7', label: 'Spine'}, {fieldId: 'fldRXhKl7oT25dlze', label: 'J-Card — Front'}, {fieldId: 'fldc7TEfXf2d1iQZC', label: 'J-Card — Back'}, {fieldId: 'flds2RK8R9ldHh8aQ', label: 'Cassette — Side A'}, {fieldId: 'fldQ1Kc0jjUExOhqa', label: 'Cassette — Side B'}];
+  const SCAN_MAP = [{fieldName: 'Scan: Front Cover', label: 'Case — Front'}, {fieldName: 'Scan: Back Cover', label: 'Case — Back'}, {fieldName: 'Scan: Spine', label: 'Spine'}, {fieldName: 'Scan: J-Card Front', label: 'J-Card — Front'}, {fieldName: 'Scan: J-Card Rear/Spine', label: 'J-Card — Back'}, {fieldName: 'Scan: Cassette (Front)', label: 'Cassette — Side A'}, {fieldName: 'Scan: Cassette (Back)', label: 'Cassette — Side B'}];
 
   let scanData = [];
   let currentScan = 0;
@@ -653,38 +651,34 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
       const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}/${RECORD_ID}`;
       const res = await fetch(url, { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } });
       const data = await res.json();
-      if (!data.fields) { console.error('No data:', data); return; }
+      if (!data.fields) { console.error('No fields in response:', data); return; }
 
       const fields = data.fields;
+      console.log('Available fields:', Object.keys(fields));
       const grid = document.getElementById('scanGrid');
       grid.innerHTML = '';
       scanData = [];
 
       SCAN_MAP.forEach((scan) => {
-        const attachments = fields[scan.fieldId];
-        if (!attachments || attachments.length === 0) return;
-
-        // Handle multiple attachments in same field (e.g. booklet pages)
+        const attachments = fields[scan.fieldName];
+        if (!attachments || attachments.length === 0) {
+          console.log('No attachment for:', scan.fieldName);
+          return;
+        }
         attachments.forEach((att) => {
           const imgUrl = att.url;
           const idx = scanData.length;
           scanData.push({ src: imgUrl, label: scan.label });
-
           const cell = document.createElement('div');
           cell.className = 'scan-cell';
           cell.dataset.idx = idx;
           cell.onclick = () => openLightbox(idx);
           cell.innerHTML = `
             <img src="${imgUrl}" alt="${scan.label}" loading="lazy">
-            <div class="scan-cell-label">
-              <span class="scl-name">${scan.label}</span>
-              <span class="scl-dim">600 dpi · JPEG</span>
-            </div>
+            <div class="scan-cell-label"><span class="scl-name">${scan.label}</span><span class="scl-dim">600 dpi · JPEG</span></div>
             <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
             <button class="save-whole-btn" onclick="openWholeDD(event,'whole-${idx}')">+ Save pressing</button>
-            <button class="save-btn" id="sb-${idx}" onclick="openScanDD(event,'scan-${idx}')">
-              <svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg>
-            </button>
+            <button class="save-btn" id="sb-${idx}" onclick="openScanDD(event,'scan-${idx}')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
             <div class="folder-dd" id="scan-${idx}"></div>
             <div class="folder-dd whole-dd" id="whole-${idx}"></div>`;
           grid.appendChild(cell);
@@ -692,12 +686,9 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
       });
 
       document.querySelector('.scan-count').textContent = `${scanData.length} scans`;
-
       const newCells = document.querySelectorAll('.scan-cell');
       const obs = new IntersectionObserver((entries) => {
-        entries.forEach((e, i) => {
-          if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 50); obs.unobserve(e.target); }
-        });
+        entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 50); obs.unobserve(e.target); } });
       }, { threshold: 0.05 });
       newCells.forEach(c => obs.observe(c));
 
@@ -708,12 +699,10 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
 
   function setTab(el){document.querySelectorAll('.scan-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
   document.querySelectorAll('.scan-type-list a').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();document.querySelectorAll('.scan-type-list a').forEach(x=>x.classList.remove('active'));a.classList.add('active');});});
-
   function openLightbox(idx){if(!scanData[idx])return;currentScan=idx;document.getElementById('lightboxImg').src=scanData[idx].src;document.getElementById('lightboxLabel').innerHTML='<strong>'+scanData[idx].label+'</strong>';document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden';}
   function closeLightbox(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
   function lbNav(dir){currentScan=(currentScan+dir+scanData.length)%scanData.length;openLightbox(currentScan);}
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();if(e.key==='ArrowRight')lbNav(1);if(e.key==='ArrowLeft')lbNav(-1);});
-
   const PRESSING_NAME='Bloom — Beach House';
   const FOLDER_COLORS=['fi-red','fi-blue','fi-green','fi-amber'];
   let folders=[{id:1,name:'Favourites',color:'fi-red',items:[]},{id:2,name:'Typography Ref',color:'fi-blue',items:[]},{id:3,name:'Colour Ref',color:'fi-green',items:[]}];
