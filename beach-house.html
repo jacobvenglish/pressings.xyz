@@ -53,7 +53,9 @@ nav { position:fixed;top:0;left:0;right:0;z-index:500;background:var(--paper);bo
 .rh-breadcrumb .current { color:var(--ink); }
 .record-title { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(48px,6vw,88px);line-height:0.9;text-transform:uppercase;letter-spacing:-0.01em;color:var(--ink);margin-bottom:8px; }
 .record-artist { font-family:'Barlow Condensed',sans-serif;font-weight:400;font-size:clamp(24px,3vw,40px);text-transform:uppercase;letter-spacing:0.02em;color:var(--mid); }
-.rh-right { border-left:1px solid var(--rule);padding:32px 24px;display:flex;flex-direction:column;min-width:200px; }
+.rh-right { border-left:1px solid var(--rule);padding:0;display:flex;flex-direction:column;min-width:200px; }
+.meta-row { padding:14px 24px;border-bottom:1px solid var(--rule); }
+.meta-row:last-child { border-bottom:none; }
 .meta-row { display:flex;flex-direction:column;gap:3px;padding:14px 0;border-bottom:1px solid var(--rule); }
 .meta-row:first-child { padding-top:0; }
 .meta-row:last-child { border-bottom:none; }
@@ -382,7 +384,7 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
     <h1 class="record-title" id="recordTitle">—</h1>
     <p class="record-artist" id="recordArtist">—</p>
   </div>
-  <div class="rh-right reveal d2"><div id="metaRows"></div></div>
+  <div class="rh-right reveal d2" id="metaRows"></div>
 </header>
 
 <section class="scan-section">
@@ -498,12 +500,7 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
     <div class="info-block">
       <div class="info-block-title">Print &amp; Production <span>02</span></div>
       <div class="production-grid" id="productionGrid"></div>
-        <div class="prod-cell"><span class="prod-key">Packaging</span><span class="prod-val">Standard Case + 4-Panel J-Card</span></div>
-        <div class="prod-cell"><span class="prod-key">Colour Palette</span><span class="prod-val">Black, White</span></div>
-        <div class="prod-cell"><span class="prod-key">Typography</span><span class="prod-val">White on Black</span></div>
-        <div class="prod-cell"><span class="prod-key">Cat. No.</span><span class="prod-val">SP965</span></div>
-        <div class="prod-cell"><span class="prod-key">Release Date</span><span class="prod-val">May 15, 2012</span></div>
-      </div>
+</div>
     </div>
 
     <div class="info-block">
@@ -524,35 +521,25 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
         <span>Record Label</span>
         <span class="label-name" id="labelName">—</span>
       </div>
-      <div class="label-card-body">
-        <div class="label-stat-row"><span class="label-stat-key">Founded</span><span class="label-stat-val">1988</span></div>
-        <div class="label-stat-row"><span class="label-stat-key">Country</span><span class="label-stat-val">USA</span></div>
+      <div class="label-card-body" id="labelCardBody">
+        <div class="label-stat-row"><span class="label-stat-key">Founded</span><span class="label-stat-val" style="font-size:13px;">1988</span></div>
+        <div class="label-stat-row"><span class="label-stat-key">Country</span><span class="label-stat-val" style="font-size:13px;">USA</span></div>
         <div class="label-stat-row"><span class="label-stat-key">Location</span><span class="label-stat-val" style="font-size:13px;">Seattle, WA</span></div>
         <div class="label-stat-row" style="border-bottom:none;"><span class="label-stat-key">In Archive</span><span class="label-stat-val">1</span></div>
       </div>
     </div>
     <div>
       <p class="sidebar-section-title">Also in Archive</p>
-      <ul class="related-list">
-        <li class="related-item" onclick="window.location='earl.html'">
-          <div class="rel-thumb">
-            <img src="images/002/002_EarlSweatshirt_LiveLaughLove_CASE-FRONT.png" alt="Live Laugh Love">
-          </div>
-          <div style="flex:1;min-width:0;">
-            <span class="rel-title">Live Laugh Love</span>
-            <span class="rel-artist">Earl Sweatshirt</span>
-          </div>
-          <span class="rel-year">2025</span>
+      <ul class="related-list" id="relatedList">
+        <li class="related-item" onclick="window.location='bon-iver.html'">
+          <div class="rel-thumb" style="background:var(--rule);width:36px;height:36px;"></div>
+          <div style="flex:1;min-width:0;"><span class="rel-title">i,i</span><span class="rel-artist">Bon Iver</span></div>
+          <span class="rel-year">2019</span>
         </li>
-        <li class="related-item" onclick="window.location='record.html'">
-          <div class="rel-thumb" style="background:#e2dfd6;">
-            <svg width="100%" height="100%" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" stroke="rgba(15,15,15,0.15)" stroke-width="1" fill="none"/><circle cx="18" cy="18" r="4" fill="rgba(15,15,15,0.1)"/></svg>
-          </div>
-          <div style="flex:1;min-width:0;">
-            <span class="rel-title">Kind of Blue</span>
-            <span class="rel-artist">Miles Davis</span>
-          </div>
-          <span class="rel-year">1959</span>
+        <li class="related-item" onclick="window.location='earl.html'">
+          <div class="rel-thumb" style="background:var(--rule);width:36px;height:36px;"></div>
+          <div style="flex:1;min-width:0;"><span class="rel-title">Live Laugh Love</span><span class="rel-artist">Earl Sweatshirt</span></div>
+          <span class="rel-year">2025</span>
         </li>
       </ul>
     </div>
@@ -709,7 +696,7 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
       if (bcGenre && genre) bcGenre.textContent = genre;
 
       // ── META RIGHT COLUMN ──
-      const metaEl = document.getElementById('metaRows');
+      const metaEl = document.getElementById('metaRows'); if(metaEl) metaEl.style.width='100%';
       if (metaEl) {
         metaEl.innerHTML = '';
         META_FIELDS.forEach((m, i) => {
