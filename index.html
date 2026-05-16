@@ -990,43 +990,13 @@ footer {
       <div class="toolbar-count">10 results</div>
     </div>
 
-    <div class="archive-grid">
-
-      <!-- 001 — Bon Iver -->
-      <div class="press-item" onclick="window.location='bon-iver.html'" style="cursor:pointer;" data-format="cassette" data-packaging="j-card" data-decade="2010s" data-country="usa" data-title="i i" data-artist="bon iver" data-label="jagjaguwar">
-        <div class="press-cover"><div class="press-cover-inner" style="background:#c8703a;"><img src="images/001/001_BonIver_II_OUTER-FRONT.png" alt="i,i" style="width:100%;height:100%;object-fit:cover;display:block;"></div><span class="press-item-num">001</span><span class="press-format-tag">Cass</span><div class="press-overlay"><div class="po-format">Cassette · Reissue</div><div class="po-title">i,i</div><div class="po-artist">Bon Iver</div><div class="po-rule"></div><div class="po-meta"><span>2019</span><span>Jagjaguwar</span><span>USA</span></div></div></div>
-        <div class="press-foot"><div class="pf-title">i,i</div><div class="pf-artist">Bon Iver · 2019</div></div>
-      </div>
-
-      <!-- 002 — Earl Sweatshirt -->
-      <div class="press-item" onclick="window.location='earl.html'" style="cursor:pointer;" data-format="cassette" data-packaging="j-card" data-decade="2020s" data-country="usa" data-title="live laugh love" data-artist="earl sweatshirt" data-label="warner tan cressida">
-        <div class="press-cover"><div class="press-cover-inner" style="background:#1a3a6b;"><img src="images/002/002_EarlSweatshirt_LiveLaughLove_CASE-FRONT.png" alt="Live Laugh Love" style="width:100%;height:100%;object-fit:cover;display:block;"></div><span class="press-item-num">002</span><span class="press-format-tag">Cass</span><div class="press-overlay"><div class="po-format">Cassette · Standard</div><div class="po-title">Live Laugh Love</div><div class="po-artist">Earl Sweatshirt</div><div class="po-rule"></div><div class="po-meta"><span>2025</span><span>Tan Cressida</span><span>USA</span></div></div></div>
-        <div class="press-foot"><div class="pf-title">Live Laugh Love</div><div class="pf-artist">Earl Sweatshirt · 2025</div></div>
-      </div>
-
-      <!-- 003 — Beach House -->
-      <div class="press-item" onclick="window.location='beach-house.html'" style="cursor:pointer;" data-format="cassette" data-packaging="j-card" data-decade="2010s" data-country="usa" data-title="bloom" data-artist="beach house" data-label="sub pop">
-        <div class="press-cover"><div class="press-cover-inner" style="background:#0f0f0f;"><img src="images/003/003_BeachHouse_Bloom_CASE-FRONT.png" alt="Bloom" style="width:100%;height:100%;object-fit:cover;display:block;"></div><span class="press-item-num">003</span><span class="press-format-tag">Cass</span><div class="press-overlay"><div class="po-format">Cassette · Standard</div><div class="po-title">Bloom</div><div class="po-artist">Beach House</div><div class="po-rule"></div><div class="po-meta"><span>2012</span><span>Sub Pop</span><span>USA</span></div></div></div>
-        <div class="press-foot"><div class="pf-title">Bloom</div><div class="pf-artist">Beach House · 2012</div></div>
-      </div>
-
-      <!-- 004 — Hippocampus -->
-      <div class="press-item" onclick="window.location='hippocampus.html'" style="cursor:pointer;" data-format="cassette" data-packaging="j-card" data-decade="2010s" data-country="usa" data-title="bambi" data-artist="hippocampus" data-label="grand jury music">
-        <div class="press-cover"><div class="press-cover-inner" style="background:#1a2a6b;"><img src="images/004/004_Hippocampus_Bambi_CASE-FRONT.png" alt="Bambi" style="width:100%;height:100%;object-fit:cover;display:block;"></div><span class="press-item-num">004</span><span class="press-format-tag">Cass</span><div class="press-overlay"><div class="po-format">Cassette · Limited 1/500</div><div class="po-title">Bambi</div><div class="po-artist">Hippocampus</div><div class="po-rule"></div><div class="po-meta"><span>2018</span><span>Grand Jury</span><span>USA</span></div></div></div>
-        <div class="press-foot"><div class="pf-title">Bambi</div><div class="pf-artist">Hippocampus · 2018</div></div>
-      </div>
-
-      <!-- 005 — BROCKHAMPTON -->
-      <div class="press-item" onclick="window.location='brockhampton.html'" style="cursor:pointer;" data-format="cassette" data-packaging="j-card" data-decade="2020s" data-country="usa" data-title="roadrunner new light new machine" data-artist="brockhampton" data-label="question everything rca">
-        <div class="press-cover"><div class="press-cover-inner" style="background:#0f0f0f;"><img src="images/005/005_Brockhampton_Roadrunner_CASE-FRONT.png" alt="ROADRUNNER" style="width:100%;height:100%;object-fit:cover;display:block;"></div><span class="press-item-num">005</span><span class="press-format-tag">Cass</span><div class="press-overlay"><div class="po-format">Cassette · Bonus Tracks</div><div class="po-title">ROADRUNNER</div><div class="po-artist">BROCKHAMPTON</div><div class="po-rule"></div><div class="po-meta"><span>2021</span><span>RCA</span><span>USA</span></div></div></div>
-        <div class="press-foot"><div class="pf-title">ROADRUNNER</div><div class="pf-artist">BROCKHAMPTON · 2021</div></div>
-      </div>
-
+    <div class="archive-grid" id="archiveGrid">
+      <!-- Dynamically populated from Airtable -->
     </div>
 
     <div class="load-row">
       <button class="load-btn">Load More →</button>
-      <span class="t-label">Showing 5 of 5</span>
+      <span class="t-label" id="archiveCount">Loading…</span>
     </div>
   </div>
 </div>
@@ -1063,14 +1033,13 @@ footer {
 </footer>
 
 <script>
-  // ── HAMBURGER MENU ──
+  // ── HAMBURGER ──
   function toggleMenu() {
     const menu = document.getElementById('mobileMenu');
     const btn = document.getElementById('hamburger');
     menu.classList.toggle('open');
     btn.classList.toggle('open');
   }
-  // Close menu on outside click
   document.addEventListener('click', e => {
     const menu = document.getElementById('mobileMenu');
     const btn = document.getElementById('hamburger');
@@ -1080,28 +1049,113 @@ footer {
     }
   });
 
-  // ── STATE ──
+  // ── AIRTABLE CONFIG ──
+  const AIRTABLE_TOKEN = 'pat0JowfMYa0NojAY.9ddaea5db505b7c680f90786a8e7f99825172992ab1f0c40fef41175916dbafa';
+  const BASE_ID = 'app7OesxAyA6zbwfp';
+  const TABLE_ID = 'tblzpkLrlIr1iCIyh';
+
+  // Map record IDs to page filenames
+  const PAGE_MAP = {
+    'rec3g7tCGIJon3tRi': 'bon-iver.html',
+    'recKPhmsqNwpAfnDP': 'earl.html',
+    'recYvQSVNIA2xLlWH': 'beach-house.html',
+    'recjjhNuznfJ5rWmF': 'hippocampus.html',
+    'recDHwKwylKeZUvZV': 'brockhampton.html',
+  };
+
+  async function loadArchive() {
+    try {
+      const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}?sort[0][field]=ID&sort[0][direction]=asc`;
+      const res = await fetch(url, { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } });
+      const data = await res.json();
+      if (!data.records) { console.error('No records:', data); return; }
+
+      const grid = document.getElementById('archiveGrid');
+      const countEl = document.getElementById('archiveCount');
+      grid.innerHTML = '';
+
+      // Filter out the example row
+      const records = data.records.filter(r => r.fields['Title'] && r.fields['Title'] !== 'Album / release title');
+
+      records.forEach((rec, i) => {
+        const f = rec.fields;
+        const page = PAGE_MAP[rec.id];
+        if (!page) return;
+
+        const title = f['Title'] || '—';
+        const artist = f['Artist'] || '—';
+        const label = f['Label'] || '—';
+        const year = f['Year (This Pressing)'] || f['Original Release Year'] || '—';
+        const format = f['FORMAT'] || '—';
+        const edition = f['Edition'] || '';
+        const id = f['ID'] || String(i + 1).padStart(3, '0');
+        const country = f['Country'] || '—';
+
+        // Get cover image from Airtable
+        const coverScan = f['Scan: Front Cover'] || f['Sacn: Outer - Front'];
+        const imgUrl = coverScan && coverScan[0] ? coverScan[0].url : null;
+
+        const formatTag = format === 'Cassette' ? 'Cass' : format === 'Vinyl 12"' ? '12"' : format === 'CD' ? 'CD' : format;
+        const decade = year ? Math.floor(parseInt(year) / 10) * 10 + 's' : '';
+        const formatDisplay = edition ? `${format} · ${edition}` : format;
+
+        const item = document.createElement('div');
+        item.className = 'press-item';
+        item.style.cursor = 'pointer';
+        item.dataset.format = format.toLowerCase();
+        item.dataset.title = title.toLowerCase();
+        item.dataset.artist = artist.toLowerCase();
+        item.dataset.label = label.toLowerCase();
+        item.dataset.decade = decade.toLowerCase();
+        item.dataset.country = country.toLowerCase();
+        item.onclick = () => window.location = page;
+
+        const coverInner = imgUrl
+          ? `<img src="${imgUrl}" alt="${title}" style="width:100%;height:100%;object-fit:cover;display:block;">`
+          : `<div style="width:100%;height:100%;background:var(--rule);"></div>`;
+
+        item.innerHTML = `
+          <div class="press-cover">
+            <div class="press-cover-inner">${coverInner}</div>
+            <span class="press-item-num">${id}</span>
+            <span class="press-format-tag">${formatTag}</span>
+            <div class="press-overlay">
+              <div class="po-format">${formatDisplay}</div>
+              <div class="po-title">${title}</div>
+              <div class="po-artist">${artist}</div>
+              <div class="po-rule"></div>
+              <div class="po-meta"><span>${year}</span><span>${label}</span><span>${country}</span></div>
+            </div>
+          </div>
+          <div class="press-foot">
+            <div class="pf-title">${title}</div>
+            <div class="pf-artist">${artist} · ${year}</div>
+          </div>`;
+
+        grid.appendChild(item);
+
+        // Animate in
+        setTimeout(() => item.classList.add('visible'), i * 80);
+      });
+
+      if (countEl) countEl.textContent = `Showing ${records.length} of ${records.length}`;
+
+      // Re-init filtering on dynamically loaded items
+      initFilters();
+
+    } catch(err) { console.error('Airtable error:', err); }
+  }
+
+  loadArchive();
   let activeFormat = 'all';
   let activePackaging = 'all';
   let activeDecade = 'all';
   let activeCountry = 'all';
   let searchQuery = '';
 
-  const allItems = document.querySelectorAll('.press-item');
-
-  // ── ENTRANCE ANIMATION ──
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 40);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.05 });
-  allItems.forEach(item => observer.observe(item));
-
-  // ── FILTER ENGINE ──
+  // ── FILTER ENGINE ── (works on dynamically loaded items)
   function applyFilters() {
+    const allItems = document.querySelectorAll('.press-item');
     let visible = 0;
     allItems.forEach(item => {
       const format    = item.dataset.format || '';
@@ -1128,13 +1182,14 @@ footer {
       if (show) visible++;
     });
 
-    // Update result count
     const countEl = document.querySelector('.toolbar-count');
     if (countEl) countEl.textContent = visible + ' results';
-
-    // Update load more label
     const loadLabel = document.querySelector('.load-row .t-label');
-    if (loadLabel) loadLabel.textContent = 'Showing ' + visible + ' of 247';
+    if (loadLabel) loadLabel.textContent = `Showing ${visible} of ${document.querySelectorAll('.press-item').length}`;
+  }
+
+  function initFilters() {
+    applyFilters();
   }
 
   // ── FORMAT STRIP ──
@@ -1197,17 +1252,7 @@ footer {
   // ── ITEM CLICKS — all items navigate, only Kind of Blue has a real page ──
   allItems.forEach(item => {
     item.style.cursor = 'pointer';
-    if (!item.onclick) {
-      item.addEventListener('click', () => {
-        // Only Kind of Blue has a real page for now
-        const title = item.dataset.title || '';
-        if (title === 'kind of blue') {
-          window.location = 'record.html';
-        }
-        // Others: do nothing for now — will link when pages are built
-      });
-    }
-  });
+
 </script>
 </body>
 </html>
