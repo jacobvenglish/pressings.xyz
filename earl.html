@@ -594,32 +594,90 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
 </footer>
 
 <script>
+  // ── HAMBURGER ──
   function toggleMenu(){const m=document.getElementById('mobileMenu'),b=document.getElementById('hamburger');m.classList.toggle('open');b.classList.toggle('open');}
   document.addEventListener('click',e=>{const m=document.getElementById('mobileMenu'),b=document.getElementById('hamburger');if(m&&b&&!m.contains(e.target)&&!b.contains(e.target)){m.classList.remove('open');b.classList.remove('open');}});
-  const cells=document.querySelectorAll('.scan-cell');
-  const obs=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);obs.unobserve(e.target);}});},{threshold:0.05});
-  cells.forEach(c=>obs.observe(c));
+
+  // ── AIRTABLE CONFIG ──
+  const AIRTABLE_TOKEN = 'pat0JowfMYa0NojAY.9ddaea5db505b7c680f90786a8e7f99825172992ab1f0c40fef41175916dbafa';
+  const BASE_ID = 'app7OesxAyA6zbwfp';
+  const TABLE_ID = 'tblzpkLrlIr1iCIyh';
+  const RECORD_ID = 'recKPhmsqNwpAfnDP';
+
+  const SCAN_MAP = [{fieldId: 'fldhDc1CfUuJdG1Y3', label: 'Case — Front'}, {fieldId: 'fldqEADFnRYJNLj3Z', label: 'Case — Back'}, {fieldId: 'fldcrPHjBslIULaw7', label: 'Spine'}, {fieldId: 'fldiCqDrZKzzgjJbJ', label: 'Hype Sticker'}, {fieldId: 'fld5yDj6ggeDGYqGx', label: 'Booklet'}, {fieldId: 'fldRXhKl7oT25dlze', label: 'J-Card — Front'}, {fieldId: 'fldc7TEfXf2d1iQZC', label: 'J-Card — Inside'}, {fieldId: 'flds2RK8R9ldHh8aQ', label: 'Cassette — Front'}, {fieldId: 'fldQ1Kc0jjUExOhqa', label: 'Cassette — Back'}];
+
+  let scanData = [];
+  let currentScan = 0;
+
+  async function loadScans() {
+    try {
+      const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}/${RECORD_ID}`;
+      const res = await fetch(url, { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } });
+      const data = await res.json();
+      if (!data.fields) { console.error('No data:', data); return; }
+
+      const fields = data.fields;
+      const grid = document.getElementById('scanGrid');
+      grid.innerHTML = '';
+      scanData = [];
+
+      SCAN_MAP.forEach((scan) => {
+        const attachments = fields[scan.fieldId];
+        if (!attachments || attachments.length === 0) return;
+
+        // Handle multiple attachments in same field (e.g. booklet pages)
+        attachments.forEach((att) => {
+          const imgUrl = att.url;
+          const idx = scanData.length;
+          scanData.push({ src: imgUrl, label: scan.label });
+
+          const cell = document.createElement('div');
+          cell.className = 'scan-cell';
+          cell.dataset.idx = idx;
+          cell.onclick = () => openLightbox(idx);
+          cell.innerHTML = `
+            <img src="${imgUrl}" alt="${scan.label}" loading="lazy">
+            <div class="scan-cell-label">
+              <span class="scl-name">${scan.label}</span>
+              <span class="scl-dim">600 dpi · JPEG</span>
+            </div>
+            <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+            <button class="save-whole-btn" onclick="openWholeDD(event,'whole-${idx}')">+ Save pressing</button>
+            <button class="save-btn" id="sb-${idx}" onclick="openScanDD(event,'scan-${idx}')">
+              <svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg>
+            </button>
+            <div class="folder-dd" id="scan-${idx}"></div>
+            <div class="folder-dd whole-dd" id="whole-${idx}"></div>`;
+          grid.appendChild(cell);
+        });
+      });
+
+      document.querySelector('.scan-count').textContent = `${scanData.length} scans`;
+
+      const newCells = document.querySelectorAll('.scan-cell');
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+          if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 50); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.05 });
+      newCells.forEach(c => obs.observe(c));
+
+    } catch(err) { console.error('Airtable fetch error:', err); }
+  }
+
+  loadScans();
+
   function setTab(el){document.querySelectorAll('.scan-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
   document.querySelectorAll('.scan-type-list a').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();document.querySelectorAll('.scan-type-list a').forEach(x=>x.classList.remove('active'));a.classList.add('active');});});
-  const scanData=[
-    {src:'images/002/002_EarlSweatshirt_LiveLaughLove_CASE-FRONT.png',label:'Case — Front'},
-    {src:'images/002/002_EarlSweatshirt_LiveLaughLove_CASE-BACK.png',label:'Case — Back'},
-    {src:'images/002/002_EarlSweatshirt_LiveLaughLove_SPINE.png',label:'Spine'},
-    {src:'images/002/002_EarlSweatshirt_LiveLaughLove_JCARD-FRONT.png',label:'J-Card — Front'},
-    {src:'images/002/002_EarlSweatshirt_LiveLaughLove_JCARD-INSIDE.png',label:'J-Card — Back'},
-    {src:'images/002/002_EarlSweatshirt_LiveLaughLove_BOOKLET-1.png',label:'Booklet — Front'},
-    {src:'images/002/002_EarlSweatshirt_LiveLaughLove_BOOKLET-2.png',label:'Booklet — Back'},
-    {src:'images/002/002_EarlSweatshirt_LiveLaughLove_CASS-FRONT.png',label:'Cassette — Side A'},
-    {src:'images/002/002_EarlSweatshirt_LiveLaughLove_CASS-BACK.png',label:'Cassette — Side B'},
-  ];
-  let currentScan=0;
-  function openLightbox(idx){currentScan=idx;document.getElementById('lightboxImg').src=scanData[idx].src;document.getElementById('lightboxLabel').innerHTML='<strong>'+scanData[idx].label+'</strong>';document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden';}
+
+  function openLightbox(idx){if(!scanData[idx])return;currentScan=idx;document.getElementById('lightboxImg').src=scanData[idx].src;document.getElementById('lightboxLabel').innerHTML='<strong>'+scanData[idx].label+'</strong>';document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden';}
   function closeLightbox(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
   function lbNav(dir){currentScan=(currentScan+dir+scanData.length)%scanData.length;openLightbox(currentScan);}
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();if(e.key==='ArrowRight')lbNav(1);if(e.key==='ArrowLeft')lbNav(-1);});
+
   const PRESSING_NAME='Live Laugh Love — Earl Sweatshirt';
   const FOLDER_COLORS=['fi-red','fi-blue','fi-green','fi-amber'];
-  let folders=[{id:1,name:'Typography Ref',color:'fi-red',items:[]},{id:2,name:'Hip-Hop Packaging',color:'fi-blue',items:[]},{id:3,name:'Self-Directed',color:'fi-green',items:[]},];
+  let folders=[{id:1,name:'Favourites',color:'fi-red',items:[]},{id:2,name:'Typography Ref',color:'fi-blue',items:[]},{id:3,name:'Colour Ref',color:'fi-green',items:[]}];
   let nextFolderId=4,activeDDId=null;
   function toast(msg){const t=document.getElementById('saveToast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
   function folderRowsHTML(key){return folders.map(f=>{const saved=f.items.includes(key);return`<div class="dd-folder-row" onclick="toggleItem('${f.id}','${key}')"><div class="dd-folder-icon ${f.color}"></div><span class="dd-folder-name">${f.name}</span><span class="dd-folder-count">${f.items.length}</span><div class="dd-check ${saved?'on':''}"></div></div>`;}).join('');}
@@ -627,8 +685,8 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
   function openScanDD(e,ddId){e.stopPropagation();const cell=e.target.closest('.scan-cell');const scanName=cell.querySelector('.scl-name').textContent;const key='scan:'+scanName;closeAllDD();const dd=document.getElementById(ddId);dd.innerHTML=buildDDHTML('Save scan',scanName,key,ddId);dd.classList.add('open');activeDDId=ddId;}
   function openWholeDD(e,ddId){e.stopPropagation();const key='pressing:'+PRESSING_NAME;closeAllDD();const dd=document.getElementById(ddId);dd.innerHTML=buildDDHTML('Save pressing',PRESSING_NAME,key,ddId);dd.classList.add('open');activeDDId=ddId;}
   function closeAllDD(){document.querySelectorAll('.folder-dd').forEach(d=>d.classList.remove('open'));activeDDId=null;}
-  function toggleItem(folderId,key){const f=folders.find(x=>x.id==folderId);if(!f)return;const i=f.items.indexOf(key);if(i===-1){f.items.push(key);toast('Saved to '+f.name);if(key.startsWith('scan:')){const sn=key.replace('scan:','');document.querySelectorAll('.scan-cell').forEach(c=>{if(c.querySelector('.scl-name')?.textContent===sn){const b=c.querySelector('.save-btn');if(b)b.classList.add('saved');}});}}else{f.items.splice(i,1);toast('Removed from '+f.name);if(key.startsWith('scan:')){const sn=key.replace('scan:','');const still=folders.some(folder=>folder.items.includes(key));if(!still){document.querySelectorAll('.scan-cell').forEach(c=>{if(c.querySelector('.scl-name')?.textContent===sn){const b=c.querySelector('.save-btn');if(b)b.classList.remove('saved');}});}}}if(activeDDId){const fl=document.getElementById('fl-'+activeDDId);if(fl)fl.innerHTML=folderRowsHTML(key);}}
-  function createFolder(key,inputId){const input=document.getElementById('ni-'+inputId);const name=input?input.value.trim():'';if(!name)return;const color=FOLDER_COLORS[nextFolderId%FOLDER_COLORS.length];const f={id:nextFolderId++,name,color,items:[key]};folders.push(f);toast('Folder "'+name+'" created');if(key.startsWith('scan:')){const sn=key.replace('scan:','');document.querySelectorAll('.scan-cell').forEach(c=>{if(c.querySelector('.scl-name')?.textContent===sn){const b=c.querySelector('.save-btn');if(b)b.classList.add('saved');}});}if(activeDDId){const dd=document.getElementById(activeDDId);if(dd){const fl=document.getElementById('fl-'+activeDDId);if(fl)fl.innerHTML=folderRowsHTML(key);if(input)input.value='';}}}
+  function toggleItem(folderId,key){const f=folders.find(x=>x.id==folderId);if(!f)return;const i=f.items.indexOf(key);if(i===-1){f.items.push(key);toast('Saved to '+f.name);}else{f.items.splice(i,1);toast('Removed from '+f.name);}if(activeDDId){const fl=document.getElementById('fl-'+activeDDId);if(fl)fl.innerHTML=folderRowsHTML(key);}}
+  function createFolder(key,inputId){const input=document.getElementById('ni-'+inputId);const name=input?input.value.trim():'';if(!name)return;const color=FOLDER_COLORS[nextFolderId%FOLDER_COLORS.length];const f={id:nextFolderId++,name,color,items:[key]};folders.push(f);toast('Folder "'+name+'" created');if(activeDDId){const dd=document.getElementById(activeDDId);if(dd){const fl=document.getElementById('fl-'+activeDDId);if(fl)fl.innerHTML=folderRowsHTML(key);if(input)input.value='';}}}
   document.addEventListener('click',e=>{if(!e.target.closest('.folder-dd')&&!e.target.closest('.save-btn')&&!e.target.closest('.save-whole-btn'))closeAllDD();});
 </script>
 </body>
