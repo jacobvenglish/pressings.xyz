@@ -333,31 +333,18 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
 
 <header class="record-header">
   <div class="rh-left">
-    <span class="rh-id">Pressing #002</span>
-    <div class="rh-format-block">
-      <span class="rh-format-tag active">Cassette</span>
-      <span class="rh-format-tag">Standard</span>
-      <span class="rh-format-tag">J-Card</span>
-    </div>
+    <span class="rh-id" id="pressNumber">Pressing #—</span>
+    <div class="rh-format-block" id="formatTags"></div>
   </div>
   <div class="rh-mid reveal d1">
     <div class="rh-breadcrumb">
       <a href="index.html">Archive</a><span class="sep">/</span>
-      <a href="#">Hip-Hop</a><span class="sep">/</span>
-      <a href="#">Earl Sweatshirt</a><span class="sep">/</span>
-      <span class="current">Live Laugh Love</span>
+      <a href="#" id="bcGenre">—</a><span class="sep">/</span><a href="#" id="bcArtist">—</a><span class="sep">/</span><span class="current" id="bcTitle">—</span>
     </div>
-    <h1 class="record-title">Live Laugh Love</h1>
-    <p class="record-artist">Earl Sweatshirt</p>
+    <h1 class="record-title" id="recordTitle">—</h1>
+    <p class="record-artist" id="recordArtist">—</p>
   </div>
-  <div class="rh-right reveal d2">
-    <div class="meta-row"><span class="meta-key">Label</span><span class="meta-val"><a href="labels.html">Warner Records</a> / Tan Cressida</span></div>
-    <div class="meta-row"><span class="meta-key">Cat. No.</span><span class="meta-val">093624828686</span></div>
-    <div class="meta-row"><span class="meta-key">Year</span><span class="meta-val">2025</span></div>
-    <div class="meta-row"><span class="meta-key">Country</span><span class="meta-val">USA</span></div>
-    <div class="meta-row"><span class="meta-key">Format</span><span class="meta-val">Cassette · Standard</span></div>
-    <div class="meta-row" style="border-bottom:none;padding-bottom:0;"><span class="meta-key">Condition</span><span class="meta-val">Mint</span></div>
-  </div>
+  <div class="rh-right reveal d2"><div id="metaRows"></div></div>
 </header>
 
 <section class="scan-section">
@@ -489,35 +476,12 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
 
     <div class="info-block">
       <div class="info-block-title">Design Credits <span>01</span></div>
-      <table class="credits-table">
-        <tr>
-          <td>Art Direction &amp; Design</td>
-          <td>
-            Sage Elsesser &amp; Jakobi McLemore
-            <span class="credit-note">Collaborative art direction between Earl and his creative collaborators</span>
-          </td>
-        </tr>
-        <tr>
-          <td>Photography</td>
-          <td>
-            Julien Wolf
-            <span class="credit-note">Album photography throughout</span>
-          </td>
-        </tr>
-        <tr>
-          <td>Label</td>
-          <td>
-            Warner Records / Tan Cressida
-            <span class="credit-note">Tan Cressida is Earl's own imprint</span>
-          </td>
-        </tr>
-      </table>
+      <table class="credits-table"><tbody id="creditsTable"></tbody></table>
     </div>
 
     <div class="info-block">
       <div class="info-block-title">Print &amp; Production <span>02</span></div>
-      <div class="production-grid">
-        <div class="prod-cell"><span class="prod-key">Format</span><span class="prod-val">Cassette · Standard</span></div>
+      <div class="production-grid" id="productionGrid"></div>
         <div class="prod-cell"><span class="prod-key">Packaging</span><span class="prod-val">Standard Case + J-Card</span></div>
         <div class="prod-cell"><span class="prod-key">Colour Palette</span><span class="prod-val">Royal Blue, Tan, Black</span></div>
         <div class="prod-cell"><span class="prod-key">Typography</span><span class="prod-val">Script + Sans-serif</span></div>
@@ -530,9 +494,7 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
 
     <div class="info-block">
       <div class="info-block-title">Curator Notes <span>04</span></div>
-      <p class="record-notes">
-        Art directed by Sage Elsesser and Jakobi McLemore with album photography by Julien Wolf. The royal blue, tan, and black palette is bold and deliberate — the image-traced illustration style throughout gives the packaging a raw, high-contrast energy that feels consistent with Earl's aesthetic. The combination of script and sans-serif type across the J-card shows real typographic consideration for a cassette format.
-      </p>
+      <p class="record-notes" id="curatorNotes"></p>
     </div>
 
   </div>
@@ -541,7 +503,7 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
     <div class="label-card">
       <div class="label-card-header">
         <span>Imprint</span>
-        <span class="label-name">Tan Cressida</span>
+        <span class="label-name" id="labelName">—</span>
       </div>
       <div class="label-card-body">
         <div class="label-stat-row"><span class="label-stat-key">Parent</span><span class="label-stat-val" style="font-size:13px;">Warner Records</span></div>
@@ -602,61 +564,250 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
   const TABLE_ID = 'tblzpkLrlIr1iCIyh';
   const RECORD_ID = 'recKPhmsqNwpAfnDP';
 
-  const SCAN_MAP = [{fieldName: 'Scan: Front Cover', label: 'Case — Front'}, {fieldName: 'Scan: Back Cover', label: 'Case — Back'}, {fieldName: 'Scan: Spine', label: 'Spine'}, {fieldName: 'Scan: Hype Sticker / Obi Strip', label: 'Hype Sticker'}, {fieldName: 'Scan: CD / Cassette Booklet Pages', label: 'Booklet'}, {fieldName: 'Scan: J-Card Front', label: 'J-Card — Front'}, {fieldName: 'Scan: J-Card Rear/Spine', label: 'J-Card — Inside'}, {fieldName: 'Scan: Cassette (Front)', label: 'Cassette — Front'}, {fieldName: 'Scan: Cassette (Back)', label: 'Cassette — Back'}];
+  // All scan fields in order — empty ones skipped automatically
+  const SCAN_FIELDS = [
+    {field: 'Sacn: Outer - Front', label: 'Outer — Front'},
+    {field: 'Scan: Outer - Back', label: 'Outer — Back'},
+    {field: 'Scan: Outer - Spine 1', label: 'Outer — Spine L'},
+    {field: 'Scan: Outer: Spine 2', label: 'Outer — Spine R'},
+    {field: 'Scan: Front Cover', label: 'Case — Front'},
+    {field: 'Scan: Back Cover', label: 'Case — Back'},
+    {field: 'Scan: Spine', label: 'Spine'},
+    {field: 'Scan: Hype Sticker', label: 'Hype Sticker'},
+    {field: 'Scan: Obi Strip', label: 'Obi Strip'},
+    {field: 'Scan: Inner Sleeve', label: 'Inner Sleeve'},
+    {field: 'Scan: Gatefold Interior', label: 'Gatefold Interior'},
+    {field: 'Scan: Booklet Cover', label: 'Booklet Cover'},
+    {field: 'Scan: Booklet Pages', label: 'Booklet'},
+    {field: 'Scan: J-Card Front', label: 'J-Card — Front'},
+    {field: 'Scan: J-Card Rear/Spine', label: 'J-Card — Back'},
+    {field: 'Scan: Tray Card', label: 'Tray Card'},
+    {field: 'Scan: Lyric Sheet', label: 'Lyric Sheet'},
+    {field: 'Scan: Poster', label: 'Poster'},
+    {field: 'Scan: Insert / Other', label: 'Insert'},
+    {field: 'Scan: Record Label Side A', label: 'Label — Side A'},
+    {field: 'Scan: Record Label Side B', label: 'Label — Side B'},
+    {field: 'Scan: Record (Full)', label: 'Record'},
+    {field: 'Scan: CD / Disc', label: 'CD / Disc'},
+    {field: 'Scan: Cassette (Front)', label: 'Cassette — Front'},
+    {field: 'Scan: Cassette (Back)', label: 'Cassette — Back'},
+    {field: 'Scan: Box / Outer Packaging', label: 'Box / Outer'},
+    {field: 'Photo: Object Detail', label: 'Detail'}
+  ];
+
+  // Credit fields — only rendered if populated
+  const CREDIT_FIELDS = [
+    {field: 'Art Director', label: 'Art Direction'},
+    {field: 'Creative Director', label: 'Creative Direction'},
+    {field: 'Graphic Designer', label: 'Graphic Design'},
+    {field: 'Photographer', label: 'Photography'},
+    {field: 'Illustrator', label: 'Illustration'},
+    {field: 'Assist.', label: 'Assistance'},
+    {field: 'Typography / Lettering', label: 'Typography'},
+    {field: 'Print Studio', label: 'Print Studio'}
+  ];
+
+  // Meta fields for right column
+  const META_FIELDS = [
+    {field: 'Label', label: 'Label'},
+    {field: 'Catalogue Number', label: 'Cat. No.'},
+    {field: 'Year (This Pressing)', label: 'Year'},
+    {field: 'Original Release Date', label: 'Released'},
+    {field: 'Country', label: 'Country'},
+    {field: 'FORMAT', label: 'Format'},
+    {field: 'Edition', label: 'Edition'},
+    {field: 'Color (cassette / CD / vinyl)', label: 'Colour'},
+    {field: 'Packaging Type', label: 'Packaging'},
+    {field: 'Condition', label: 'Condition'}
+  ];
+
+  // Format tag fields for left column pills
+  const FORMAT_TAG_FIELDS = ['FORMAT', 'Edition', 'Packaging Type', 'Special Features', 'Color (cassette / CD / vinyl)'];
 
   let scanData = [];
   let currentScan = 0;
 
-  async function loadScans() {
-    try {
-      const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}/${RECORD_ID}`;
-      const res = await fetch(url, { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } });
-      const data = await res.json();
-      if (!data.fields) { console.error('No fields in response:', data); return; }
-
-      const fields = data.fields;
-      console.log('Available fields:', Object.keys(fields));
-      const grid = document.getElementById('scanGrid');
-      grid.innerHTML = '';
-      scanData = [];
-
-      SCAN_MAP.forEach((scan) => {
-        const attachments = fields[scan.fieldName];
-        if (!attachments || attachments.length === 0) {
-          console.log('No attachment for:', scan.fieldName);
-          return;
-        }
-        attachments.forEach((att) => {
-          const imgUrl = att.url;
-          const idx = scanData.length;
-          scanData.push({ src: imgUrl, label: scan.label });
-          const cell = document.createElement('div');
-          cell.className = 'scan-cell';
-          cell.dataset.idx = idx;
-          cell.onclick = () => openLightbox(idx);
-          cell.innerHTML = `
-            <img src="${imgUrl}" alt="${scan.label}" loading="lazy">
-            <div class="scan-cell-label"><span class="scl-name">${scan.label}</span><span class="scl-dim">600 dpi · JPEG</span></div>
-            <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
-            <button class="save-whole-btn" onclick="openWholeDD(event,'whole-${idx}')">+ Save pressing</button>
-            <button class="save-btn" id="sb-${idx}" onclick="openScanDD(event,'scan-${idx}')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
-            <div class="folder-dd" id="scan-${idx}"></div>
-            <div class="folder-dd whole-dd" id="whole-${idx}"></div>`;
-          grid.appendChild(cell);
-        });
-      });
-
-      document.querySelector('.scan-count').textContent = `${scanData.length} scans`;
-      const newCells = document.querySelectorAll('.scan-cell');
-      const obs = new IntersectionObserver((entries) => {
-        entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 50); obs.unobserve(e.target); } });
-      }, { threshold: 0.05 });
-      newCells.forEach(c => obs.observe(c));
-
-    } catch(err) { console.error('Airtable fetch error:', err); }
+  function val(fields, key) {
+    return (fields[key] || '').toString().trim();
   }
 
-  loadScans();
+  async function loadRecord() {
+    try {
+      const res = await fetch(
+        `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}/${RECORD_ID}`,
+        { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } }
+      );
+      const data = await res.json();
+      if (!data.fields) { console.error('No data:', data); return; }
+      const f = data.fields;
+
+      // ── PAGE TITLE ──
+      const title = val(f, 'Title');
+      const artist = val(f, 'Artist');
+      document.title = `${title} — ${artist} · Pressings.xyz`;
+
+      // ── PRESSING NUMBER ──
+      const pressNum = val(f, 'ID');
+      const pressEl = document.getElementById('pressNumber');
+      if (pressEl && pressNum) pressEl.textContent = `Pressing #${pressNum}`;
+
+      // ── FORMAT TAGS (left column) ──
+      const tagsEl = document.getElementById('formatTags');
+      if (tagsEl) {
+        tagsEl.innerHTML = '';
+        FORMAT_TAG_FIELDS.forEach((field, i) => {
+          const v = val(f, field);
+          if (!v) return;
+          const span = document.createElement('span');
+          span.className = 'rh-format-tag' + (i === 0 ? ' active' : '');
+          span.textContent = v;
+          tagsEl.appendChild(span);
+        });
+      }
+
+      // ── BREADCRUMB + TITLE ──
+      const titleEl = document.getElementById('recordTitle');
+      if (titleEl) titleEl.textContent = title;
+      const artistEl = document.getElementById('recordArtist');
+      if (artistEl) artistEl.textContent = artist;
+      const bcArtist = document.getElementById('bcArtist');
+      if (bcArtist) bcArtist.textContent = artist;
+      const bcTitle = document.getElementById('bcTitle');
+      if (bcTitle) bcTitle.textContent = title;
+      const genre = val(f, 'GENRE & TAGS') || val(f, 'Subgenre') || '';
+      const bcGenre = document.getElementById('bcGenre');
+      if (bcGenre && genre) bcGenre.textContent = genre;
+
+      // ── META RIGHT COLUMN ──
+      const metaEl = document.getElementById('metaRows');
+      if (metaEl) {
+        metaEl.innerHTML = '';
+        META_FIELDS.forEach((m, i) => {
+          const v = val(f, m.field);
+          if (!v) return;
+          const isLast = i === META_FIELDS.length - 1;
+          const div = document.createElement('div');
+          div.className = 'meta-row';
+          if (isLast) div.style.cssText = 'border-bottom:none;padding-bottom:0;';
+          div.innerHTML = `<span class="meta-key">${m.label}</span><span class="meta-val">${v}</span>`;
+          metaEl.appendChild(div);
+        });
+      }
+
+      // ── SCANS ──
+      const grid = document.getElementById('scanGrid');
+      if (grid) {
+        grid.innerHTML = '';
+        scanData = [];
+        SCAN_FIELDS.forEach((s) => {
+          const attachments = f[s.field];
+          if (!attachments || !Array.isArray(attachments) || attachments.length === 0) return;
+          attachments.forEach((att) => {
+            const idx = scanData.length;
+            scanData.push({ src: att.url, label: s.label });
+            const cell = document.createElement('div');
+            cell.className = 'scan-cell';
+            cell.onclick = () => openLightbox(idx);
+            cell.innerHTML = `
+              <img src="${att.url}" alt="${s.label}" loading="lazy">
+              <div class="scan-cell-label"><span class="scl-name">${s.label}</span><span class="scl-dim">600 dpi · JPEG</span></div>
+              <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+              <button class="save-whole-btn" onclick="openWholeDD(event,'whole-${idx}')">+ Save pressing</button>
+              <button class="save-btn" onclick="openScanDD(event,'scan-${idx}')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+              <div class="folder-dd" id="scan-${idx}"></div>
+              <div class="folder-dd whole-dd" id="whole-${idx}"></div>`;
+            grid.appendChild(cell);
+          });
+        });
+
+        const countEl = document.querySelector('.scan-count');
+        if (countEl) countEl.textContent = `${scanData.length} scans`;
+
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach((e, i) => {
+            if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 50); obs.unobserve(e.target); }
+          });
+        }, { threshold: 0.05 });
+        document.querySelectorAll('.scan-cell').forEach(c => obs.observe(c));
+      }
+
+      // ── CREDITS ──
+      const creditsEl = document.getElementById('creditsTable');
+      if (creditsEl) {
+        creditsEl.innerHTML = '';
+        CREDIT_FIELDS.forEach((c) => {
+          const v = val(f, c.field);
+          if (!v) return;
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${c.label}</td><td>${v}</td>`;
+          creditsEl.appendChild(tr);
+        });
+      }
+
+      // ── PRODUCTION GRID ──
+      const prodEl = document.getElementById('productionGrid');
+      if (prodEl) {
+        prodEl.innerHTML = '';
+        const prodFields = [
+          { field: 'FORMAT', label: 'Format' },
+          { field: 'Packaging Type', label: 'Packaging' },
+          { field: 'Color (cassette / CD / vinyl)', label: 'Colour' },
+          { field: 'Edition', label: 'Edition' },
+          { field: 'Print Finish', label: 'Print Finish' },
+          { field: 'Special Features', label: 'Special Features' },
+          { field: 'Insert Types', label: 'Inserts' },
+          { field: 'Catalogue Number', label: 'Cat. No.' },
+          { field: 'Original Release Date', label: 'Release Date' },
+          { field: 'Typography / Lettering', label: 'Typography' },
+        ];
+        prodFields.forEach((p) => {
+          const v = val(f, p.field);
+          if (!v) return;
+          const div = document.createElement('div');
+          div.className = 'prod-cell';
+          div.innerHTML = `<span class="prod-key">${p.label}</span><span class="prod-val">${v}</span>`;
+          prodEl.appendChild(div);
+        });
+      }
+
+      // ── AESTHETIC TAGS ──
+      const tagsListEl = document.getElementById('aestheticTags');
+      if (tagsListEl) {
+        tagsListEl.innerHTML = '';
+        const tagFields = ['Design Style', 'Subgenre', 'Color Styles', 'Type Styles', 'Aesthetic Tags'];
+        const allTags = new Set();
+        tagFields.forEach(tf => {
+          const v = val(f, tf);
+          if (v) v.split(',').forEach(t => { const trimmed = t.trim(); if (trimmed) allTags.add(trimmed); });
+        });
+        allTags.forEach(tag => {
+          const span = document.createElement('span');
+          span.className = 'tag';
+          span.textContent = tag;
+          tagsListEl.appendChild(span);
+        });
+      }
+
+      // ── CURATOR NOTES ──
+      const notesEl = document.getElementById('curatorNotes');
+      if (notesEl) {
+        const notes = val(f, 'Design Notes');
+        if (notes) {
+          notesEl.textContent = notes;
+          notesEl.parentElement.style.display = '';
+        } else {
+          notesEl.parentElement.style.display = 'none';
+        }
+      }
+
+      // ── LABEL CARD ──
+      const labelNameEl = document.getElementById('labelName');
+      if (labelNameEl) labelNameEl.textContent = val(f, 'Label');
+
+    } catch(err) { console.error('Airtable error:', err); }
+  }
+
+  loadRecord();
 
   function setTab(el){document.querySelectorAll('.scan-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
   document.querySelectorAll('.scan-type-list a').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();document.querySelectorAll('.scan-type-list a').forEach(x=>x.classList.remove('active'));a.classList.add('active');});});
