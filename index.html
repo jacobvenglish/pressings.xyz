@@ -1082,14 +1082,14 @@ footer {
         const page = PAGE_MAP[rec.id];
         if (!page) return;
 
-        const title = f['Title'] || '—';
-        const artist = f['Artist'] || '—';
-        const label = f['Label'] || '—';
-        const year = f['Year (This Pressing)'] || f['Original Release Year'] || '—';
-        const format = f['FORMAT'] || '—';
-        const edition = f['Edition'] || '';
-        const id = f['ID'] || String(i + 1).padStart(3, '0');
-        const country = f['Country'] || '—';
+        const title = Array.isArray(f['Title']) ? f['Title'][0] : (f['Title'] || '—');
+        const artist = Array.isArray(f['Artist']) ? f['Artist'].join(', ') : (String(f['Artist'] || '—'));
+        const label = Array.isArray(f['Label']) ? f['Label'].join(', ') : (String(f['Label'] || '—'));
+        const year = String(f['Year (This Pressing)'] || f['Original Release Year'] || '—');
+        const format = Array.isArray(f['FORMAT']) ? f['FORMAT'][0] : (String(f['FORMAT'] || '—'));
+        const edition = Array.isArray(f['Edition']) ? f['Edition'][0] : (String(f['Edition'] || ''));
+        const id = String(f['ID'] || String(i + 1).padStart(3, '0'));
+        const country = Array.isArray(f['Country']) ? f['Country'][0] : (String(f['Country'] || '—'));
 
         // Get cover image from Airtable
         const coverScan = f['Scan: Front Cover'] || f['Sacn: Outer - Front'];
