@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loading… · Pressings.xyz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; scroll-behavior: smooth; }
+:root { --paper:#f4f1eb;--ink:#0f0f0f;--mid:#6b6b6b;--light:#c8c4bb;--rule:#d4d0c8;--red:#d42b2b;--white:#ffffff; }
+body { background:var(--paper);color:var(--ink);font-family:'Barlow',sans-serif;font-weight:400;overflow-x:hidden;cursor:crosshair; }
+body::before { content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:0.022;pointer-events:none;z-index:-1; }
+nav { position:fixed;top:0;left:0;right:0;z-index:500;background:var(--paper);border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr auto;align-items:stretch;height:48px; }
+.nav-logo-cell { border-right:1px solid var(--ink);display:flex;align-items:center;padding:0 20px;text-decoration:none; }
+.nav-logo-mark { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;letter-spacing:0.04em;text-transform:uppercase;color:var(--ink); }
+.nav-logo-mark sup { font-size:9px;color:var(--red);vertical-align:super;margin-left:1px; }
+.nav-links-cell { display:flex;align-items:center;padding:0 24px; }
+.nav-links { display:flex;list-style:none;gap:32px; }
+.nav-links a { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color 0.15s; }
+.nav-links a:hover { color:var(--ink); }
+.nav-actions { display:flex;align-items:stretch;border-left:1px solid var(--ink); }
+.nav-btn { display:flex;align-items:center;padding:0 20px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;color:var(--mid);border-right:1px solid var(--rule);transition:all 0.15s;white-space:nowrap; }
+.nav-btn:hover { color:var(--ink);background:var(--rule); }
+.nav-btn-filled { background:var(--ink);color:var(--paper);border-right:none; }
+.nav-btn-filled:hover { background:var(--red); }
+.nav-hamburger { display:none;flex-direction:column;justify-content:center;gap:5px;padding:0 20px;cursor:pointer;background:none;border:none;border-left:1px solid var(--rule);height:100%; }
+.nav-hamburger span { display:block;width:20px;height:1.5px;background:var(--ink);transition:all 0.2s; }
+.nav-hamburger.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity:0; }
+.nav-hamburger.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+.mobile-menu { display:none;position:fixed;top:48px;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--ink);z-index:490;flex-direction:column; }
+.mobile-menu.open { display:flex; }
+.mobile-menu a { font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);text-decoration:none;padding:16px 24px;border-bottom:1px solid var(--rule);transition:color 0.15s; }
+.mobile-menu a.filled { background:var(--ink);color:var(--paper);border-bottom:none; }
+
+/* RECORD HEADER */
+.record-header { padding-top:48px;border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr auto;position:relative;z-index:1; }
+.rh-left { border-right:1px solid var(--rule);padding:32px 20px;display:flex;flex-direction:column;justify-content:space-between; }
+.rh-id { font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--red);letter-spacing:0.14em;text-transform:uppercase; }
+.rh-format-block { display:flex;flex-direction:column;gap:4px;margin-top:24px; }
+.rh-format-tag { display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.14em;text-transform:uppercase;padding:4px 8px;border:1px solid var(--rule);color:var(--mid);width:fit-content; }
+.rh-format-tag.active { background:var(--ink);color:var(--paper);border-color:var(--ink); }
+.rh-mid { padding:32px 48px; }
+.rh-breadcrumb { display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;row-gap:4px; }
+.rh-breadcrumb a,.rh-breadcrumb span { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light);text-decoration:none;transition:color 0.15s; }
+.rh-breadcrumb a:hover { color:var(--mid); }
+.rh-breadcrumb .sep { color:var(--red); }
+.rh-breadcrumb .current { color:var(--ink); }
+.record-title { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(48px,6vw,88px);line-height:0.9;text-transform:uppercase;letter-spacing:-0.01em;color:var(--ink);margin-bottom:8px;margin-top:8px; }
+.record-artist { font-family:'Barlow Condensed',sans-serif;font-weight:400;font-size:clamp(24px,3vw,40px);text-transform:uppercase;letter-spacing:0.02em;color:var(--mid); }
+.rh-right { border-left:1px solid var(--rule);padding:0;display:flex;flex-direction:column;min-width:200px; }
+.meta-row { display:flex;flex-direction:column;gap:3px;padding:14px 24px;border-bottom:1px solid var(--rule); }
+.meta-row:last-child { border-bottom:none; }
+.meta-key { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--light); }
+.meta-val { font-family:'Barlow',sans-serif;font-size:13px;font-weight:500;color:var(--ink); }
+
+/* SCAN SECTION */
+.scan-section { border-bottom:1px solid var(--ink); }
+.scan-section-header { display:grid;grid-template-columns:200px 1fr;border-bottom:1px solid var(--rule);height:40px; }
+.ssh-label { border-right:1px solid var(--rule);padding:0 20px;display:flex;align-items:center; }
+.ssh-label span { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--light); }
+.ssh-tabs { padding:0 24px;display:flex;align-items:center; }
+.scan-tab { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:0 16px;height:100%;display:flex;align-items:center;cursor:pointer;color:var(--mid);border-right:1px solid var(--rule);transition:all 0.15s;background:transparent;border-top:none;border-bottom:none;border-left:none; }
+.scan-tab:first-child { padding-left:0; }
+.scan-tab:hover { color:var(--ink); }
+.scan-tab.active { color:var(--ink);border-bottom:2px solid var(--red); }
+.scan-grid-wrap { display:grid;grid-template-columns:200px 1fr; }
+.scan-sidebar { border-right:1px solid var(--rule);padding:24px 20px; }
+.scan-count { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--light);margin-bottom:16px;display:block; }
+.scan-main { padding:24px; }
+.scan-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule); }
+.scan-cell { background:var(--white);position:relative;overflow:hidden;cursor:zoom-in;aspect-ratio:1;opacity:0;transform:translateY(8px);transition:opacity 0.4s ease,transform 0.4s ease; }
+.scan-cell.visible { opacity:1;transform:translateY(0); }
+.scan-cell:hover .scan-cell-overlay { opacity:1; }
+.scan-cell img { width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+.scan-cell:hover img { transform:scale(1.04); }
+.scan-cell-label { position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:rgba(244,241,235,0.92);border-top:1px solid var(--rule); }
+.scl-name { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink);display:block; }
+.scl-dim { font-family:'IBM Plex Mono',monospace;font-size:7px;color:var(--light);display:block;margin-top:1px; }
+.scan-cell-overlay { position:absolute;inset:0;background:rgba(15,15,15,0.7);opacity:0;transition:opacity 0.2s;display:flex;align-items:center;justify-content:center;z-index:2; }
+.zoom-icon { font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--paper);letter-spacing:0.1em; }
+.save-btn { position:absolute;top:7px;right:7px;width:28px;height:28px;background:rgba(244,241,235,0.95);border:1px solid var(--rule);border-radius:3px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:10;transition:all 0.15s; }
+.save-btn svg { width:13px;height:13px;stroke:var(--mid);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round; }
+.save-btn:hover { background:var(--white);border-color:var(--ink); }
+.save-btn:hover svg { stroke:var(--ink); }
+.save-btn.saved svg { stroke:var(--red);fill:var(--red); }
+.save-whole-btn { position:absolute;top:7px;left:7px;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:0.1em;text-transform:uppercase;padding:5px 7px;background:rgba(244,241,235,0.95);border:1px solid var(--rule);border-radius:3px;display:none;cursor:pointer;color:var(--mid);z-index:10;white-space:nowrap;transition:all 0.15s;line-height:1; }
+.save-whole-btn:hover { background:var(--white);border-color:var(--ink);color:var(--ink); }
+.scan-cell:hover .save-btn { display:flex; }
+.scan-cell:hover .save-whole-btn { display:block; }
+.folder-dd { position:absolute;top:38px;right:7px;width:210px;background:var(--white);border:1px solid var(--ink);z-index:50;display:none;border-radius:3px;overflow:hidden;box-shadow:0 6px 24px rgba(15,15,15,0.12); }
+.folder-dd.open { display:block; }
+.whole-dd { top:38px;right:auto;left:7px; }
+.dd-head { padding:9px 12px;border-bottom:1px solid var(--rule);background:var(--ink); }
+.dd-head-label { font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(244,241,235,0.5);display:block; }
+.dd-head-name { font-family:'Barlow',sans-serif;font-size:12px;font-weight:500;color:var(--paper);display:block;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.dd-folder-row { display:flex;align-items:center;gap:9px;padding:9px 12px;cursor:pointer;border-bottom:1px solid var(--rule);transition:background 0.1s; }
+.dd-folder-row:last-of-type { border-bottom:none; }
+.dd-folder-row:hover { background:var(--paper); }
+.dd-folder-icon { width:14px;height:11px;border-radius:1px 3px 3px 3px;flex-shrink:0;position:relative; }
+.dd-folder-icon::before { content:'';position:absolute;top:-3px;left:0;width:6px;height:3px;border-radius:1px 1px 0 0;background:inherit; }
+.fi-red{background:var(--red)}.fi-blue{background:#185FA5}.fi-green{background:#3B6D11}.fi-amber{background:#BA7517}
+.dd-folder-name { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.08em;color:var(--ink);flex:1; }
+.dd-folder-count { font-family:'Barlow Condensed',monospace;font-size:14px;font-weight:600;color:var(--light);line-height:1; }
+.dd-check { width:13px;height:13px;border:1px solid var(--rule);border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center; }
+.dd-check.on { background:var(--red);border-color:var(--red); }
+.dd-check.on::after { content:'';width:7px;height:4px;border-left:1.5px solid white;border-bottom:1.5px solid white;transform:rotate(-45deg) translateY(-1px);display:block; }
+.dd-new-section { padding:9px 12px;border-top:1px solid var(--rule);background:var(--paper); }
+.dd-new-input { width:100%;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;padding:6px 9px;border:1px solid var(--rule);background:var(--white);color:var(--ink);outline:none;border-radius:2px; }
+.dd-new-input:focus { border-color:var(--ink); }
+.dd-new-input::placeholder { color:var(--light); }
+.dd-new-row { display:flex;gap:6px;margin-top:7px; }
+.dd-create-btn { flex:1;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;padding:6px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;border-radius:2px;transition:background 0.15s; }
+.dd-create-btn:hover { background:var(--red); }
+.dd-cancel-btn { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;padding:6px 10px;background:transparent;color:var(--mid);border:1px solid var(--rule);cursor:pointer;border-radius:2px; }
+
+/* LIGHTBOX */
+.lightbox { position:fixed;inset:0;background:rgba(15,15,15,0.96);z-index:500;display:none;align-items:center;justify-content:center;cursor:zoom-out; }
+.lightbox.open { display:flex; }
+.lightbox-inner { position:relative;max-width:90vw;max-height:90vh;display:flex;flex-direction:column;align-items:center;gap:16px; }
+.lightbox-img { max-width:80vw;max-height:75vh;object-fit:contain;display:block; }
+.lightbox-meta { display:flex;align-items:center;gap:24px; }
+.lightbox-meta span { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(244,241,235,0.4); }
+.lightbox-meta strong { color:rgba(244,241,235,0.9);font-weight:400; }
+.lightbox-close { position:absolute;top:-40px;right:0;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(244,241,235,0.4);cursor:pointer;transition:color 0.15s;background:none;border:none;padding:8px 0; }
+.lightbox-close:hover { color:var(--paper); }
+.lightbox-nav { display:flex;align-items:center;gap:16px; }
+.lb-nav-btn { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(244,241,235,0.4);background:none;border:1px solid rgba(244,241,235,0.15);padding:8px 16px;cursor:pointer;transition:all 0.15s; }
+.lb-nav-btn:hover { color:var(--paper);border-color:rgba(244,241,235,0.4); }
+.save-toast { position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:10px 18px;border-radius:3px;opacity:0;transition:opacity 0.2s,transform 0.2s;pointer-events:none;z-index:600;white-space:nowrap; }
+.save-toast.show { opacity:1;transform:translateX(-50%) translateY(0); }
+
+/* INFO SECTION */
+.info-section { border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr 280px; }
+.info-left { border-right:1px solid var(--rule);padding:40px 20px;display:flex;align-items:flex-end; }
+.info-vert { writing-mode:vertical-lr;transform:rotate(180deg);font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--light); }
+.info-mid { padding:40px 48px;border-right:1px solid var(--rule); }
+.info-block { margin-bottom:40px; }
+.info-block:last-child { margin-bottom:0; }
+.info-block-title { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--light);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between; }
+.info-block-title span { color:var(--red); }
+.credits-table { width:100%;border-collapse:collapse; }
+.credits-table tr { border-bottom:1px solid var(--rule); }
+.credits-table tr:last-child { border-bottom:none; }
+.credits-table td { padding:10px 0;font-size:13px;vertical-align:top; }
+.credits-table td:first-child { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light);width:160px;padding-right:24px;padding-top:12px; }
+.credits-table td:last-child { font-family:'Barlow',sans-serif;font-weight:500;color:var(--ink); }
+.production-grid { display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule); }
+.prod-cell { padding:14px 16px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule); }
+.prod-cell:nth-child(even) { border-right:none; }
+.prod-cell:nth-last-child(-n+2) { border-bottom:none; }
+.prod-key { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--light);display:block;margin-bottom:4px; }
+.prod-val { font-family:'Barlow',sans-serif;font-size:13px;font-weight:500;color:var(--ink);display:block; }
+.tag-list { display:flex;flex-wrap:wrap;gap:6px; }
+.tag { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;padding:5px 10px;border:1px solid var(--rule);color:var(--mid);transition:all 0.15s;cursor:pointer; }
+.tag:hover { border-color:var(--ink);color:var(--ink); }
+.record-notes { font-size:13px;line-height:1.8;color:var(--mid);font-weight:300;font-style:italic;padding:16px;border-left:2px solid var(--red);background:rgba(212,43,43,0.03); }
+.info-right { padding:40px 24px; }
+.label-card { border:1px solid var(--rule);margin-bottom:32px; }
+.label-card-header { padding:14px 16px;border-bottom:1px solid var(--rule);background:var(--ink); }
+.label-card-header span { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--paper); }
+.label-name { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;text-transform:uppercase;letter-spacing:0.02em;color:var(--paper);margin-top:4px;display:block; }
+.label-card-body { padding:16px; }
+.label-stat-row { display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--rule); }
+.label-stat-row:last-child { border-bottom:none; }
+.label-stat-key { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light); }
+.label-stat-val { font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:18px;color:var(--ink); }
+.sidebar-section-title { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--light);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--rule); }
+.related-list { list-style:none; }
+.related-item { display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--rule);cursor:pointer;text-decoration:none; }
+.related-item:last-child { border-bottom:none; }
+.related-item:hover .rel-title { color:var(--red); }
+.rel-thumb { width:36px;height:36px;flex-shrink:0;border:1px solid var(--rule);overflow:hidden;background:var(--rule); }
+.rel-thumb img { width:100%;height:100%;object-fit:cover; }
+.rel-title { font-family:'Barlow',sans-serif;font-size:11px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;transition:color 0.12s; }
+.rel-artist { font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--light);letter-spacing:0.06em;display:block;margin-top:1px; }
+.rel-year { font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--light);flex-shrink:0; }
+
+/* PREV/NEXT */
+.record-nav { display:grid;grid-template-columns:1fr 1px 1fr;border-bottom:1px solid var(--ink);position:relative;z-index:1; }
+.record-nav-divider { background:var(--rule); }
+.record-nav-cell { display:flex;align-items:center;gap:20px;padding:24px 40px;text-decoration:none;transition:background 0.15s;cursor:pointer; }
+.record-nav-cell:hover { background:var(--rule); }
+.record-nav-cell.next { justify-content:flex-end;text-align:right; }
+.rnc-dir { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--light);display:block;margin-bottom:4px; }
+.rnc-title { font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:20px;text-transform:uppercase;color:var(--ink);display:block;line-height:1; }
+.rnc-artist { font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mid);display:block;margin-top:3px;letter-spacing:0.06em; }
+.rnc-arrow { font-family:'IBM Plex Mono',monospace;font-size:20px;color:var(--rule);flex-shrink:0;transition:color 0.15s,transform 0.15s; }
+.record-nav-cell:hover .rnc-arrow { color:var(--red); }
+.record-nav-cell.prev:hover .rnc-arrow { transform:translateX(-3px); }
+.record-nav-cell.next:hover .rnc-arrow { transform:translateX(3px); }
+
+/* FOOTER */
+footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;height:48px;position:relative;z-index:1; }
+.footer-logo-cell { border-right:1px solid var(--rule);padding:0 20px;height:100%;display:flex;align-items:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink); }
+.footer-logo-cell sup { color:var(--red);font-size:7px; }
+.footer-mid { padding:0 24px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light); }
+.footer-right { padding:0 24px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light);border-left:1px solid var(--rule);height:100%;display:flex;align-items:center; }
+
+.reveal { opacity:0;transform:translateY(16px);animation:revealUp 0.55s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+@keyframes revealUp { to{opacity:1;transform:translateY(0);} }
+.d1{animation-delay:0.05s}.d2{animation-delay:0.12s}
+
+/* MOBILE */
+@media (max-width:768px) {
+  nav{grid-template-columns:1fr auto}.nav-links-cell,.nav-actions{display:none}.nav-hamburger{display:flex}
+  .record-header{grid-template-columns:1fr;padding-top:48px}
+  .rh-left{border-right:none;border-bottom:1px solid var(--rule);padding:20px;flex-direction:column;align-items:flex-start;gap:10px}
+  .rh-format-tag{font-size:7px;padding:3px 6px}
+  .rh-mid{padding:24px 20px}.record-title{font-size:clamp(36px,10vw,56px);margin-top:8px}.record-artist{font-size:clamp(18px,5vw,28px)}
+  .rh-right{border-left:none;border-top:1px solid var(--rule);display:grid;grid-template-columns:1fr 1fr;padding:0}
+  .meta-row{padding:12px 16px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+  .meta-row:nth-child(even){border-right:none}
+  .scan-section-header{grid-template-columns:1fr}.ssh-label{display:none}.ssh-tabs{padding:0 16px;overflow-x:auto}
+  .scan-tab{font-size:8px;padding:0 10px;flex-shrink:0}
+  .scan-grid-wrap{grid-template-columns:1fr}.scan-sidebar{display:none}.scan-main{padding:12px}
+  .scan-grid{grid-template-columns:repeat(2,1fr)}
+  .info-section{grid-template-columns:1fr}.info-left{display:none}
+  .info-mid{padding:28px 20px;border-right:none;border-bottom:1px solid var(--rule)}
+  .info-right{padding:28px 20px}.production-grid{grid-template-columns:1fr}.prod-cell{border-right:none !important}
+  .credits-table td:first-child{width:120px;padding-right:12px}
+  .record-nav{grid-template-columns:1fr}.record-nav-divider{display:none}
+  .record-nav-cell{padding:18px 20px;border-bottom:1px solid var(--rule)}.record-nav-cell.next{justify-content:flex-start;text-align:left}
+  footer{grid-template-columns:1fr;height:auto}.footer-logo-cell{border-right:none;border-bottom:1px solid var(--rule);padding:16px 20px;height:auto}
+  .footer-mid{padding:12px 20px;border-bottom:1px solid var(--rule)}.footer-right{border-left:none;padding:12px 20px;height:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="save-toast" id="saveToast"></div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-inner" onclick="event.stopPropagation()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <div class="lightbox-meta"><span id="lightboxLabel"><strong>—</strong></span><span id="lightboxSub">—</span></div>
+    <div class="lightbox-nav">
+      <button class="lb-nav-btn" onclick="lbNav(-1)">← Prev</button>
+      <button class="lb-nav-btn" onclick="lbNav(1)">Next →</button>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo-cell"><span class="nav-logo-mark">Pressings<sup>.xyz</sup></span></a>
+  <div class="nav-links-cell">
+    <ul class="nav-links">
+      <li><a href="index.html">Archive</a></li>
+      <li><a href="formats.html">Formats</a></li>
+      <li><a href="designers.html">Designers</a></li>
+      <li><a href="labels.html">Labels</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </div>
+  <div class="nav-actions">
+    <a href="folders.html" class="nav-btn">My Folders</a>
+    <a href="#" class="nav-btn nav-btn-filled">Get Access</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Archive</a>
+  <a href="formats.html">Formats</a>
+  <a href="designers.html">Designers</a>
+  <a href="labels.html">Labels</a>
+  <a href="about.html">About</a>
+  <a href="folders.html">My Folders</a>
+  <a href="#" class="filled">Get Access</a>
+</div>
+
+<!-- RECORD HEADER — all populated by JS -->
+<header class="record-header">
+  <div class="rh-left">
+    <span class="rh-id" id="pressNumber">Pressing #—</span>
+    <div class="rh-format-block" id="formatTags"></div>
+  </div>
+  <div class="rh-mid reveal d1">
+    <div class="rh-breadcrumb">
+      <a href="index.html">Archive</a>
+      <span class="sep">/</span>
+      <span id="bcGenre">—</span>
+      <span class="sep">/</span>
+      <span id="bcArtist">—</span>
+      <span class="sep">/</span>
+      <span class="current" id="bcTitle">—</span>
+    </div>
+    <h1 class="record-title" id="recordTitle">—</h1>
+    <p class="record-artist" id="recordArtist">—</p>
+  </div>
+  <div class="rh-right reveal d2" id="metaRows"></div>
+</header>
+
+<!-- SCAN SECTION -->
+<section class="scan-section">
+  <div class="scan-section-header">
+    <div class="ssh-label"><span>Scans</span></div>
+    <div class="ssh-tabs">
+      <button class="scan-tab active" onclick="setTab(this)">All</button>
+      <button class="scan-tab" onclick="setTab(this)">Exterior</button>
+      <button class="scan-tab" onclick="setTab(this)">Interior</button>
+      <button class="scan-tab" onclick="setTab(this)">Object</button>
+    </div>
+  </div>
+  <div class="scan-grid-wrap">
+    <div class="scan-sidebar">
+      <span class="scan-count">— scans</span>
+    </div>
+    <div class="scan-main">
+      <div class="scan-grid" id="scanGrid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO SECTION -->
+<section class="info-section">
+  <div class="info-left"><span class="info-vert">Pressing Details</span></div>
+  <div class="info-mid">
+
+    <div class="info-block" id="creditsBlock">
+      <div class="info-block-title">Design Credits <span>01</span></div>
+      <table class="credits-table"><tbody id="creditsTable"></tbody></table>
+    </div>
+
+    <div class="info-block" id="productionBlock">
+      <div class="info-block-title">Print &amp; Production <span>02</span></div>
+      <div class="production-grid" id="productionGrid"></div>
+    </div>
+
+    <div class="info-block" id="tagsBlock">
+      <div class="info-block-title">Aesthetic Tags <span>03</span></div>
+      <div class="tag-list" id="aestheticTags"></div>
+    </div>
+
+    <div class="info-block" id="notesBlock" style="display:none;">
+      <div class="info-block-title">Curator Notes <span>04</span></div>
+      <p class="record-notes" id="curatorNotes"></p>
+    </div>
+
+  </div>
+  <div class="info-right">
+    <div class="label-card">
+      <div class="label-card-header">
+        <span>Label</span>
+        <span class="label-name" id="labelName">—</span>
+      </div>
+      <div class="label-card-body" id="labelCardBody"></div>
+    </div>
+    <div>
+      <p class="sidebar-section-title">Also in Archive</p>
+      <ul class="related-list" id="relatedList"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- PREV / NEXT — populated by JS -->
+<div class="record-nav">
+  <div class="record-nav-cell prev" id="prevNav" onclick="navTo('prev')">
+    <span class="rnc-arrow">←</span>
+    <div>
+      <span class="rnc-dir" id="prevDir">Previous</span>
+      <span class="rnc-title" id="prevTitle">—</span>
+      <span class="rnc-artist" id="prevArtist">—</span>
+    </div>
+  </div>
+  <div class="record-nav-divider"></div>
+  <div class="record-nav-cell next" id="nextNav" onclick="navTo('next')">
+    <div>
+      <span class="rnc-dir" id="nextDir">Next</span>
+      <span class="rnc-title" id="nextTitle">—</span>
+      <span class="rnc-artist" id="nextArtist">—</span>
+    </div>
+    <span class="rnc-arrow">→</span>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo-cell">Pressings<sup>.xyz</sup></div>
+  <div class="footer-mid">© 2025 · Built by a collector, for designers</div>
+  <div class="footer-right">Vol. 01 — Est. 2025</div>
+</footer>
+
+<script>
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // !! ONLY CHANGE THIS LINE WHEN DUPLICATING !!
+  const PRESSING_ID = '0005'; // ROADRUNNER — BROCKHAMPTON
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  const WORKER_URL = 'https://pressings-api.jenglish-projects.workers.dev';
+
+  // Page slug map — add new pages here when you create them
+  const PAGE_MAP = {
+    '0001': 'ii-bon-iver.html',
+    '0002': 'live-laugh-love-earl-sweatshirt.html',
+    '0003': 'bloom-beach-house.html',
+    '0004': 'bambi-hippocampus.html',
+    '0005': 'roadrunner-brockhampton.html',
+    '0006': 'im-sorry-i-love-you-alexander-23.html',
+    '0007': 'fix-yourself-not-the-world-the-wombats.html',
+    '0008': 'you-just-might-regret-this-swansea-skag.html',
+    '0009': 'good-kid-maad-city-kendrick-lamar.html',
+    '0010': 'madvillainy-madvillain.html'
+  };
+
+  // All scan fields in display order
+  const SCAN_FIELDS = [
+    {field:'Sacn: Outer - Front',       label:'Outer — Front'},
+    {field:'Scan: Outer - Back',        label:'Outer — Back'},
+    {field:'Scan: Outer - Spine 1',     label:'Outer — Spine L'},
+    {field:'Scan: Outer: Spine 2',      label:'Outer — Spine R'},
+    {field:'Scan: Front Cover',         label:'Case — Front'},
+    {field:'Scan: Back Cover',          label:'Case — Back'},
+    {field:'Scan: Spine',               label:'Spine'},
+    {field:'Scan: Hype Sticker',        label:'Hype Sticker'},
+    {field:'Scan: Obi Strip',           label:'Obi Strip'},
+    {field:'Scan: Inner Sleeve',        label:'Inner Sleeve'},
+    {field:'Scan: Gatefold Interior',   label:'Gatefold Interior'},
+    {field:'Scan: Booklet Cover',       label:'Booklet Cover'},
+    {field:'Scan: Booklet Pages',       label:'Booklet'},
+    {field:'Scan: J-Card Front',        label:'J-Card — Front'},
+    {field:'Scan: J-Card Rear/Spine',   label:'J-Card — Back'},
+    {field:'Scan: Tray Card',           label:'Tray Card'},
+    {field:'Scan: Lyric Sheet',         label:'Lyric Sheet'},
+    {field:'Scan: Poster',              label:'Poster'},
+    {field:'Scan: Insert / Other',      label:'Insert'},
+    {field:'Scan: Record Label Side A', label:'Label — Side A'},
+    {field:'Scan: Record Label Side B', label:'Label — Side B'},
+    {field:'Scan: Record (Full)',       label:'Record'},
+    {field:'Scan: CD / Disc',           label:'CD / Disc'},
+    {field:'Scan: Cassette (Front)',    label:'Cassette — Front'},
+    {field:'Scan: Cassette (Back)',     label:'Cassette — Back'},
+    {field:'Scan: Box / Outer Packaging', label:'Box / Outer'},
+    {field:'Photo: Object Detail',      label:'Detail'},
+  ];
+
+  const CREDIT_FIELDS = [
+    {field:'Art Director',           label:'Art Direction'},
+    {field:'Creative Director',      label:'Creative Direction'},
+    {field:'Graphic Designer',       label:'Graphic Design'},
+    {field:'Photographer',           label:'Photography'},
+    {field:'Illustrator',            label:'Illustration'},
+    {field:'Assist.',                label:'Assistance'},
+    {field:'Typography / Lettering', label:'Typography'},
+    {field:'Print Studio',           label:'Print Studio'},
+  ];
+
+  const META_FIELDS = [
+    {field:'Label',                         label:'Label'},
+    {field:'Catalogue Number',              label:'Cat. No.'},
+    {field:'Year (This Pressing)',          label:'Year'},
+    {field:'Original Release Date',         label:'Released'},
+    {field:'Country',                       label:'Country'},
+    {field:'FORMAT',                        label:'Format'},
+    {field:'Edition',                       label:'Edition'},
+    {field:'Color (cassette / CD / vinyl)', label:'Colour'},
+    {field:'Packaging Type',                label:'Packaging'},
+    {field:'Condition',                     label:'Condition'},
+  ];
+
+  const PROD_FIELDS = [
+    {field:'FORMAT',                        label:'Format'},
+    {field:'Packaging Type',                label:'Packaging'},
+    {field:'Color (cassette / CD / vinyl)', label:'Colour'},
+    {field:'Edition',                       label:'Edition'},
+    {field:'Print Finish',                  label:'Print Finish'},
+    {field:'Special Features',             label:'Special Features'},
+    {field:'Insert Types',                  label:'Inserts'},
+    {field:'Catalogue Number',              label:'Cat. No.'},
+    {field:'Original Release Date',         label:'Release Date'},
+    {field:'Typography / Lettering',        label:'Typography'},
+  ];
+
+  const TAG_FIELDS = ['Design Style','Subgenre','Color Styles','Type Styles','Aesthetic Tags'];
+  const FORMAT_TAG_FIELDS = ['FORMAT','Edition','Packaging Type','Special Features','Color (cassette / CD / vinyl)'];
+
+  let scanData = [];
+  let currentScan = 0;
+  let allRecords = [];
+  let prevPage = null;
+  let nextPage = null;
+
+  function s(fields, key) {
+    const v = fields[key];
+    if (!v) return '';
+    if (Array.isArray(v)) return v.join(', ');
+    return String(v).trim();
+  }
+
+  async function loadRecord() {
+    try {
+      // Fetch this record
+      const res = await fetch(`${WORKER_URL}?pressing=${PRESSING_ID}`);
+      const data = await res.json();
+      if (!data.records || data.records.length === 0) { console.error('No data:', data); return; }
+      const f = data.records[0].fields;
+
+      const title  = s(f, 'Title')  || '—';
+      const artist = s(f, 'Artist') || '—';
+      const id     = s(f, 'ID')     || '—';
+
+      // Page title
+      document.title = `${title} — ${artist} · Pressings.xyz`;
+
+      // Pressing number
+      document.getElementById('pressNumber').textContent = `Pressing #${id}`;
+
+      // Format tags
+      const tagsEl = document.getElementById('formatTags');
+      FORMAT_TAG_FIELDS.forEach((field, i) => {
+        const v = s(f, field);
+        if (!v) return;
+        const span = document.createElement('span');
+        span.className = 'rh-format-tag' + (i === 0 ? ' active' : '');
+        span.textContent = v;
+        tagsEl.appendChild(span);
+      });
+
+      // Breadcrumb
+      document.getElementById('recordTitle').textContent  = title;
+      document.getElementById('recordArtist').textContent = artist;
+      document.getElementById('bcArtist').textContent     = artist;
+      document.getElementById('bcTitle').textContent      = title;
+      const genre = s(f, 'Subgenre') || s(f, 'GENRE & TAGS') || '—';
+      document.getElementById('bcGenre').textContent = genre;
+
+      // Lightbox subtitle
+      document.getElementById('lightboxSub').textContent = `${title} · ${artist}`;
+
+      // Meta right column
+      const metaEl = document.getElementById('metaRows');
+      META_FIELDS.forEach((m) => {
+        const v = s(f, m.field);
+        if (!v) return;
+        const div = document.createElement('div');
+        div.className = 'meta-row';
+        div.innerHTML = `<span class="meta-key">${m.label}</span><span class="meta-val">${v}</span>`;
+        metaEl.appendChild(div);
+      });
+
+      // Scans
+      const grid = document.getElementById('scanGrid');
+      scanData = [];
+      SCAN_FIELDS.forEach((s_) => {
+        const atts = f[s_.field];
+        if (!atts || !Array.isArray(atts)) return;
+        atts.forEach(att => {
+          const idx = scanData.length;
+          scanData.push({src: att.url, label: s_.label});
+          const cell = document.createElement('div');
+          cell.className = 'scan-cell';
+          cell.onclick = () => openLightbox(idx);
+          cell.innerHTML = `
+            <img src="${att.url}" alt="${s_.label}" loading="lazy">
+            <div class="scan-cell-label"><span class="scl-name">${s_.label}</span><span class="scl-dim">600 dpi · JPEG</span></div>
+            <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
+            <button class="save-whole-btn" onclick="openWholeDD(event,'whole-${idx}')">+ Save pressing</button>
+            <button class="save-btn" onclick="openScanDD(event,'scan-${idx}')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
+            <div class="folder-dd" id="scan-${idx}"></div>
+            <div class="folder-dd whole-dd" id="whole-${idx}"></div>`;
+          grid.appendChild(cell);
+        });
+      });
+
+      document.querySelector('.scan-count').textContent = `${scanData.length} scans`;
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+          if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 50); obs.unobserve(e.target); }
+        });
+      }, {threshold: 0.05});
+      document.querySelectorAll('.scan-cell').forEach(c => obs.observe(c));
+
+      // Credits
+      const creditsEl = document.getElementById('creditsTable');
+      let hasCredits = false;
+      CREDIT_FIELDS.forEach(c_ => {
+        const v = s(f, c_.field);
+        if (!v) return;
+        hasCredits = true;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${c_.label}</td><td>${v}</td>`;
+        creditsEl.appendChild(tr);
+      });
+      if (!hasCredits) document.getElementById('creditsBlock').style.display = 'none';
+
+      // Production grid
+      const prodEl = document.getElementById('productionGrid');
+      let hasProd = false;
+      PROD_FIELDS.forEach(p => {
+        const v = s(f, p.field);
+        if (!v) return;
+        hasProd = true;
+        const div = document.createElement('div');
+        div.className = 'prod-cell';
+        div.innerHTML = `<span class="prod-key">${p.label}</span><span class="prod-val">${v}</span>`;
+        prodEl.appendChild(div);
+      });
+      if (!hasProd) document.getElementById('productionBlock').style.display = 'none';
+
+      // Aesthetic tags
+      const tagsListEl = document.getElementById('aestheticTags');
+      const allTags = new Set();
+      TAG_FIELDS.forEach(tf => {
+        const v = s(f, tf);
+        if (v) v.split(',').forEach(t => { const trimmed = t.trim(); if (trimmed) allTags.add(trimmed); });
+      });
+      if (allTags.size === 0) {
+        document.getElementById('tagsBlock').style.display = 'none';
+      } else {
+        allTags.forEach(tag => {
+          const span = document.createElement('span');
+          span.className = 'tag';
+          span.textContent = tag;
+          tagsListEl.appendChild(span);
+        });
+      }
+
+      // Curator notes
+      const notes = s(f, 'Design Notes');
+      if (notes) {
+        document.getElementById('curatorNotes').textContent = notes;
+        document.getElementById('notesBlock').style.display = '';
+      }
+
+      // Label card
+      document.getElementById('labelName').textContent = s(f, 'Label') || '—';
+
+      // Load all records for prev/next and related
+      loadAllRecords(title, artist);
+
+    } catch(err) { console.error('Error loading record:', err); }
+  }
+
+  async function loadAllRecords(currentTitle, currentArtist) {
+    try {
+      const res = await fetch(WORKER_URL);
+      const data = await res.json();
+      if (!data.records) return;
+
+      // Filter out example row
+      allRecords = data.records.filter(r =>
+        r.fields['Title'] && r.fields['Title'] !== 'Album / release title'
+      );
+
+      const currentIdx = allRecords.findIndex(r => String(r.fields['ID']) === String(PRESSING_ID));
+
+      // Prev/Next nav
+      const prevRecord = currentIdx > 0 ? allRecords[currentIdx - 1] : null;
+      const nextRecord = currentIdx < allRecords.length - 1 ? allRecords[currentIdx + 1] : null;
+
+      if (prevRecord) {
+        const pf = prevRecord.fields;
+        document.getElementById('prevTitle').textContent  = s(pf, 'Title') || '—';
+        document.getElementById('prevArtist').textContent = `${s(pf, 'Artist') || '—'} · ${s(pf, 'Year (This Pressing)') || ''}`;
+        prevPage = PAGE_MAP[prevRecord.id] || null;
+        if (!prevPage) {
+          document.getElementById('prevNav').style.display = 'none';
+        }
+      } else {
+        document.getElementById('prevDir').textContent   = 'Back to';
+        document.getElementById('prevTitle').textContent = 'Archive';
+        document.getElementById('prevArtist').textContent = 'All Pressings';
+        prevPage = 'index.html';
+      }
+
+      if (nextRecord) {
+        const nf = nextRecord.fields;
+        document.getElementById('nextTitle').textContent  = s(nf, 'Title') || '—';
+        document.getElementById('nextArtist').textContent = `${s(nf, 'Artist') || '—'} · ${s(nf, 'Year (This Pressing)') || ''}`;
+        nextPage = PAGE_MAP[nextRecord.id] || null;
+        if (!nextPage) {
+          document.getElementById('nextNav').style.display = 'none';
+        }
+      } else {
+        document.getElementById('nextDir').textContent   = 'Back to';
+        document.getElementById('nextTitle').textContent = 'Archive';
+        document.getElementById('nextArtist').textContent = 'All Pressings';
+        nextPage = 'index.html';
+      }
+
+      // Related list — show up to 3 other pressings
+      const relatedEl = document.getElementById('relatedList');
+      const others = allRecords.filter(r => r.id !== RECORD_ID).slice(0, 3);
+      others.forEach(rec => {
+        const rf = rec.fields;
+        const page = PAGE_MAP[rec.id];
+        if (!page) return;
+        const thumb = rf['Thumbnail'] || rf['Scan: Front Cover'] || rf['Sacn: Outer - Front'];
+        const imgUrl = thumb && thumb[0] ? thumb[0].url : null;
+        const li = document.createElement('li');
+        li.className = 'related-item';
+        li.onclick = () => window.location = page;
+        li.innerHTML = `
+          <div class="rel-thumb">${imgUrl ? `<img src="${imgUrl}" alt="${s(rf,'Title')}">` : ''}</div>
+          <div style="flex:1;min-width:0;">
+            <span class="rel-title">${s(rf,'Title') || '—'}</span>
+            <span class="rel-artist">${s(rf,'Artist') || '—'}</span>
+          </div>
+          <span class="rel-year">${s(rf,'Year (This Pressing)') || ''}</span>`;
+        relatedEl.appendChild(li);
+      });
+
+    } catch(err) { console.error('Error loading all records:', err); }
+  }
+
+  function navTo(dir) {
+    const page = dir === 'prev' ? prevPage : nextPage;
+    if (page) window.location = page;
+  }
+
+  loadRecord();
+
+  // ── HAMBURGER ──
+  function toggleMenu(){const m=document.getElementById('mobileMenu'),b=document.getElementById('hamburger');m.classList.toggle('open');b.classList.toggle('open');}
+  document.addEventListener('click',e=>{const m=document.getElementById('mobileMenu'),b=document.getElementById('hamburger');if(m&&b&&!m.contains(e.target)&&!b.contains(e.target)){m.classList.remove('open');b.classList.remove('open');}});
+
+  function setTab(el){document.querySelectorAll('.scan-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
+  function openLightbox(idx){if(!scanData[idx])return;currentScan=idx;document.getElementById('lightboxImg').src=scanData[idx].src;document.getElementById('lightboxLabel').innerHTML='<strong>'+scanData[idx].label+'</strong>';document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden';}
+  function closeLightbox(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
+  function lbNav(dir){currentScan=(currentScan+dir+scanData.length)%scanData.length;openLightbox(currentScan);}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();if(e.key==='ArrowRight')lbNav(1);if(e.key==='ArrowLeft')lbNav(-1);});
+
+  // ── FOLDER SAVE SYSTEM ──
+  const FOLDER_COLORS=['fi-red','fi-blue','fi-green','fi-amber'];
+  let folders=[{id:1,name:'Favourites',color:'fi-red',items:[]},{id:2,name:'Typography Ref',color:'fi-blue',items:[]},{id:3,name:'Colour Ref',color:'fi-green',items:[]}];
+  let nextFolderId=4,activeDDId=null;
+  function toast(msg){const t=document.getElementById('saveToast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+  function folderRowsHTML(key){return folders.map(f=>{const saved=f.items.includes(key);return`<div class="dd-folder-row" onclick="toggleItem('${f.id}','${key}')"><div class="dd-folder-icon ${f.color}"></div><span class="dd-folder-name">${f.name}</span><span class="dd-folder-count">${f.items.length}</span><div class="dd-check ${saved?'on':''}"></div></div>`;}).join('');}
+  function buildDDHTML(label,subLabel,key,inputId){return`<div class="dd-head"><span class="dd-head-label">${label}</span><span class="dd-head-name">${subLabel}</span></div><div id="fl-${inputId}">${folderRowsHTML(key)}</div><div class="dd-new-section"><input class="dd-new-input" id="ni-${inputId}" placeholder="New folder name…" onkeydown="if(event.key==='Enter')createFolder('${key}','${inputId}')"/><div class="dd-new-row"><button class="dd-create-btn" onclick="createFolder('${key}','${inputId}')">Create + save</button><button class="dd-cancel-btn" onclick="closeAllDD()">Cancel</button></div></div>`;}
+  function openScanDD(e,ddId){e.stopPropagation();const cell=e.target.closest('.scan-cell');const scanName=cell.querySelector('.scl-name').textContent;const key='scan:'+scanName;closeAllDD();const dd=document.getElementById(ddId);dd.innerHTML=buildDDHTML('Save scan',scanName,key,ddId);dd.classList.add('open');activeDDId=ddId;}
+  function openWholeDD(e,ddId){e.stopPropagation();const title=document.getElementById('recordTitle').textContent;const key='pressing:'+title;closeAllDD();const dd=document.getElementById(ddId);dd.innerHTML=buildDDHTML('Save pressing',title,key,ddId);dd.classList.add('open');activeDDId=ddId;}
+  function closeAllDD(){document.querySelectorAll('.folder-dd').forEach(d=>d.classList.remove('open'));activeDDId=null;}
+  function toggleItem(folderId,key){const f=folders.find(x=>x.id==folderId);if(!f)return;const i=f.items.indexOf(key);if(i===-1){f.items.push(key);toast('Saved to '+f.name);}else{f.items.splice(i,1);toast('Removed from '+f.name);}if(activeDDId){const fl=document.getElementById('fl-'+activeDDId);if(fl)fl.innerHTML=folderRowsHTML(key);}}
+  function createFolder(key,inputId){const input=document.getElementById('ni-'+inputId);const name=input?input.value.trim():'';if(!name)return;const color=FOLDER_COLORS[nextFolderId%FOLDER_COLORS.length];const f={id:nextFolderId++,name,color,items:[key]};folders.push(f);toast('Folder "'+name+'" created');if(activeDDId){const dd=document.getElementById(activeDDId);if(dd){const fl=document.getElementById('fl-'+activeDDId);if(fl)fl.innerHTML=folderRowsHTML(key);if(input)input.value='';}}}
+  document.addEventListener('click',e=>{if(!e.target.closest('.folder-dd')&&!e.target.closest('.save-btn')&&!e.target.closest('.save-whole-btn'))closeAllDD();});
+</script>
+</body>
+</html>

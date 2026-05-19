@@ -1050,23 +1050,26 @@ footer {
   });
 
   // ── AIRTABLE CONFIG ──
-  const AIRTABLE_TOKEN = 'pat0JowfMYa0NojAY.9ddaea5db505b7c680f90786a8e7f99825172992ab1f0c40fef41175916dbafa';
-  const BASE_ID = 'app7OesxAyA6zbwfp';
-  const TABLE_ID = 'tblzpkLrlIr1iCIyh';
+  const WORKER_URL = 'https://pressings-api.jenglish-projects.workers.dev';
 
   // Map record IDs to page filenames
   const PAGE_MAP = {
-    'rec3g7tCGIJon3tRi': 'bon-iver.html',
-    'recKPhmsqNwpAfnDP': 'earl.html',
-    'recYvQSVNIA2xLlWH': 'beach-house.html',
-    'recjjhNuznfJ5rWmF': 'hippocampus.html',
-    'recDHwKwylKeZUvZV': 'brockhampton.html',
+    '0001': 'ii-bon-iver.html',
+    '0002': 'live-laugh-love-earl-sweatshirt.html',
+    '0003': 'bloom-beach-house.html',
+    '0004': 'bambi-hippocampus.html',
+    '0005': 'roadrunner-brockhampton.html',
+    '0006': 'im-sorry-i-love-you-alexander-23.html',
+    '0007': 'fix-yourself-not-the-world-the-wombats.html',
+    '0008': 'you-just-might-regret-this-swansea-skag.html',
+    '0009': 'good-kid-maad-city-kendrick-lamar.html',
+    '0010': 'madvillainy-madvillain.html',
   };
 
   async function loadArchive() {
     try {
-      const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}?sort[0][field]=ID&sort[0][direction]=asc`;
-      const res = await fetch(url, { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } });
+      const url = `${WORKER_URL}`;
+      const res = await fetch(url);
       const data = await res.json();
       if (!data.records) { console.error('No records:', data); return; }
 
@@ -1079,7 +1082,7 @@ footer {
 
       records.forEach((rec, i) => {
         const f = rec.fields;
-        const page = PAGE_MAP[rec.id];
+        const page = PAGE_MAP[String(f['ID'])?.padStart(4,'0')] || PAGE_MAP[String(f['ID'])];
         if (!page) return;
 
         const title = Array.isArray(f['Title']) ? f['Title'][0] : (f['Title'] || '—');
@@ -1091,8 +1094,8 @@ footer {
         const id = String(f['ID'] || String(i + 1).padStart(3, '0'));
         const country = Array.isArray(f['Country']) ? f['Country'][0] : (String(f['Country'] || '—'));
 
-        // Get cover image from Airtable
-        const coverScan = f['Scan: Front Cover'] || f['Sacn: Outer - Front'];
+        // Get cover image — use Thumbnail field first, fall back to Front Cover
+        const coverScan = f['Thumbnail'] || f['Scan: Front Cover'] || f['Sacn: Outer - Front'];
         const imgUrl = coverScan && coverScan[0] ? coverScan[0].url : null;
 
         const formatTag = format === 'Cassette' ? 'Cass' : format === 'Vinyl 12"' ? '12"' : format === 'CD' ? 'CD' : format;
