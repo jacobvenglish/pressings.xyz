@@ -35,8 +35,6 @@ nav { position:fixed;top:0;left:0;right:0;z-index:500;background:var(--paper);bo
 .mobile-menu.open { display:flex; }
 .mobile-menu a { font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);text-decoration:none;padding:16px 24px;border-bottom:1px solid var(--rule);transition:color 0.15s; }
 .mobile-menu a.filled { background:var(--ink);color:var(--paper);border-bottom:none; }
-
-/* RECORD HEADER */
 .record-header { padding-top:48px;border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr auto;position:relative;z-index:1; }
 .rh-left { border-right:1px solid var(--rule);padding:32px 20px;display:flex;flex-direction:column;justify-content:space-between; }
 .rh-id { font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--red);letter-spacing:0.14em;text-transform:uppercase; }
@@ -45,8 +43,7 @@ nav { position:fixed;top:0;left:0;right:0;z-index:500;background:var(--paper);bo
 .rh-format-tag.active { background:var(--ink);color:var(--paper);border-color:var(--ink); }
 .rh-mid { padding:32px 48px; }
 .rh-breadcrumb { display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;row-gap:4px; }
-.rh-breadcrumb a,.rh-breadcrumb span { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light);text-decoration:none;transition:color 0.15s; }
-.rh-breadcrumb a:hover { color:var(--mid); }
+.rh-breadcrumb a,.rh-breadcrumb span { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light);text-decoration:none; }
 .rh-breadcrumb .sep { color:var(--red); }
 .rh-breadcrumb .current { color:var(--ink); }
 .record-title { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(48px,6vw,88px);line-height:0.9;text-transform:uppercase;letter-spacing:-0.01em;color:var(--ink);margin-bottom:8px;margin-top:8px; }
@@ -56,8 +53,6 @@ nav { position:fixed;top:0;left:0;right:0;z-index:500;background:var(--paper);bo
 .meta-row:last-child { border-bottom:none; }
 .meta-key { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--light); }
 .meta-val { font-family:'Barlow',sans-serif;font-size:13px;font-weight:500;color:var(--ink); }
-
-/* SCAN SECTION */
 .scan-section { border-bottom:1px solid var(--ink); }
 .scan-section-header { display:grid;grid-template-columns:200px 1fr;border-bottom:1px solid var(--rule);height:40px; }
 .ssh-label { border-right:1px solid var(--rule);padding:0 20px;display:flex;align-items:center; }
@@ -116,8 +111,6 @@ nav { position:fixed;top:0;left:0;right:0;z-index:500;background:var(--paper);bo
 .dd-create-btn { flex:1;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;padding:6px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;border-radius:2px;transition:background 0.15s; }
 .dd-create-btn:hover { background:var(--red); }
 .dd-cancel-btn { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;padding:6px 10px;background:transparent;color:var(--mid);border:1px solid var(--rule);cursor:pointer;border-radius:2px; }
-
-/* LIGHTBOX */
 .lightbox { position:fixed;inset:0;background:rgba(15,15,15,0.96);z-index:500;display:none;align-items:center;justify-content:center;cursor:zoom-out; }
 .lightbox.open { display:flex; }
 .lightbox-inner { position:relative;max-width:90vw;max-height:90vh;display:flex;flex-direction:column;align-items:center;gap:16px; }
@@ -132,8 +125,6 @@ nav { position:fixed;top:0;left:0;right:0;z-index:500;background:var(--paper);bo
 .lb-nav-btn:hover { color:var(--paper);border-color:rgba(244,241,235,0.4); }
 .save-toast { position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:10px 18px;border-radius:3px;opacity:0;transition:opacity 0.2s,transform 0.2s;pointer-events:none;z-index:600;white-space:nowrap; }
 .save-toast.show { opacity:1;transform:translateX(-50%) translateY(0); }
-
-/* INFO SECTION */
 .info-section { border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr 280px; }
 .info-left { border-right:1px solid var(--rule);padding:40px 20px;display:flex;align-items:flex-end; }
 .info-vert { writing-mode:vertical-lr;transform:rotate(180deg);font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--light); }
@@ -170,7 +161,7 @@ nav { position:fixed;top:0;left:0;right:0;z-index:500;background:var(--paper);bo
 .label-stat-val { font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:18px;color:var(--ink); }
 .sidebar-section-title { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--light);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--rule); }
 .related-list { list-style:none; }
-.related-item { display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--rule);cursor:pointer;text-decoration:none; }
+.related-item { display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--rule);cursor:pointer; }
 .related-item:last-child { border-bottom:none; }
 .related-item:hover .rel-title { color:var(--red); }
 .rel-thumb { width:36px;height:36px;flex-shrink:0;border:1px solid var(--rule);overflow:hidden;background:var(--rule); }
@@ -178,8 +169,6 @@ nav { position:fixed;top:0;left:0;right:0;z-index:500;background:var(--paper);bo
 .rel-title { font-family:'Barlow',sans-serif;font-size:11px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;transition:color 0.12s; }
 .rel-artist { font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--light);letter-spacing:0.06em;display:block;margin-top:1px; }
 .rel-year { font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--light);flex-shrink:0; }
-
-/* PREV/NEXT */
 .record-nav { display:grid;grid-template-columns:1fr 1px 1fr;border-bottom:1px solid var(--ink);position:relative;z-index:1; }
 .record-nav-divider { background:var(--rule); }
 .record-nav-cell { display:flex;align-items:center;gap:20px;padding:24px 40px;text-decoration:none;transition:background 0.15s;cursor:pointer; }
@@ -192,19 +181,14 @@ nav { position:fixed;top:0;left:0;right:0;z-index:500;background:var(--paper);bo
 .record-nav-cell:hover .rnc-arrow { color:var(--red); }
 .record-nav-cell.prev:hover .rnc-arrow { transform:translateX(-3px); }
 .record-nav-cell.next:hover .rnc-arrow { transform:translateX(3px); }
-
-/* FOOTER */
 footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;height:48px;position:relative;z-index:1; }
 .footer-logo-cell { border-right:1px solid var(--rule);padding:0 20px;height:100%;display:flex;align-items:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink); }
 .footer-logo-cell sup { color:var(--red);font-size:7px; }
 .footer-mid { padding:0 24px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light); }
 .footer-right { padding:0 24px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light);border-left:1px solid var(--rule);height:100%;display:flex;align-items:center; }
-
 .reveal { opacity:0;transform:translateY(16px);animation:revealUp 0.55s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
 @keyframes revealUp { to{opacity:1;transform:translateY(0);} }
 .d1{animation-delay:0.05s}.d2{animation-delay:0.12s}
-
-/* MOBILE */
 @media (max-width:768px) {
   nav{grid-template-columns:1fr auto}.nav-links-cell,.nav-actions{display:none}.nav-hamburger{display:flex}
   .record-header{grid-template-columns:1fr;padding-top:48px}
@@ -230,9 +214,7 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
 </style>
 </head>
 <body>
-
 <div class="save-toast" id="saveToast"></div>
-
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <div class="lightbox-inner" onclick="event.stopPropagation()">
     <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
@@ -244,7 +226,6 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
     </div>
   </div>
 </div>
-
 <nav>
   <a href="index.html" class="nav-logo-cell"><span class="nav-logo-mark">Pressings<sup>.xyz</sup></span></a>
   <div class="nav-links-cell">
@@ -262,7 +243,6 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
   </div>
   <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
-
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html">Archive</a>
   <a href="formats.html">Formats</a>
@@ -272,8 +252,6 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
   <a href="folders.html">My Folders</a>
   <a href="#" class="filled">Get Access</a>
 </div>
-
-<!-- RECORD HEADER — all populated by JS -->
 <header class="record-header">
   <div class="rh-left">
     <span class="rh-id" id="pressNumber">Pressing #—</span>
@@ -281,12 +259,9 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
   </div>
   <div class="rh-mid reveal d1">
     <div class="rh-breadcrumb">
-      <a href="index.html">Archive</a>
-      <span class="sep">/</span>
-      <span id="bcGenre">—</span>
-      <span class="sep">/</span>
-      <span id="bcArtist">—</span>
-      <span class="sep">/</span>
+      <a href="index.html">Archive</a><span class="sep">/</span>
+      <span id="bcGenre">—</span><span class="sep">/</span>
+      <span id="bcArtist">—</span><span class="sep">/</span>
       <span class="current" id="bcTitle">—</span>
     </div>
     <h1 class="record-title" id="recordTitle">—</h1>
@@ -294,8 +269,6 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
   </div>
   <div class="rh-right reveal d2" id="metaRows"></div>
 </header>
-
-<!-- SCAN SECTION -->
 <section class="scan-section">
   <div class="scan-section-header">
     <div class="ssh-label"><span>Scans</span></div>
@@ -307,47 +280,33 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
     </div>
   </div>
   <div class="scan-grid-wrap">
-    <div class="scan-sidebar">
-      <span class="scan-count">— scans</span>
-    </div>
-    <div class="scan-main">
-      <div class="scan-grid" id="scanGrid"></div>
-    </div>
+    <div class="scan-sidebar"><span class="scan-count">— scans</span></div>
+    <div class="scan-main"><div class="scan-grid" id="scanGrid"></div></div>
   </div>
 </section>
-
-<!-- INFO SECTION -->
 <section class="info-section">
   <div class="info-left"><span class="info-vert">Pressing Details</span></div>
   <div class="info-mid">
-
     <div class="info-block" id="creditsBlock">
       <div class="info-block-title">Design Credits <span>01</span></div>
       <table class="credits-table"><tbody id="creditsTable"></tbody></table>
     </div>
-
     <div class="info-block" id="productionBlock">
       <div class="info-block-title">Print &amp; Production <span>02</span></div>
       <div class="production-grid" id="productionGrid"></div>
     </div>
-
     <div class="info-block" id="tagsBlock">
       <div class="info-block-title">Aesthetic Tags <span>03</span></div>
       <div class="tag-list" id="aestheticTags"></div>
     </div>
-
     <div class="info-block" id="notesBlock" style="display:none;">
       <div class="info-block-title">Curator Notes <span>04</span></div>
       <p class="record-notes" id="curatorNotes"></p>
     </div>
-
   </div>
   <div class="info-right">
     <div class="label-card">
-      <div class="label-card-header">
-        <span>Label</span>
-        <span class="label-name" id="labelName">—</span>
-      </div>
+      <div class="label-card-header"><span>Label</span><span class="label-name" id="labelName">—</span></div>
       <div class="label-card-body" id="labelCardBody"></div>
     </div>
     <div>
@@ -356,10 +315,8 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
     </div>
   </div>
 </section>
-
-<!-- PREV / NEXT — populated by JS -->
 <div class="record-nav">
-  <div class="record-nav-cell prev" id="prevNav" onclick="navTo('prev')">
+  <div class="record-nav-cell prev" onclick="navTo('prev')">
     <span class="rnc-arrow">←</span>
     <div>
       <span class="rnc-dir" id="prevDir">Previous</span>
@@ -368,7 +325,7 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
     </div>
   </div>
   <div class="record-nav-divider"></div>
-  <div class="record-nav-cell next" id="nextNav" onclick="navTo('next')">
+  <div class="record-nav-cell next" onclick="navTo('next')">
     <div>
       <span class="rnc-dir" id="nextDir">Next</span>
       <span class="rnc-title" id="nextTitle">—</span>
@@ -377,13 +334,11 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
     <span class="rnc-arrow">→</span>
   </div>
 </div>
-
 <footer>
   <div class="footer-logo-cell">Pressings<sup>.xyz</sup></div>
   <div class="footer-mid">© 2025 · Built by a collector, for designers</div>
   <div class="footer-right">Vol. 01 — Est. 2025</div>
 </footer>
-
 <script>
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // !! ONLY CHANGE THIS LINE WHEN DUPLICATING !!
@@ -392,7 +347,6 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
 
   const WORKER_URL = 'https://pressings-api.jenglish-projects.workers.dev';
 
-  // Page slug map — add new pages here when you create them
   const PAGE_MAP = {
     '0001': 'ii-bon-iver.html',
     '0002': 'live-laugh-love-earl-sweatshirt.html',
@@ -403,38 +357,43 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
     '0007': 'fix-yourself-not-the-world-the-wombats.html',
     '0008': 'you-just-might-regret-this-swansea-skag.html',
     '0009': 'good-kid-maad-city-kendrick-lamar.html',
-    '0010': 'madvillainy-madvillain.html'
+    '0010': 'madvillainy-madvillain.html',
+    '0011': 'the-new-abnormal-the-strokes.html'
   };
 
-  // All scan fields in display order
   const SCAN_FIELDS = [
-    {field:'Sacn: Outer - Front',       label:'Outer — Front'},
-    {field:'Scan: Outer - Back',        label:'Outer — Back'},
-    {field:'Scan: Outer - Spine 1',     label:'Outer — Spine L'},
-    {field:'Scan: Outer: Spine 2',      label:'Outer — Spine R'},
-    {field:'Scan: Front Cover',         label:'Case — Front'},
-    {field:'Scan: Back Cover',          label:'Case — Back'},
-    {field:'Scan: Spine',               label:'Spine'},
-    {field:'Scan: Hype Sticker',        label:'Hype Sticker'},
-    {field:'Scan: Obi Strip',           label:'Obi Strip'},
-    {field:'Scan: Inner Sleeve',        label:'Inner Sleeve'},
-    {field:'Scan: Gatefold Interior',   label:'Gatefold Interior'},
-    {field:'Scan: Booklet Cover',       label:'Booklet Cover'},
-    {field:'Scan: Booklet Pages',       label:'Booklet'},
-    {field:'Scan: J-Card Front',        label:'J-Card — Front'},
-    {field:'Scan: J-Card Rear/Spine',   label:'J-Card — Back'},
-    {field:'Scan: Tray Card',           label:'Tray Card'},
-    {field:'Scan: Lyric Sheet',         label:'Lyric Sheet'},
-    {field:'Scan: Poster',              label:'Poster'},
-    {field:'Scan: Insert / Other',      label:'Insert'},
-    {field:'Scan: Record Label Side A', label:'Label — Side A'},
-    {field:'Scan: Record Label Side B', label:'Label — Side B'},
-    {field:'Scan: Record (Full)',       label:'Record'},
-    {field:'Scan: CD / Disc',           label:'CD / Disc'},
-    {field:'Scan: Cassette (Front)',    label:'Cassette — Front'},
-    {field:'Scan: Cassette (Back)',     label:'Cassette — Back'},
-    {field:'Scan: Box / Outer Packaging', label:'Box / Outer'},
-    {field:'Photo: Object Detail',      label:'Detail'},
+    {field:'Thumbnail',                      label:'Thumbnail',           skipDisplay: true},
+    {field:'Scan: Outer - Front',            label:'Outer — Front'},
+    {field:'Scan: Outer - Back',             label:'Outer — Back'},
+    {field:'Scan: Outer - Spine 1',          label:'Outer — Spine L'},
+    {field:'Scan: Outer: Spine 2',           label:'Outer — Spine R'},
+    {field:'Scan: O-Ring / Transparent Outer', label:'O-Ring / Outer'},
+    {field:'Scan: Front Cover',              label:'Case — Front'},
+    {field:'Scan: Back Cover',              label:'Case — Back'},
+    {field:'Scan: Spine 1',                  label:'Spine'},
+    {field:'Scan: Spine 2',                  label:'Spine 2'},
+    {field:'Scan: CD Inside',                label:'CD — Inside'},
+    {field:'Scan: Hype Sticker',             label:'Hype Sticker'},
+    {field:'Scan: Obi Strip',                label:'Obi Strip'},
+    {field:'Scan: Inner Sleeve',             label:'Inner Sleeve'},
+    {field:'Scan: Gatefold Interior',        label:'Gatefold Interior'},
+    {field:'Scan: Booklet Cover',            label:'Booklet Cover'},
+    {field:'Scan: Booklet Pages',            label:'Booklet'},
+    {field:'Scan: J-Card Front',             label:'J-Card — Front'},
+    {field:'Scan: J-Card Rear/Spine',        label:'J-Card — Back'},
+    {field:'Scan: Tray Card Inner',          label:'Tray Card — Inner'},
+    {field:'Scan: Tray Card Back',           label:'Tray Card — Back'},
+    {field:'Scan: Lyric Sheet',              label:'Lyric Sheet'},
+    {field:'Scan: Poster',                   label:'Poster'},
+    {field:'Scan: Insert / Other',           label:'Insert'},
+    {field:'Scan: Record Label Side A',      label:'Label — Side A'},
+    {field:'Scan: Record Label Side B',      label:'Label — Side B'},
+    {field:'Scan: Record (Full)',            label:'Record'},
+    {field:'Scan: CD / Disc',               label:'CD / Disc'},
+    {field:'Scan: Cassette (Front)',         label:'Cassette — Front'},
+    {field:'Scan: Cassette (Back)',          label:'Cassette — Back'},
+    {field:'Scan: Box / Outer Packaging',    label:'Box / Outer'},
+    {field:'Photo: Object Detail',           label:'Detail'},
   ];
 
   const CREDIT_FIELDS = [
@@ -449,113 +408,104 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
   ];
 
   const META_FIELDS = [
-    {field:'Label',                         label:'Label'},
-    {field:'Catalogue Number',              label:'Cat. No.'},
-    {field:'Year (This Pressing)',          label:'Year'},
-    {field:'Original Release Date',         label:'Released'},
-    {field:'Country',                       label:'Country'},
-    {field:'FORMAT',                        label:'Format'},
-    {field:'Edition',                       label:'Edition'},
-    {field:'Color (cassette / CD / vinyl)', label:'Colour'},
-    {field:'Packaging Type',                label:'Packaging'},
-    {field:'Condition',                     label:'Condition'},
+    {field:'Label',                          label:'Label'},
+    {field:'Catalogue Number',               label:'Cat. No.'},
+    {field:'Year (This Pressing)',           label:'Year'},
+    {field:'Original Release Date',          label:'Released'},
+    {field:'Country',                        label:'Country'},
+    {field:'FORMAT',                         label:'Format'},
+    {field:'Edition',                        label:'Edition'},
+    {field:'Color (cassette / CD / vinyl)',  label:'Colour'},
+    {field:'Number of Discs',                label:'Discs'},
+    {field:'Packaging Type',                 label:'Packaging'},
+    {field:'Condition',                      label:'Condition'},
   ];
 
   const PROD_FIELDS = [
-    {field:'FORMAT',                        label:'Format'},
-    {field:'Packaging Type',                label:'Packaging'},
-    {field:'Color (cassette / CD / vinyl)', label:'Colour'},
-    {field:'Edition',                       label:'Edition'},
-    {field:'Print Finish',                  label:'Print Finish'},
-    {field:'Special Features',             label:'Special Features'},
-    {field:'Insert Types',                  label:'Inserts'},
-    {field:'Catalogue Number',              label:'Cat. No.'},
-    {field:'Original Release Date',         label:'Release Date'},
-    {field:'Typography / Lettering',        label:'Typography'},
+    {field:'FORMAT',                         label:'Format'},
+    {field:'Packaging Type',                 label:'Packaging'},
+    {field:'Color (cassette / CD / vinyl)',  label:'Colour'},
+    {field:'Edition',                        label:'Edition'},
+    {field:'Number of Discs',                label:'Discs'},
+    {field:'Print Finish',                   label:'Print Finish'},
+    {field:'Special Features',              label:'Special Features'},
+    {field:'Insert Types',                   label:'Inserts'},
+    {field:'Speed',                          label:'Speed'},
+    {field:'Catalogue Number',               label:'Cat. No.'},
+    {field:'Original Release Date',          label:'Release Date'},
+    {field:'Typography / Lettering',         label:'Typography'},
   ];
 
   const TAG_FIELDS = ['Design Style','Subgenre','Color Styles','Type Styles','Aesthetic Tags'];
   const FORMAT_TAG_FIELDS = ['FORMAT','Edition','Packaging Type','Special Features','Color (cassette / CD / vinyl)'];
 
-  let scanData = [];
-  let currentScan = 0;
-  let allRecords = [];
-  let prevPage = null;
-  let nextPage = null;
+  let scanData = [], currentScan = 0, prevPage = null, nextPage = null;
 
-  function s(fields, key) {
+  function sv(fields, key) {
     const v = fields[key];
-    if (!v) return '';
+    if (v === undefined || v === null || v === '') return '';
     if (Array.isArray(v)) return v.join(', ');
     return String(v).trim();
   }
 
   async function loadRecord() {
     try {
-      // Fetch this record
       const res = await fetch(`${WORKER_URL}?pressing=${PRESSING_ID}`);
       const data = await res.json();
-      if (!data.records || data.records.length === 0) { console.error('No data:', data); return; }
+      if (!data.records || data.records.length === 0) { console.error('No record found for:', PRESSING_ID); return; }
       const f = data.records[0].fields;
 
-      const title  = s(f, 'Title')  || '—';
-      const artist = s(f, 'Artist') || '—';
-      const id     = s(f, 'ID')     || '—';
+      const title  = sv(f,'Title')  || '—';
+      const artist = sv(f,'Artist') || '—';
+      const id     = sv(f,'ID')     || '—';
 
-      // Page title
       document.title = `${title} — ${artist} · Pressings.xyz`;
-
-      // Pressing number
       document.getElementById('pressNumber').textContent = `Pressing #${id}`;
 
       // Format tags
       const tagsEl = document.getElementById('formatTags');
       FORMAT_TAG_FIELDS.forEach((field, i) => {
-        const v = s(f, field);
-        if (!v) return;
+        const v = sv(f, field); if (!v) return;
         const span = document.createElement('span');
         span.className = 'rh-format-tag' + (i === 0 ? ' active' : '');
         span.textContent = v;
         tagsEl.appendChild(span);
       });
 
-      // Breadcrumb
+      // Breadcrumb + title
       document.getElementById('recordTitle').textContent  = title;
       document.getElementById('recordArtist').textContent = artist;
       document.getElementById('bcArtist').textContent     = artist;
       document.getElementById('bcTitle').textContent      = title;
-      const genre = s(f, 'Subgenre') || s(f, 'GENRE & TAGS') || '—';
-      document.getElementById('bcGenre').textContent = genre;
+      document.getElementById('bcGenre').textContent      = sv(f,'Subgenre') || sv(f,'GENRE & TAGS') || '—';
+      document.getElementById('lightboxSub').textContent  = `${title} · ${artist}`;
 
-      // Lightbox subtitle
-      document.getElementById('lightboxSub').textContent = `${title} · ${artist}`;
-
-      // Meta right column
+      // Meta column
       const metaEl = document.getElementById('metaRows');
-      META_FIELDS.forEach((m) => {
-        const v = s(f, m.field);
-        if (!v) return;
+      META_FIELDS.forEach(m => {
+        const v = sv(f, m.field); if (!v) return;
         const div = document.createElement('div');
         div.className = 'meta-row';
         div.innerHTML = `<span class="meta-key">${m.label}</span><span class="meta-val">${v}</span>`;
         metaEl.appendChild(div);
       });
 
-      // Scans
+      // Scans — skip Thumbnail field in display
       const grid = document.getElementById('scanGrid');
       scanData = [];
-      SCAN_FIELDS.forEach((s_) => {
-        const atts = f[s_.field];
+      SCAN_FIELDS.forEach(s => {
+        if (s.skipDisplay) return;
+        const atts = f[s.field];
         if (!atts || !Array.isArray(atts)) return;
         atts.forEach(att => {
           const idx = scanData.length;
-          scanData.push({src: att.url, label: s_.label});
+          scanData.push({src: att.url, label: s.label});
           const cell = document.createElement('div');
           cell.className = 'scan-cell';
           cell.onclick = () => openLightbox(idx);
           cell.innerHTML = `
-            <img src="${att.url}" alt="${s_.label}" loading="lazy">
-            <div class="scan-cell-label"><span class="scl-name">${s_.label}</span><span class="scl-dim">600 dpi · JPEG</span></div>
+            <img src="${att.url}" alt="${s.label}" loading="lazy">
+            <div class="scan-cell-label"><span class="scl-name">${s.label}</span><span class="scl-dim">600 dpi · JPEG</span></div>
             <div class="scan-cell-overlay"><span class="zoom-icon">⊕ Zoom</span></div>
             <button class="save-whole-btn" onclick="openWholeDD(event,'whole-${idx}')">+ Save pressing</button>
             <button class="save-btn" onclick="openScanDD(event,'scan-${idx}')"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7l3 3 3-3"/><line x1="3" y1="13" x2="13" y2="13"/></svg></button>
@@ -564,34 +514,29 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
           grid.appendChild(cell);
         });
       });
-
       document.querySelector('.scan-count').textContent = `${scanData.length} scans`;
       const obs = new IntersectionObserver((entries) => {
-        entries.forEach((e, i) => {
-          if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 50); obs.unobserve(e.target); }
-        });
-      }, {threshold: 0.05});
+        entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i*50); obs.unobserve(e.target); } });
+      }, {threshold:0.05});
       document.querySelectorAll('.scan-cell').forEach(c => obs.observe(c));
 
       // Credits
       const creditsEl = document.getElementById('creditsTable');
       let hasCredits = false;
-      CREDIT_FIELDS.forEach(c_ => {
-        const v = s(f, c_.field);
-        if (!v) return;
+      CREDIT_FIELDS.forEach(c => {
+        const v = sv(f, c.field); if (!v) return;
         hasCredits = true;
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${c_.label}</td><td>${v}</td>`;
+        tr.innerHTML = `<td>${c.label}</td><td>${v}</td>`;
         creditsEl.appendChild(tr);
       });
       if (!hasCredits) document.getElementById('creditsBlock').style.display = 'none';
 
-      // Production grid
+      // Production
       const prodEl = document.getElementById('productionGrid');
       let hasProd = false;
       PROD_FIELDS.forEach(p => {
-        const v = s(f, p.field);
-        if (!v) return;
+        const v = sv(f, p.field); if (!v) return;
         hasProd = true;
         const div = document.createElement('div');
         div.className = 'prod-cell';
@@ -600,130 +545,91 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
       });
       if (!hasProd) document.getElementById('productionBlock').style.display = 'none';
 
-      // Aesthetic tags
+      // Tags
       const tagsListEl = document.getElementById('aestheticTags');
       const allTags = new Set();
-      TAG_FIELDS.forEach(tf => {
-        const v = s(f, tf);
-        if (v) v.split(',').forEach(t => { const trimmed = t.trim(); if (trimmed) allTags.add(trimmed); });
-      });
-      if (allTags.size === 0) {
-        document.getElementById('tagsBlock').style.display = 'none';
-      } else {
-        allTags.forEach(tag => {
-          const span = document.createElement('span');
-          span.className = 'tag';
-          span.textContent = tag;
-          tagsListEl.appendChild(span);
-        });
-      }
+      TAG_FIELDS.forEach(tf => { const v = sv(f,tf); if (v) v.split(',').forEach(t => { const tr = t.trim(); if (tr) allTags.add(tr); }); });
+      if (allTags.size === 0) { document.getElementById('tagsBlock').style.display = 'none'; }
+      else { allTags.forEach(tag => { const span = document.createElement('span'); span.className='tag'; span.textContent=tag; tagsListEl.appendChild(span); }); }
 
-      // Curator notes
-      const notes = s(f, 'Design Notes');
-      if (notes) {
-        document.getElementById('curatorNotes').textContent = notes;
-        document.getElementById('notesBlock').style.display = '';
-      }
+      // Notes
+      const notes = sv(f,'Design Notes');
+      if (notes) { document.getElementById('curatorNotes').textContent = notes; document.getElementById('notesBlock').style.display = ''; }
 
-      // Label card
-      document.getElementById('labelName').textContent = s(f, 'Label') || '—';
+      // Label
+      document.getElementById('labelName').textContent = sv(f,'Label') || '—';
 
-      // Load all records for prev/next and related
-      loadAllRecords(title, artist);
+      // Load all for nav + related
+      loadAllRecords();
 
-    } catch(err) { console.error('Error loading record:', err); }
+    } catch(err) { console.error('Error:', err); }
   }
 
-  async function loadAllRecords(currentTitle, currentArtist) {
+  async function loadAllRecords() {
     try {
       const res = await fetch(WORKER_URL);
       const data = await res.json();
       if (!data.records) return;
+      const all = data.records.filter(r => r.fields['Title'] && r.fields['Title'] !== 'Album / release title');
+      const idx = all.findIndex(r => String(r.fields['ID']) === String(PRESSING_ID));
 
-      // Filter out example row
-      allRecords = data.records.filter(r =>
-        r.fields['Title'] && r.fields['Title'] !== 'Album / release title'
-      );
+      const prev = idx > 0 ? all[idx-1] : null;
+      const next = idx < all.length-1 ? all[idx+1] : null;
 
-      const currentIdx = allRecords.findIndex(r => String(r.fields['ID']) === String(PRESSING_ID));
-
-      // Prev/Next nav
-      const prevRecord = currentIdx > 0 ? allRecords[currentIdx - 1] : null;
-      const nextRecord = currentIdx < allRecords.length - 1 ? allRecords[currentIdx + 1] : null;
-
-      if (prevRecord) {
-        const pf = prevRecord.fields;
-        document.getElementById('prevTitle').textContent  = s(pf, 'Title') || '—';
-        document.getElementById('prevArtist').textContent = `${s(pf, 'Artist') || '—'} · ${s(pf, 'Year (This Pressing)') || ''}`;
-        prevPage = PAGE_MAP[prevRecord.id] || null;
-        if (!prevPage) {
-          document.getElementById('prevNav').style.display = 'none';
-        }
+      if (prev) {
+        const pf = prev.fields;
+        document.getElementById('prevTitle').textContent  = sv(pf,'Title') || '—';
+        document.getElementById('prevArtist').textContent = sv(pf,'Artist') || '—';
+        prevPage = PAGE_MAP[String(pf['ID'])?.padStart(4,'0')] || PAGE_MAP[String(pf['ID'])] || null;
       } else {
-        document.getElementById('prevDir').textContent   = 'Back to';
-        document.getElementById('prevTitle').textContent = 'Archive';
+        document.getElementById('prevDir').textContent    = 'Back to';
+        document.getElementById('prevTitle').textContent  = 'Archive';
         document.getElementById('prevArtist').textContent = 'All Pressings';
         prevPage = 'index.html';
       }
 
-      if (nextRecord) {
-        const nf = nextRecord.fields;
-        document.getElementById('nextTitle').textContent  = s(nf, 'Title') || '—';
-        document.getElementById('nextArtist').textContent = `${s(nf, 'Artist') || '—'} · ${s(nf, 'Year (This Pressing)') || ''}`;
-        nextPage = PAGE_MAP[nextRecord.id] || null;
-        if (!nextPage) {
-          document.getElementById('nextNav').style.display = 'none';
-        }
+      if (next) {
+        const nf = next.fields;
+        document.getElementById('nextTitle').textContent  = sv(nf,'Title') || '—';
+        document.getElementById('nextArtist').textContent = sv(nf,'Artist') || '—';
+        nextPage = PAGE_MAP[String(nf['ID'])?.padStart(4,'0')] || PAGE_MAP[String(nf['ID'])] || null;
       } else {
-        document.getElementById('nextDir').textContent   = 'Back to';
-        document.getElementById('nextTitle').textContent = 'Archive';
+        document.getElementById('nextDir').textContent    = 'Back to';
+        document.getElementById('nextTitle').textContent  = 'Archive';
         document.getElementById('nextArtist').textContent = 'All Pressings';
         nextPage = 'index.html';
       }
 
-      // Related list — show up to 3 other pressings
+      // Related — up to 3 others
       const relatedEl = document.getElementById('relatedList');
-      const others = allRecords.filter(r => r.id !== RECORD_ID).slice(0, 3);
-      others.forEach(rec => {
+      all.filter(r => String(r.fields['ID']) !== String(PRESSING_ID)).slice(0,3).forEach(rec => {
         const rf = rec.fields;
-        const page = PAGE_MAP[rec.id];
+        const page = PAGE_MAP[String(rf['ID'])?.padStart(4,'0')] || PAGE_MAP[String(rf['ID'])];
         if (!page) return;
-        const thumb = rf['Thumbnail'] || rf['Scan: Front Cover'] || rf['Sacn: Outer - Front'];
+        const thumb = rf['Thumbnail'] || rf['Scan: Front Cover'] || rf['Scan: Outer - Front'];
         const imgUrl = thumb && thumb[0] ? thumb[0].url : null;
         const li = document.createElement('li');
         li.className = 'related-item';
         li.onclick = () => window.location = page;
         li.innerHTML = `
-          <div class="rel-thumb">${imgUrl ? `<img src="${imgUrl}" alt="${s(rf,'Title')}">` : ''}</div>
-          <div style="flex:1;min-width:0;">
-            <span class="rel-title">${s(rf,'Title') || '—'}</span>
-            <span class="rel-artist">${s(rf,'Artist') || '—'}</span>
-          </div>
-          <span class="rel-year">${s(rf,'Year (This Pressing)') || ''}</span>`;
+          <div class="rel-thumb">${imgUrl ? `<img src="${imgUrl}" alt="${sv(rf,'Title')}">` : ''}</div>
+          <div style="flex:1;min-width:0;"><span class="rel-title">${sv(rf,'Title')||'—'}</span><span class="rel-artist">${sv(rf,'Artist')||'—'}</span></div>
+          <span class="rel-year">${sv(rf,'Year (This Pressing)')||''}</span>`;
         relatedEl.appendChild(li);
       });
 
-    } catch(err) { console.error('Error loading all records:', err); }
+    } catch(err) { console.error('Nav error:', err); }
   }
 
-  function navTo(dir) {
-    const page = dir === 'prev' ? prevPage : nextPage;
-    if (page) window.location = page;
-  }
-
+  function navTo(dir) { const page = dir==='prev' ? prevPage : nextPage; if (page) window.location = page; }
   loadRecord();
-
-  // ── HAMBURGER ──
   function toggleMenu(){const m=document.getElementById('mobileMenu'),b=document.getElementById('hamburger');m.classList.toggle('open');b.classList.toggle('open');}
   document.addEventListener('click',e=>{const m=document.getElementById('mobileMenu'),b=document.getElementById('hamburger');if(m&&b&&!m.contains(e.target)&&!b.contains(e.target)){m.classList.remove('open');b.classList.remove('open');}});
-
   function setTab(el){document.querySelectorAll('.scan-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
   function openLightbox(idx){if(!scanData[idx])return;currentScan=idx;document.getElementById('lightboxImg').src=scanData[idx].src;document.getElementById('lightboxLabel').innerHTML='<strong>'+scanData[idx].label+'</strong>';document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden';}
   function closeLightbox(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
   function lbNav(dir){currentScan=(currentScan+dir+scanData.length)%scanData.length;openLightbox(currentScan);}
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();if(e.key==='ArrowRight')lbNav(1);if(e.key==='ArrowLeft')lbNav(-1);});
-
-  // ── FOLDER SAVE SYSTEM ──
   const FOLDER_COLORS=['fi-red','fi-blue','fi-green','fi-amber'];
   let folders=[{id:1,name:'Favourites',color:'fi-red',items:[]},{id:2,name:'Typography Ref',color:'fi-blue',items:[]},{id:3,name:'Colour Ref',color:'fi-green',items:[]}];
   let nextFolderId=4,activeDDId=null;
