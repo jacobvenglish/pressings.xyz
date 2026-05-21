@@ -35,22 +35,22 @@ nav { position:fixed;top:0;left:0;right:0;z-index:500;background:var(--paper);bo
 .mobile-menu.open { display:flex; }
 .mobile-menu a { font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);text-decoration:none;padding:16px 24px;border-bottom:1px solid var(--rule);transition:color 0.15s; }
 .mobile-menu a.filled { background:var(--ink);color:var(--paper);border-bottom:none; }
-.record-header {padding-top:48px;border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr auto;position:relative;z-index:1;align-items:stretch;}
+.record-header {padding-top:48px;border-bottom:1px solid var(--ink);display:grid;grid-template-columns:200px 1fr;position:relative;z-index:1;align-items:stretch;}
 .rh-left {border-right:1px solid var(--rule);padding:20px 16px;display:flex;flex-direction:column;justify-content:flex-start;gap:10px;}
 .rh-id { font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--red);letter-spacing:0.14em;text-transform:uppercase; }
 .rh-format-block {display:flex;flex-direction:row;flex-wrap:wrap;gap:4px;}
 .rh-format-tag { display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.14em;text-transform:uppercase;padding:4px 8px;border:1px solid var(--rule);color:var(--mid);width:fit-content; }
 .rh-format-tag.active { background:var(--ink);color:var(--paper);border-color:var(--ink); }
-.rh-mid {padding:20px 32px;display:flex;flex-direction:column;justify-content:center;}
+.rh-content {display:flex;flex-direction:column;} .rh-mid {padding:24px 32px 20px 32px;}
 .rh-breadcrumb { display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;row-gap:4px; }
 .rh-breadcrumb a,.rh-breadcrumb span { font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--light);text-decoration:none; }
 .rh-breadcrumb .sep { color:var(--red); }
 .rh-breadcrumb .current { color:var(--ink); }
 .record-title { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(48px,6vw,88px);line-height:0.9;text-transform:uppercase;letter-spacing:-0.01em;color:var(--ink);margin-bottom:8px;margin-top:8px; }
 .record-artist { font-family:'Barlow Condensed',sans-serif;font-weight:400;font-size:clamp(24px,3vw,40px);text-transform:uppercase;letter-spacing:0.02em;color:var(--mid); }
-.rh-right {border-left:1px solid var(--rule);padding:0;display:flex;flex-direction:column;min-width:180px;align-self:stretch;}
-.meta-row { display:flex;flex-direction:column;gap:3px;padding:14px 24px;border-bottom:1px solid var(--rule); }
-.meta-row:last-child { border-bottom:none; }
+.rh-right {border-top:1px solid var(--rule);padding:0;display:grid;grid-template-columns:1fr 1fr;align-self:stretch;}
+.meta-row { display:flex;flex-direction:column;gap:3px;padding:14px 20px;border-bottom:1px solid var(--rule);border-right:1px solid var(--rule); }
+.meta-row:last-child { border-bottom:none; } .meta-row:nth-child(even) { border-right:none; }
 .meta-key { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--light); }
 .meta-val { font-family:'Barlow',sans-serif;font-size:13px;font-weight:500;color:var(--ink); }
 .scan-section { border-bottom:1px solid var(--ink); }
@@ -259,7 +259,7 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
     <span class="rh-id" id="pressNumber">Pressing #—</span>
     <div class="rh-format-block" id="formatTags"></div>
   </div>
-  <div class="rh-mid reveal d1">
+  <div class="rh-content"><div class="rh-mid reveal d1">
     <div class="rh-breadcrumb">
       <a href="index.html">Archive</a><span class="sep">/</span>
       <span id="bcGenre">—</span><span class="sep">/</span>
@@ -269,7 +269,7 @@ footer { display:grid;grid-template-columns:200px 1fr auto;align-items:center;he
     <h1 class="record-title" id="recordTitle">—</h1>
     <p class="record-artist" id="recordArtist">—</p>
   </div>
-  <div class="rh-right reveal d2" id="metaRows"></div>
+  <div class="rh-right reveal d2" id="metaRows"></div></div>
 </header>
 <section class="scan-section">
   <div class="scan-section-header">
