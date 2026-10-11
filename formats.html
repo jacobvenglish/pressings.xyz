@@ -1,248 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Formats — Pressings.xyz</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 14px; scroll-behavior: smooth; }
-:root {
-  --paper: #f4f1eb; --ink: #0f0f0f; --mid: #6b6b6b;
-  --light: #c8c4bb; --rule: #d4d0c8; --red: #d42b2b; --white: #ffffff;
-}
-body { background: var(--paper); color: var(--ink); font-family: 'Barlow', sans-serif; font-weight: 400; overflow-x: hidden; cursor: crosshair; }
-body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); opacity: 0.022; pointer-events: none; z-index: 1000; }
-
-/* ── NAV ── */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: var(--paper); border-bottom: 1px solid var(--ink); display: grid; grid-template-columns: 200px 1fr auto; align-items: stretch; height: 48px; }
-.nav-logo-cell { border-right: 1px solid var(--ink); display: flex; align-items: center; padding: 0 20px; text-decoration: none; }
-.nav-logo-mark { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink); }
-.nav-logo-mark sup { font-size: 9px; color: var(--red); vertical-align: super; margin-left: 1px; }
-.nav-links-cell { display: flex; align-items: center; padding: 0 24px; }
-.nav-links { display: flex; list-style: none; gap: 32px; }
-.nav-links a { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.15s; }
-.nav-links a:hover { color: var(--ink); }
-.nav-links a.active { color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 1px; }
-.nav-actions { display: flex; align-items: stretch; border-left: 1px solid var(--ink); }
-.nav-btn { display: flex; align-items: center; padding: 0 20px; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; color: var(--mid); border-right: 1px solid var(--rule); transition: all 0.15s; white-space: nowrap; }
-.nav-btn:hover { color: var(--ink); background: var(--rule); }
-.nav-btn-filled { background: var(--ink); color: var(--paper); border-right: none; }
-.nav-btn-filled:hover { background: var(--red); color: var(--white); }
-
-/* ── PAGE HEADER ── */
-.page-header { padding-top: 48px; border-bottom: 1px solid var(--ink); display: grid; grid-template-columns: 200px 1fr auto; }
-.ph-left { border-right: 1px solid var(--rule); padding: 32px 20px; display: flex; flex-direction: column; justify-content: space-between; }
-.ph-vol { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--red); letter-spacing: 0.14em; text-transform: uppercase; }
-.ph-vert { writing-mode: vertical-lr; transform: rotate(180deg); font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light); margin-top: 24px; }
-.ph-mid { padding: 32px 48px; }
-.ph-breadcrumb { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
-.ph-breadcrumb a, .ph-breadcrumb span { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); text-decoration: none; }
-.ph-breadcrumb a:hover { color: var(--mid); }
-.ph-breadcrumb .sep { color: var(--red); }
-.ph-breadcrumb .current { color: var(--ink); }
-.page-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: clamp(56px, 7vw, 108px); line-height: 0.88; text-transform: uppercase; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 32px; }
-.page-title .red { color: var(--red); display: block; }
-.page-title .outline { -webkit-text-stroke: 1.5px var(--ink); color: transparent; display: block; }
-.ph-desc { font-size: 13px; line-height: 1.75; color: var(--mid); font-weight: 300; max-width: 480px; padding-top: 24px; border-top: 1px solid var(--rule); }
-.ph-right { border-left: 1px solid var(--rule); padding: 32px 24px; display: flex; flex-direction: column; gap: 24px; min-width: 160px; justify-content: center; }
-.ph-stat-n { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 48px; line-height: 1; color: var(--ink); display: block; }
-.ph-stat-l { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--light); display: block; margin-top: 2px; }
-
-/* ── FORMAT NAV STRIP ── */
-.format-nav { border-bottom: 1px solid var(--ink); display: grid; grid-template-columns: 200px repeat(4, 1fr); position: sticky; top: 48px; z-index: 100; background: var(--paper); }
-.fn-label { border-right: 1px solid var(--rule); padding: 0 20px; display: flex; align-items: center; }
-.fn-label span { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
-.fn-cell { border-right: 1px solid var(--rule); padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: background 0.15s; text-decoration: none; }
-.fn-cell:last-child { border-right: none; }
-.fn-cell:hover { background: var(--rule); }
-.fn-cell.active { background: var(--ink); }
-.fn-cell.active .fnc-name { color: var(--paper); }
-.fn-cell.active .fnc-count { color: var(--red); }
-.fnc-name { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); transition: color 0.15s; }
-.fnc-count { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 18px; color: var(--light); transition: color 0.15s; }
-
-/* ── FORMAT SECTION ── */
-.format-section { border-bottom: 1px solid var(--ink); }
-
-.format-section-header {
-  display: grid;
-  grid-template-columns: 200px 1fr auto;
-  border-bottom: 1px solid var(--rule);
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.format-section-header:hover { background: rgba(212,43,43,0.02); }
-
-.fsh-left {
-  border-right: 1px solid var(--rule);
-  padding: 32px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.fsh-num { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--red); letter-spacing: 0.14em; text-transform: uppercase; }
-.fsh-illustration { margin-top: 20px; }
-
-.fsh-mid { padding: 32px 48px; }
-.fsh-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: clamp(48px, 5vw, 80px); text-transform: uppercase; letter-spacing: -0.01em; color: var(--ink); line-height: 0.9; margin-bottom: 16px; }
-.fsh-subtitle { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); margin-bottom: 24px; }
-.fsh-desc { font-size: 13px; line-height: 1.75; color: var(--mid); font-weight: 300; max-width: 560px; }
-
-.fsh-right {
-  border-left: 1px solid var(--rule);
-  padding: 32px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  min-width: 180px;
-  justify-content: space-between;
-}
-.fsh-stat { }
-.fsh-stat-n { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 40px; color: var(--ink); line-height: 1; display: block; }
-.fsh-stat-l { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--light); display: block; margin-top: 2px; }
-.fsh-toggle { font-family: 'IBM Plex Mono', monospace; font-size: 18px; color: var(--light); align-self: flex-end; transition: transform 0.2s, color 0.15s; }
-.format-section-header:hover .fsh-toggle { color: var(--red); }
-.format-section.collapsed .fsh-toggle { transform: rotate(-90deg); }
-
-/* ── SECTION BODY ── */
-.format-section-body { display: grid; grid-template-columns: 200px 1fr; }
-.format-section.collapsed .format-section-body { display: none; }
-
-.fsb-sidebar {
-  border-right: 1px solid var(--rule);
-  padding: 32px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-.fsb-sidebar-title { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--light); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
-.sub-format-list { list-style: none; display: flex; flex-direction: column; }
-.sub-format-list li { border-bottom: 1px solid var(--rule); }
-.sub-format-list li:last-child { border-bottom: none; }
-.sub-format-btn { width: 100%; text-align: left; padding: 8px 0; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: color 0.12s; }
-.sub-format-btn:hover { color: var(--ink); }
-.sub-format-btn.active { color: var(--red); }
-.sfb-count { font-size: 8px; color: var(--light); }
-.sub-format-btn.active .sfb-count { color: var(--red); }
-
-/* ── SPEC PANELS ── */
-.fsb-main { padding: 32px 40px; }
-
-.spec-panel { display: none; }
-.spec-panel.active { display: block; }
-
-.spec-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 48px;
-  padding-bottom: 32px;
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: 32px;
-}
-.spec-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 40px; text-transform: uppercase; color: var(--ink); line-height: 1; }
-.spec-subtitle { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); margin-top: 6px; }
-.spec-diagram { flex-shrink: 0; }
-
-/* Spec table */
-.spec-section { margin-bottom: 32px; }
-.spec-section:last-child { margin-bottom: 0; }
-.spec-section-title { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); display: flex; align-items: center; justify-content: space-between; }
-.spec-section-title span { color: var(--red); }
-
-.spec-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
-.spec-cell { background: var(--white); padding: 12px 16px; }
-.spec-cell.full { grid-column: 1 / -1; }
-.spec-key { font-family: 'IBM Plex Mono', monospace; font-size: 7px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--light); display: block; margin-bottom: 4px; }
-.spec-val { font-family: 'Barlow', sans-serif; font-size: 13px; font-weight: 500; color: var(--ink); display: block; line-height: 1.4; }
-.spec-val.mono { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink); }
-.spec-val.highlight { color: var(--red); }
-
-/* Print spec tags */
-.spec-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
-.spec-tag { font-family: 'IBM Plex Mono', monospace; font-size: 7px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 7px; border: 1px solid var(--rule); color: var(--mid); }
-.spec-tag.recommended { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-
-/* Diagram SVG container */
-.diagram-wrap { background: var(--white); border: 1px solid var(--rule); padding: 20px; display: flex; align-items: center; justify-content: center; }
-
-/* ── FOOTER ── */
-footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: center; height: 48px; }
-.footer-logo-cell { border-right: 1px solid var(--rule); padding: 0 20px; height: 100%; display: flex; align-items: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); }
-.footer-logo-cell sup { color: var(--red); font-size: 7px; }
-.footer-mid { padding: 0 24px; font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); }
-.footer-right { padding: 0 24px; font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); border-left: 1px solid var(--rule); height: 100%; display: flex; align-items: center; }
-
-.reveal { opacity: 0; transform: translateY(16px); animation: revealUp 0.55s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
-@keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
-.d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.15s; }
-
-/* ── HAMBURGER ── */
-.nav-hamburger { display:none; flex-direction:column; justify-content:center; gap:5px; padding:0 20px; cursor:pointer; background:none; border:none; border-left:1px solid var(--rule); height:100%; }
-.nav-hamburger span { display:block; width:20px; height:1.5px; background:var(--ink); transition:all 0.2s; }
-.nav-hamburger.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
-.nav-hamburger.open span:nth-child(2) { opacity:0; }
-.nav-hamburger.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
-.mobile-menu { display:none; position:fixed; top:48px; left:0; right:0; background:var(--paper); border-bottom:1px solid var(--ink); z-index:190; flex-direction:column; }
-.mobile-menu.open { display:flex; }
-.mobile-menu a { font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--mid); text-decoration:none; padding:16px 24px; border-bottom:1px solid var(--rule); transition:color 0.15s; }
-.mobile-menu a:hover { color:var(--ink); }
-.mobile-menu a.filled { background:var(--ink); color:var(--paper); border-bottom:none; }
-.mobile-menu a.filled:hover { background:var(--red); }
-@media (max-width:768px) {
-  nav { grid-template-columns:1fr auto; }
-  .nav-links-cell { display:none; }
-  .nav-actions { display:none; }
-  .nav-hamburger { display:flex; }
-  footer { grid-template-columns:1fr; height:auto; }
-  .footer-logo-cell { border-right:none; border-bottom:1px solid var(--rule); padding:16px 20px; height:auto; }
-  .footer-mid { padding:12px 20px; border-bottom:1px solid var(--rule); }
-  .footer-right { border-left:none; padding:12px 20px; height:auto; }
-
-  .page-header { grid-template-columns:1fr; }
-  .ph-left { border-right:none; border-bottom:1px solid var(--rule); padding:16px 20px; flex-direction:row; align-items:center; gap:16px; }
-  .ph-vert { display:none; }
-  .ph-mid { padding:32px 20px; }
-  .page-title { font-size:clamp(48px,13vw,72px); }
-  .ph-right { border-left:none; border-top:1px solid var(--rule); display:grid; grid-template-columns:repeat(3,1fr); padding:0; }
-  .ph-right > div { padding:16px; border-right:1px solid var(--rule); }
-  .ph-right > div:last-child { border-right:none; }
-  .ph-stat-n { font-size:28px; }
-  .format-nav { grid-template-columns:repeat(4,1fr); top:48px; }
-  .fn-label { display:none; }
-  .fn-cell { padding:10px 8px; }
-  .fnc-count { font-size:14px; }
-  .format-section-header { grid-template-columns:1fr; }
-  .fsh-left { border-right:none; border-bottom:1px solid var(--rule); padding:16px 20px; flex-direction:row; align-items:center; gap:16px; }
-  .fsh-illustration { display:none; }
-  .fsh-mid { padding:24px 20px; }
-  .fsh-title { font-size:clamp(36px,10vw,56px); }
-  .fsh-right { border-left:none; border-top:1px solid var(--rule); flex-direction:row; padding:0; gap:0; }
-  .fsh-stat { flex:1; padding:16px; border-right:1px solid var(--rule); }
-  .fsh-stat:last-child { border-right:none; }
-  .fsh-stat-n { font-size:28px; }
-  .fsh-toggle { display:none; }
-  .format-section-body { grid-template-columns:1fr; }
-  .fsb-sidebar { border-right:none; border-bottom:1px solid var(--rule); padding:16px 20px; }
-  .sub-format-list { flex-direction:row; flex-wrap:wrap; gap:4px; }
-  .sub-format-list li { border-bottom:none; }
-  .sub-format-btn { border:1px solid var(--rule); padding:5px 10px; font-size:8px; }
-  .sub-format-btn.active { background:var(--ink); color:var(--paper); border-color:var(--ink); }
-  .fsb-main { padding:20px; }
-  .spec-header { flex-direction:column; gap:16px; }
-  .spec-grid { grid-template-columns:1fr; }
-  .spec-cell.full { grid-column:1; }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formats · Pressings.xyz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Barlow+Condensed:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/formats.css">
 </head>
 <body>
-
+<!-- NAV (same on every page) -->
 <nav>
-  <a href="index.html" class="nav-logo-cell"><span class="nav-logo-mark">Pressings<sup>.xyz</sup></span></a>
+  <a href="index.html" class="nav-logo-cell">
+    <span class="nav-logo-mark">Pressings<sup>.xyz</sup></span>
+  </a>
   <div class="nav-links-cell">
     <ul class="nav-links">
       <li><a href="index.html">Archive</a></li>
@@ -256,12 +29,12 @@ footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: cent
     <a href="folders.html" class="nav-btn">My Folders</a>
     <a href="#" class="nav-btn nav-btn-filled">Get Access</a>
   </div>
-  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html">Archive</a>
-  <a href="formats.html">Formats</a>
+  <a href="formats.html" class="active">Formats</a>
   <a href="designers.html">Designers</a>
   <a href="labels.html">Labels</a>
   <a href="about.html">About</a>
@@ -287,26 +60,26 @@ footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: cent
     <p class="ph-desc">Technical specifications, print dimensions, material standards, and sub-format breakdowns for every physical format in the archive. A reference for designers working with physical music packaging.</p>
   </div>
   <div class="ph-right reveal d2">
-    <div><span class="ph-stat-n">4</span><span class="ph-stat-l">Formats</span></div>
-    <div><span class="ph-stat-n" style="color:var(--red)">18</span><span class="ph-stat-l">Sub-formats</span></div>
-    <div><span class="ph-stat-n">247</span><span class="ph-stat-l">Pressings</span></div>
+    <div><span class="ph-stat-n" data-stat="formats">—</span><span class="ph-stat-l">Formats</span></div>
+    <div><span class="ph-stat-n is-red" data-stat="packaging">—</span><span class="ph-stat-l">Packaging Types</span></div>
+    <div><span class="ph-stat-n" data-stat="pressings">—</span><span class="ph-stat-l">Pressings</span></div>
   </div>
 </header>
 
 <!-- FORMAT NAV STRIP -->
 <div class="format-nav">
   <div class="fn-label"><span>Jump to format</span></div>
-  <a href="#vinyl" class="fn-cell active" onclick="setFormatNav(this)"><span class="fnc-name">Vinyl</span><span class="fnc-count">142</span></a>
-  <a href="#cd" class="fn-cell" onclick="setFormatNav(this)"><span class="fnc-name">CD</span><span class="fnc-count">71</span></a>
-  <a href="#cassette" class="fn-cell" onclick="setFormatNav(this)"><span class="fnc-name">Cassette</span><span class="fnc-count">28</span></a>
-  <a href="#boxset" class="fn-cell" onclick="setFormatNav(this)"><span class="fnc-name">Box Set</span><span class="fnc-count">06</span></a>
+  <a href="#vinyl" class="fn-cell active"><span class="fnc-name">Vinyl</span><span class="fnc-count" data-format-count="Vinyl">—</span></a>
+  <a href="#cd" class="fn-cell"><span class="fnc-name">CD</span><span class="fnc-count" data-format-count="CD">—</span></a>
+  <a href="#cassette" class="fn-cell"><span class="fnc-name">Cassette</span><span class="fnc-count" data-format-count="Cassette">—</span></a>
+  <a href="#boxset" class="fn-cell"><span class="fnc-name">Box Set</span><span class="fnc-count" data-format-count="Box Set">—</span></a>
 </div>
 
 <!-- ══════════════════════════════════════════ -->
 <!-- VINYL -->
 <!-- ══════════════════════════════════════════ -->
 <section class="format-section" id="vinyl">
-  <div class="format-section-header" onclick="toggleSection('vinyl')">
+  <div class="format-section-header">
     <div class="fsh-left">
       <span class="fsh-num">01</span>
       <div class="fsh-illustration">
@@ -326,23 +99,25 @@ footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: cent
       <p class="fsh-desc">The dominant format from the 1950s through the 1980s and a strong revival since the 2000s. Vinyl's large format — particularly the 12" LP — gave designers the most canvas to work with of any physical music format. Single sleeve, gatefold, tip-on, and die-cut variants each have distinct spec requirements.</p>
     </div>
     <div class="fsh-right">
-      <div class="fsh-stat"><span class="fsh-stat-n">142</span><span class="fsh-stat-l">In Archive</span></div>
-      <div class="fsh-stat"><span class="fsh-stat-n" style="color:var(--red)">6</span><span class="fsh-stat-l">Sub-formats</span></div>
+      <div class="fsh-stat"><span class="fsh-stat-n" data-format-count="Vinyl">—</span><span class="fsh-stat-l">In Archive</span></div>
+      <div class="fsh-stat"><span class="fsh-stat-n is-red">6</span><span class="fsh-stat-l">Sub-formats</span></div>
       <span class="fsh-toggle">↓</span>
     </div>
   </div>
 
+  <!-- Pressings in this format, from Airtable -->
+  <div class="format-archive" data-format="Vinyl"></div>
   <div class="format-section-body">
     <div class="fsb-sidebar">
       <div>
         <p class="fsb-sidebar-title">Sub-formats</p>
         <ul class="sub-format-list">
-          <li><button class="sub-format-btn active" onclick="showSpec('vinyl','lp12',this)">LP 12" <span class="sfb-count">84</span></button></li>
-          <li><button class="sub-format-btn" onclick="showSpec('vinyl','single7',this)">Single 7" <span class="sfb-count">24</span></button></li>
-          <li><button class="sub-format-btn" onclick="showSpec('vinyl','ep10',this)">EP 10" <span class="sfb-count">8</span></button></li>
-          <li><button class="sub-format-btn" onclick="showSpec('vinyl','gatefold',this)">Gatefold <span class="sfb-count">68</span></button></li>
-          <li><button class="sub-format-btn" onclick="showSpec('vinyl','tipon',this)">Tip-On Jacket <span class="sfb-count">14</span></button></li>
-          <li><button class="sub-format-btn" onclick="showSpec('vinyl','picturedisc',this)">Picture Disc <span class="sfb-count">6</span></button></li>
+          <li><button class="sub-format-btn active" data-spec="vinyl-lp12">LP 12" <span class="sfb-count">—</span></button></li>
+          <li><button class="sub-format-btn" data-spec="vinyl-single7">Single 7" <span class="sfb-count">—</span></button></li>
+          <li><button class="sub-format-btn" data-spec="vinyl-ep10">EP 10" <span class="sfb-count">—</span></button></li>
+          <li><button class="sub-format-btn" data-spec="vinyl-gatefold">Gatefold <span class="sfb-count">—</span></button></li>
+          <li><button class="sub-format-btn" data-spec="vinyl-tipon">Tip-On Jacket <span class="sfb-count">—</span></button></li>
+          <li><button class="sub-format-btn" data-spec="vinyl-picturedisc">Picture Disc <span class="sfb-count">—</span></button></li>
         </ul>
       </div>
     </div>
@@ -372,7 +147,7 @@ footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: cent
         <div class="spec-section">
           <div class="spec-section-title">Sleeve Dimensions <span>01</span></div>
           <div class="spec-grid">
-            <div class="spec-cell"><span class="spec-key">Cover (W × H)</span><span class="spec-val mono">314.3 × 314.3 mm <span style="color:var(--light);font-size:10px;">/ 12.375 × 12.375 in</span></span></div>
+            <div class="spec-cell"><span class="spec-key">Cover (W × H)</span><span class="spec-val mono">314.3 × 314.3 mm <span class="spec-alt">/ 12.375 × 12.375 in</span></span></div>
             <div class="spec-cell"><span class="spec-key">Spine Width</span><span class="spec-val mono">6–10 mm typical</span></div>
             <div class="spec-cell"><span class="spec-key">Bleed</span><span class="spec-val mono">3 mm all sides</span></div>
             <div class="spec-cell"><span class="spec-key">Safe Zone</span><span class="spec-val mono">6 mm from trim edge</span></div>
@@ -439,7 +214,7 @@ footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: cent
         <div class="spec-section">
           <div class="spec-section-title">Sleeve Dimensions <span>01</span></div>
           <div class="spec-grid">
-            <div class="spec-cell"><span class="spec-key">Cover (W × H)</span><span class="spec-val mono">184.1 × 184.1 mm <span style="color:var(--light);font-size:10px;">/ 7.25 × 7.25 in</span></span></div>
+            <div class="spec-cell"><span class="spec-key">Cover (W × H)</span><span class="spec-val mono">184.1 × 184.1 mm <span class="spec-alt">/ 7.25 × 7.25 in</span></span></div>
             <div class="spec-cell"><span class="spec-key">Spine Width</span><span class="spec-val mono">4–6 mm typical</span></div>
             <div class="spec-cell"><span class="spec-key">Bleed</span><span class="spec-val mono">3 mm all sides</span></div>
             <div class="spec-cell"><span class="spec-key">Safe Zone</span><span class="spec-val mono">5 mm from trim edge</span></div>
@@ -481,7 +256,7 @@ footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: cent
         <div class="spec-section">
           <div class="spec-section-title">Sleeve Dimensions <span>01</span></div>
           <div class="spec-grid">
-            <div class="spec-cell"><span class="spec-key">Cover (W × H)</span><span class="spec-val mono">262.0 × 262.0 mm <span style="color:var(--light);font-size:10px;">/ 10.31 × 10.31 in</span></span></div>
+            <div class="spec-cell"><span class="spec-key">Cover (W × H)</span><span class="spec-val mono">262.0 × 262.0 mm <span class="spec-alt">/ 10.31 × 10.31 in</span></span></div>
             <div class="spec-cell"><span class="spec-key">Bleed</span><span class="spec-val mono">3 mm all sides</span></div>
             <div class="spec-cell"><span class="spec-key">Disc Diameter</span><span class="spec-val mono">254 mm (10 in)</span></div>
             <div class="spec-cell"><span class="spec-key">Label Diameter</span><span class="spec-val mono">88.9 mm (3.5 in)</span></div>
@@ -604,7 +379,7 @@ footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: cent
 <!-- CD -->
 <!-- ══════════════════════════════════════════ -->
 <section class="format-section" id="cd">
-  <div class="format-section-header" onclick="toggleSection('cd')">
+  <div class="format-section-header">
     <div class="fsh-left">
       <span class="fsh-num">02</span>
       <div class="fsh-illustration">
@@ -622,21 +397,23 @@ footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: cent
       <p class="fsh-desc">Dominant from the mid-1980s through the 2000s. The CD booklet — printed on coated paper, folded into a jewel case — became the primary canvas for detailed liner notes, photography, and typography. Digipak and slim case variants offer different structural possibilities.</p>
     </div>
     <div class="fsh-right">
-      <div class="fsh-stat"><span class="fsh-stat-n">71</span><span class="fsh-stat-l">In Archive</span></div>
-      <div class="fsh-stat"><span class="fsh-stat-n" style="color:var(--red)">4</span><span class="fsh-stat-l">Sub-formats</span></div>
+      <div class="fsh-stat"><span class="fsh-stat-n" data-format-count="CD">—</span><span class="fsh-stat-l">In Archive</span></div>
+      <div class="fsh-stat"><span class="fsh-stat-n is-red">4</span><span class="fsh-stat-l">Sub-formats</span></div>
       <span class="fsh-toggle">↓</span>
     </div>
   </div>
 
+  <!-- Pressings in this format, from Airtable -->
+  <div class="format-archive" data-format="CD"></div>
   <div class="format-section-body">
     <div class="fsb-sidebar">
       <div>
         <p class="fsb-sidebar-title">Sub-formats</p>
         <ul class="sub-format-list">
-          <li><button class="sub-format-btn active" onclick="showSpec('cd','jewel',this)">Jewel Case <span class="sfb-count">49</span></button></li>
-          <li><button class="sub-format-btn" onclick="showSpec('cd','digipak',this)">Digipak <span class="sfb-count">12</span></button></li>
-          <li><button class="sub-format-btn" onclick="showSpec('cd','slim',this)">Slim Case <span class="sfb-count">7</span></button></li>
-          <li><button class="sub-format-btn" onclick="showSpec('cd','cardboard',this)">Cardboard Sleeve <span class="sfb-count">3</span></button></li>
+          <li><button class="sub-format-btn active" data-spec="cd-jewel">Jewel Case <span class="sfb-count">—</span></button></li>
+          <li><button class="sub-format-btn" data-spec="cd-digipak">Digipak <span class="sfb-count">—</span></button></li>
+          <li><button class="sub-format-btn" data-spec="cd-slim">Slim Case <span class="sfb-count">—</span></button></li>
+          <li><button class="sub-format-btn" data-spec="cd-cardboard">Cardboard Sleeve <span class="sfb-count">—</span></button></li>
         </ul>
       </div>
     </div>
@@ -770,7 +547,7 @@ footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: cent
 <!-- CASSETTE -->
 <!-- ══════════════════════════════════════════ -->
 <section class="format-section" id="cassette">
-  <div class="format-section-header" onclick="toggleSection('cassette')">
+  <div class="format-section-header">
     <div class="fsh-left">
       <span class="fsh-num">03</span>
       <div class="fsh-illustration">
@@ -790,20 +567,22 @@ footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: cent
       <p class="fsh-desc">The cassette's J-card — named for the J-shape of its fold — is one of the most constrained design challenges in physical music packaging. The front panel, spine, and back must all be read at once. A revival since the 2010s has brought new packaging creativity to the format.</p>
     </div>
     <div class="fsh-right">
-      <div class="fsh-stat"><span class="fsh-stat-n">28</span><span class="fsh-stat-l">In Archive</span></div>
-      <div class="fsh-stat"><span class="fsh-stat-n" style="color:var(--red)">3</span><span class="fsh-stat-l">Sub-formats</span></div>
+      <div class="fsh-stat"><span class="fsh-stat-n" data-format-count="Cassette">—</span><span class="fsh-stat-l">In Archive</span></div>
+      <div class="fsh-stat"><span class="fsh-stat-n is-red">3</span><span class="fsh-stat-l">Sub-formats</span></div>
       <span class="fsh-toggle">↓</span>
     </div>
   </div>
 
+  <!-- Pressings in this format, from Airtable -->
+  <div class="format-archive" data-format="Cassette"></div>
   <div class="format-section-body">
     <div class="fsb-sidebar">
       <div>
         <p class="fsb-sidebar-title">Sub-formats</p>
         <ul class="sub-format-list">
-          <li><button class="sub-format-btn active" onclick="showSpec('cassette','jcard',this)">J-Card <span class="sfb-count">22</span></button></li>
-          <li><button class="sub-format-btn" onclick="showSpec('cassette','ocard',this)">O-Card <span class="sfb-count">4</span></button></li>
-          <li><button class="sub-format-btn" onclick="showSpec('cassette','shell',this)">Shell Print <span class="sfb-count">2</span></button></li>
+          <li><button class="sub-format-btn active" data-spec="cassette-jcard">J-Card <span class="sfb-count">—</span></button></li>
+          <li><button class="sub-format-btn" data-spec="cassette-ocard">O-Card <span class="sfb-count">—</span></button></li>
+          <li><button class="sub-format-btn" data-spec="cassette-shell">Shell Print <span class="sfb-count">—</span></button></li>
         </ul>
       </div>
     </div>
@@ -830,8 +609,8 @@ footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: cent
         <div class="spec-section">
           <div class="spec-section-title">Panel Dimensions <span>01</span></div>
           <div class="spec-grid">
-            <div class="spec-cell"><span class="spec-key">Front Panel (W × H)</span><span class="spec-val mono">101.6 × 63.5 mm <span style="color:var(--light);font-size:10px;">/ 4 × 2.5 in</span></span></div>
-            <div class="spec-cell"><span class="spec-key">Front Tall Panel (W × H)</span><span class="spec-val mono">101.6 × 88.9 mm <span style="color:var(--light);font-size:10px;">/ 4 × 3.5 in</span></span></div>
+            <div class="spec-cell"><span class="spec-key">Front Panel (W × H)</span><span class="spec-val mono">101.6 × 63.5 mm <span class="spec-alt">/ 4 × 2.5 in</span></span></div>
+            <div class="spec-cell"><span class="spec-key">Front Tall Panel (W × H)</span><span class="spec-val mono">101.6 × 88.9 mm <span class="spec-alt">/ 4 × 3.5 in</span></span></div>
             <div class="spec-cell"><span class="spec-key">Back Panel (W × H)</span><span class="spec-val mono">101.6 × 63.5 mm</span></div>
             <div class="spec-cell"><span class="spec-key">Spine (W × H)</span><span class="spec-val mono">9.5 × 63.5 mm</span></div>
             <div class="spec-cell"><span class="spec-key">Bleed</span><span class="spec-val mono">1.5 mm all outer edges</span></div>
@@ -893,7 +672,7 @@ footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: cent
 <!-- BOX SET -->
 <!-- ══════════════════════════════════════════ -->
 <section class="format-section" id="boxset">
-  <div class="format-section-header" onclick="toggleSection('boxset')">
+  <div class="format-section-header">
     <div class="fsh-left">
       <span class="fsh-num">04</span>
       <div class="fsh-illustration">
@@ -912,20 +691,22 @@ footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: cent
       <p class="fsh-desc">Box sets represent the most complex packaging design challenge — multiple formats, components, and inserts all needing to cohere visually within a single outer box. Slip cases, clamshells, and rigid lift-lid boxes each have different structural and print requirements.</p>
     </div>
     <div class="fsh-right">
-      <div class="fsh-stat"><span class="fsh-stat-n">6</span><span class="fsh-stat-l">In Archive</span></div>
-      <div class="fsh-stat"><span class="fsh-stat-n" style="color:var(--red)">3</span><span class="fsh-stat-l">Sub-formats</span></div>
+      <div class="fsh-stat"><span class="fsh-stat-n" data-format-count="Box Set">—</span><span class="fsh-stat-l">In Archive</span></div>
+      <div class="fsh-stat"><span class="fsh-stat-n is-red">3</span><span class="fsh-stat-l">Sub-formats</span></div>
       <span class="fsh-toggle">↓</span>
     </div>
   </div>
 
+  <!-- Pressings in this format, from Airtable -->
+  <div class="format-archive" data-format="Box Set"></div>
   <div class="format-section-body">
     <div class="fsb-sidebar">
       <div>
         <p class="fsb-sidebar-title">Sub-formats</p>
         <ul class="sub-format-list">
-          <li><button class="sub-format-btn active" onclick="showSpec('boxset','slipcase',this)">Slip Case <span class="sfb-count">3</span></button></li>
-          <li><button class="sub-format-btn" onclick="showSpec('boxset','clamshell',this)">Clamshell <span class="sfb-count">2</span></button></li>
-          <li><button class="sub-format-btn" onclick="showSpec('boxset','liftlid',this)">Lift-Lid Box <span class="sfb-count">1</span></button></li>
+          <li><button class="sub-format-btn active" data-spec="boxset-slipcase">Slip Case <span class="sfb-count">—</span></button></li>
+          <li><button class="sub-format-btn" data-spec="boxset-clamshell">Clamshell <span class="sfb-count">—</span></button></li>
+          <li><button class="sub-format-btn" data-spec="boxset-liftlid">Lift-Lid Box <span class="sfb-count">—</span></button></li>
         </ul>
       </div>
     </div>
@@ -990,54 +771,15 @@ footer { display: grid; grid-template-columns: 200px 1fr auto; align-items: cent
   </div>
 </section>
 
+<!-- FOOTER (same on every page) -->
 <footer>
   <div class="footer-logo-cell">Pressings<sup>.xyz</sup></div>
   <div class="footer-mid">© 2025 · Built by a collector, for designers</div>
   <div class="footer-right">Vol. 01 — Est. 2025</div>
 </footer>
 
-<script>
-  function toggleMenu(){var m=document.getElementById('mobileMenu'),b=document.getElementById('hamburger');m.classList.toggle('open');b.classList.toggle('open');}
-  document.addEventListener('click',function(e){var m=document.getElementById('mobileMenu'),b=document.getElementById('hamburger');if(m&&b&&!m.contains(e.target)&&!b.contains(e.target)){m.classList.remove('open');b.classList.remove('open');}});
-
-  // Format nav active state
-  function setFormatNav(el) {
-    document.querySelectorAll('.fn-cell').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
-  }
-
-  // Update format nav on scroll
-  const sections = ['vinyl','cd','cassette','boxset'];
-  const navCells = document.querySelectorAll('.fn-cell');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(id => {
-      const el = document.getElementById(id);
-      if (el && window.scrollY >= el.offsetTop - 120) current = id;
-    });
-    navCells.forEach(cell => {
-      cell.classList.toggle('active', cell.getAttribute('href') === '#' + current);
-    });
-  });
-
-  // Toggle section collapse
-  function toggleSection(id) {
-    const sec = document.getElementById(id);
-    sec.classList.toggle('collapsed');
-  }
-
-  // Show sub-format spec panel
-  function showSpec(format, subformat, btn) {
-    // Deactivate all buttons in this format's sidebar
-    const sec = document.getElementById(format);
-    sec.querySelectorAll('.sub-format-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    // Hide all panels in this format
-    sec.querySelectorAll('.spec-panel').forEach(p => p.classList.remove('active'));
-    // Show selected
-    const panel = document.getElementById(format + '-' + subformat);
-    if (panel) panel.classList.add('active');
-  }
-</script>
+<script src="js/api.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/formats.js"></script>
 </body>
 </html>
