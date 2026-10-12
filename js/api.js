@@ -26,6 +26,7 @@ const PAGE_MAP = {
   '0009': 'good-kid-maad-city-kendrick-lamar.html',
   '0010': 'madvillainy-madvillain.html',
   '0011': 'the-new-abnormal-the-strokes.html'
+  '0012': 'mark-william-lewis-mark-william-lewis.html'
 };
 
 // ── DESIGN CREDIT FIELDS ──
