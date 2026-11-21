@@ -29,6 +29,8 @@ const PAGE_MAP = {
   '0012': 'mark-william-lewis-mark-william-lewis.html',
   '0013': 'frank-ocean-channel-orange.html'
   '0014': 'jeremy-zucker-love-is-not-dying.html', 
+  '0015': 'cake-fashion-nugget',
+  '0016': 'tirzah-coulourgraede', 
 };
 
 // ── DESIGN CREDIT FIELDS ──
