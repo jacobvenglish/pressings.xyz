@@ -27,7 +27,7 @@ const PAGE_MAP = {
   '0010': 'madvillainy-madvillain.html',
   '0011': 'the-new-abnormal-the-strokes.html',
   '0012': 'mark-william-lewis-mark-william-lewis.html',
-  '0013': 'frank-ocean-channel-orange.html'
+  '0013': 'frank-ocean-channel-orange.html',
   '0014': 'jeremy-zucker-love-is-not-dying.html', 
   '0015': 'cake-fashion-nugget.html',
   '0016': 'tirzah-colourgrade.html', 
