@@ -30,7 +30,7 @@ const PAGE_MAP = {
   '0013': 'frank-ocean-channel-orange.html'
   '0014': 'jeremy-zucker-love-is-not-dying.html', 
   '0015': 'cake-fashion-nugget.html',
-  '0016': 'tirzah-coulourgrade.html', 
+  '0016': 'tirzah-colourgrade.html', 
 };
 
 // ── DESIGN CREDIT FIELDS ──
