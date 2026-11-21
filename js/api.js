@@ -28,6 +28,7 @@ const PAGE_MAP = {
   '0011': 'the-new-abnormal-the-strokes.html',
   '0012': 'mark-william-lewis-mark-william-lewis.html',
   '0013': 'frank-ocean-channel-orange.html'
+  '0014': 'jeremy-zucker-love-is-not-dying.html', 
 };
 
 // ── DESIGN CREDIT FIELDS ──
